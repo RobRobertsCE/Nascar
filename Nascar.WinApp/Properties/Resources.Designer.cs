@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Nascar.WinApp.Properties
-{
-
-
+namespace Nascar.WinApp.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,49 +22,50 @@ namespace Nascar.WinApp.Properties
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources
-    {
-
+    internal class Resources {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources()
-        {
+        internal Resources() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if ((resourceMan == null))
-                {
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Nascar.WinApp.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {&quot;lap_number&quot;:8,&quot;elapsed_time&quot;:3076.0,&quot;flag_state&quot;:9,&quot;race_id&quot;:4315,&quot;laps_in_race&quot;:999,&quot;laps_to_go&quot;:991,&quot;vehicles&quot;:[{&quot;average_restart_speed&quot;:0.0,&quot;average_running_position&quot;:0.0,&quot;average_speed&quot;:176.431,&quot;best_lap&quot;:3,&quot;best_lap_speed&quot;:187.964,&quot;best_lap_time&quot;:50.946,&quot;vehicle_manufacturer&quot;:&quot;Frd&quot;,&quot;vehicle_number&quot;:&quot;16&quot;,&quot;driver&quot;:{&quot;driver_id&quot;:243,&quot;full_name&quot;:&quot;Greg Biffle&quot;,&quot;first_name&quot;:&quot;Greg&quot;,&quot;last_name&quot;:&quot;Biffle&quot;,&quot;is_in_chase&quot;:false},&quot;vehicle_elapsed_time&quot;:326.7078,&quot;fastest_laps_run&quot;:0,&quot;laps_completed&quot;:5,&quot;laps_led&quot;:[], [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string cup_live_feed {
+            get {
+                return ResourceManager.GetString("cup_live_feed", resourceCulture);
             }
         }
     }

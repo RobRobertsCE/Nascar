@@ -39,8 +39,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientBase.cs" />
+    <Compile Include="FeedEventArgs.cs" />
+    <Compile Include="FeedManager.cs" />
+    <Compile Include="IFeedClient.cs" />
     <Compile Include="LiveFeedClient.cs" />
+    <Compile Include="LiveFeedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nascar.Models\Nascar.Models\Nascar.Models.csproj">
+      <Project>{a2f2fa60-f876-4e93-9890-4eb9673acae3}</Project>
+      <Name>Nascar.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
