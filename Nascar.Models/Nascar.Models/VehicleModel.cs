@@ -16,7 +16,7 @@ namespace Nascar.Models
       public double vehicle_elapsed_time { get; set; }
       public int fastest_laps_run { get; set; }
       public int laps_completed { get; set; }
-      public IList<int> laps_led { get; set; }
+      public IList<LapsLedModel> laps_led { get; set; }
       public double last_lap_speed { get; set; }
       public double last_lap_time { get; set; }
       public int passes_made { get; set; }
@@ -35,7 +35,7 @@ namespace Nascar.Models
       public VehicleModel()
       {
           driver = new DriverModel();
-          laps_led = new List<int>();
+          laps_led = new List<LapsLedModel>();
           pit_stops = new List<PitStopModel>();
       }
   }

@@ -82,6 +82,36 @@ namespace Nascar.WinApp
             }
         }
 
+        // truck tally final 
+        private void button6_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                resultJson = Properties.Resources.truck_live_feed_tally_final;
+                LiveFeedModel model = JsonConvert.DeserializeObject<LiveFeedModel>(resultJson);
+                ProcessFeedData(model);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+        // cup final tally 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                resultJson = Properties.Resources.tally_final_cup_live_feed;
+                LiveFeedModel model = JsonConvert.DeserializeObject<LiveFeedModel>(resultJson);
+                ProcessFeedData(model);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+        }
+
         void ProcessFeedData(LiveFeedModel model)
         {
             RecordFeedData(model);

@@ -36,6 +36,8 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.liveFeedDisplay1 = new Nascar.WinApp.LiveFeedDisplay();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -105,6 +107,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button6);
+            this.panel1.Controls.Add(this.button5);
             this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.listBox1);
@@ -116,6 +120,26 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1032, 136);
             this.panel1.TabIndex = 7;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(408, 16);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(136, 23);
+            this.button5.TabIndex = 6;
+            this.button5.Text = "cup final tally";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(408, 48);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(136, 23);
+            this.button6.TabIndex = 7;
+            this.button6.Text = "truck final tally";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // Form1
             // 
@@ -142,6 +166,8 @@
         private System.Windows.Forms.ListBox listBox1;
         private LiveFeedDisplay liveFeedDisplay1;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button5;
     }
 }
 

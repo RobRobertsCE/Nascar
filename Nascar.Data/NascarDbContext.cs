@@ -16,6 +16,7 @@ namespace Nascar.Data
         public virtual DbSet<Series> RaceSeries { get; set; }
         public virtual DbSet<Track> Tracks { get; set; }
         public virtual DbSet<LiveFeed> LiveFeeds { get; set; }
+        public virtual DbSet<LapsLed> LapsLedList { get; set; }
 
         public NascarDbContext()
             : base()

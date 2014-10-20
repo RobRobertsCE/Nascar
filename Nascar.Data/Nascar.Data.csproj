@@ -47,10 +47,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Driver.cs" />
+    <Compile Include="FlagState.cs" />
+    <Compile Include="LapsLed.cs" />
     <Compile Include="LiveFeed.cs" />
     <Compile Include="LiveFeedProcessor.cs" />
+    <Compile Include="Migrations\201410202157309_InitialCreate.cs" />
+    <Compile Include="Migrations\201410202157309_InitialCreate.Designer.cs">
+      <DependentUpon>201410202157309_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201410202238527_AddLapsLed.cs" />
+    <Compile Include="Migrations\201410202238527_AddLapsLed.Designer.cs">
+      <DependentUpon>201410202238527_AddLapsLed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201410202240509_RenameLapsLeds.cs" />
+    <Compile Include="Migrations\201410202240509_RenameLapsLeds.Designer.cs">
+      <DependentUpon>201410202240509_RenameLapsLeds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NascarDbContext.cs" />
     <Compile Include="PitStop.cs" />
+    <Compile Include="Points.cs" />
     <Compile Include="Race.cs" />
     <Compile Include="Series.cs" />
     <Compile Include="Session.cs" />
@@ -67,6 +83,17 @@
       <Project>{a2f2fa60-f876-4e93-9890-4eb9673acae3}</Project>
       <Name>Nascar.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201410202157309_InitialCreate.resx">
+      <DependentUpon>201410202157309_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410202238527_AddLapsLed.resx">
+      <DependentUpon>201410202238527_AddLapsLed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410202240509_RenameLapsLeds.resx">
+      <DependentUpon>201410202240509_RenameLapsLeds.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

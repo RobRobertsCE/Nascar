@@ -152,6 +152,24 @@
   <ItemGroup>
     <None Include="Resources\cup-live-feed.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cup_live_feed_tally_final.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tally_final_cup_live_feed.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\live_qualifying_tally.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\live_flag_cup_tally_final.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\live_points_cup_tally_final.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\weather_underground_cup_tally_final.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
