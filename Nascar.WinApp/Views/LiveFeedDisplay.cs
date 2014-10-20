@@ -41,7 +41,7 @@ namespace Nascar.WinApp
             eventDisplay.TrackName = model.track_name;
             eventDisplay.Run = model.run_name;
             eventDisplay.EventDate = model.created;
-            eventDisplay.Series = (Series)model.series_id;
+            eventDisplay.Series = (SeriesName)model.series_id;
             eventSet = true;
         }
     }

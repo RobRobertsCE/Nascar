@@ -45,15 +45,15 @@ namespace Nascar.WinApp
                 this.RunLabel.Text = value;
             }
         }
-        public Series Series
+        public SeriesName Series
         {
             get
             {
-                return (Series)Enum.Parse(typeof(Series), this.SeriesLabel.Text);
+                return (SeriesName)Enum.Parse(typeof(SeriesName), this.SeriesLabel.Text);
             }
             set
             {
-                this.SeriesLabel.Text = ((Series)value).ToString();
+                this.SeriesLabel.Text = ((SeriesName)value).ToString();
             }
         }
 

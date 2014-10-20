@@ -4,6 +4,7 @@ namespace Nascar.Models
 {
   public class VehicleModel
   {
+      public string vehicle_number { get; set; }
       public double average_restart_speed { get; set; }
       public double average_running_position { get; set; }
       public double average_speed { get; set; }
@@ -11,7 +12,6 @@ namespace Nascar.Models
       public double best_lap_speed { get; set; }
       public double best_lap_time { get; set; }
       public string vehicle_manufacturer { get; set; }
-      public string vehicle_number { get; set; }
       public DriverModel driver { get; set; }
       public double vehicle_elapsed_time { get; set; }
       public int fastest_laps_run { get; set; }

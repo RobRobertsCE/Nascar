@@ -5,7 +5,7 @@ namespace Nascar.Web
 {
     interface IFeedClient
     {
-        Series Series { get; }
+        SeriesName Series { get; }
 
         string GetData();
     }

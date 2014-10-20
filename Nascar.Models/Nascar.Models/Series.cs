@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Nascar.Models
 {
-    public enum Series
+    public enum SeriesName
     {
         Cup = 1,
         XFinity = 2,

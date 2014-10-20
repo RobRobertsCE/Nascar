@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Nascar.Web;
 using Nascar.Models;
+using Nascar.Data;
 using Newtonsoft.Json;
 
 namespace Nascar.WinApp
@@ -16,6 +17,8 @@ namespace Nascar.WinApp
     {
         string resultJson = string.Empty;
 
+        LiveFeedProcessor processor = null;
+
         public Form1()
         {
             InitializeComponent();
@@ -23,7 +26,7 @@ namespace Nascar.WinApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-            LiveFeedClient client = new LiveFeedClient(Series.Truck);
+            LiveFeedClient client = new LiveFeedClient(SeriesName.Truck);
 
             resultJson = client.GetData();
 
@@ -64,7 +67,7 @@ namespace Nascar.WinApp
                     manager.LiveFeedEvent -= manager_LiveFeedEvent;
                     manager = null;
                 }
-                manager = new FeedManager(Series.Truck);
+                manager = new FeedManager(SeriesName.Truck);
                 manager.LiveFeedStarted += manager_LiveFeedStarted;
                 manager.LiveFeedStopped += manager_LiveFeedStopped;
                 manager.LiveFeedEvent += manager_LiveFeedEvent;
@@ -84,10 +87,13 @@ namespace Nascar.WinApp
             RecordFeedData(model);
             DisplayFeedData(model);
         }
-
+        
         void RecordFeedData(LiveFeedModel model)
         {
-
+            if (null == processor)
+                processor = new LiveFeedProcessor();
+            
+            processor.ProcessLiveFeed(model);
         }
 
         void DisplayFeedData(LiveFeedModel model)

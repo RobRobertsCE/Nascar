@@ -168,7 +168,7 @@
             this.eventDisplay.Location = new System.Drawing.Point(8, 8);
             this.eventDisplay.Name = "eventDisplay";
             this.eventDisplay.Run = "<run>";
-            this.eventDisplay.Series = Nascar.Models.Series.Cup;
+            this.eventDisplay.Series = Nascar.Models.SeriesName.Cup;
             this.eventDisplay.Size = new System.Drawing.Size(447, 55);
             this.eventDisplay.TabIndex = 0;
             this.eventDisplay.TrackName = "<event>";
@@ -180,7 +180,7 @@
             this.eventDisplay1.Location = new System.Drawing.Point(8, 8);
             this.eventDisplay1.Name = "eventDisplay1";
             this.eventDisplay1.Run = "<run>";
-            this.eventDisplay1.Series = Nascar.Models.Series.Cup;
+            this.eventDisplay1.Series = Nascar.Models.SeriesName.Cup;
             this.eventDisplay1.Size = new System.Drawing.Size(447, 55);
             this.eventDisplay1.TabIndex = 0;
             this.eventDisplay1.TrackName = "<event>";

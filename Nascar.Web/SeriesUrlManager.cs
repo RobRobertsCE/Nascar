@@ -12,23 +12,23 @@ namespace Nascar.Web
         const string XFinityFeedUrl = @"http://www.nascar.com/live/feeds/series_2/4315/live_feed.json{0}";
         const string TruckFeedUrl = @"http://www.nascar.com/live/feeds/series_3/4371/live_feed.json{0}";
 
-        public static string GetSeriesFeedUrl(Series series)
+        public static string GetSeriesFeedUrl(SeriesName series)
         {
             string feedUrl = string.Empty;
 
             switch (series)
             {
-                case Series.Cup:
+                case SeriesName.Cup:
                     {
                         feedUrl = CupFeedUrl;
                         break;
                     }
-                case Series.XFinity:
+                case SeriesName.XFinity:
                     {
                         feedUrl = XFinityFeedUrl;
                         break;
                     }
-                case Series.Truck:
+                case SeriesName.Truck:
                     {
                         feedUrl = TruckFeedUrl;
                         break;
@@ -36,7 +36,6 @@ namespace Nascar.Web
                 default:
                     {
                         throw new ArgumentException("series");
-                        break;
                     }
             }
 
