@@ -70,6 +70,15 @@ namespace Nascar.WinApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {&quot;lap_number&quot;:334,&quot;elapsed_time&quot;:12596.0,&quot;flag_state&quot;:9,&quot;race_id&quot;:4314,&quot;laps_in_race&quot;:334,&quot;laps_to_go&quot;:0,&quot;vehicles&quot;:[{&quot;average_restart_speed&quot;:176.205,&quot;average_running_position&quot;:31.458,&quot;average_speed&quot;:159.718,&quot;best_lap&quot;:5,&quot;best_lap_speed&quot;:187.963,&quot;best_lap_time&quot;:28.729,&quot;vehicle_manufacturer&quot;:&quot;Chv&quot;,&quot;vehicle_number&quot;:&quot;27&quot;,&quot;driver&quot;:{&quot;driver_id&quot;:2225,&quot;full_name&quot;:&quot;Paul Menard&quot;,&quot;first_name&quot;:&quot;Paul&quot;,&quot;last_name&quot;:&quot;Menard&quot;,&quot;is_in_chase&quot;:false},&quot;vehicle_elapsed_time&quot;:4573.283,&quot;fastest_laps_run&quot;:6,&quot;laps_completed&quot;:134,&quot;la [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string live_feed_char_cup_final {
+            get {
+                return ResourceManager.GetString("live_feed_char_cup_final", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [{&quot;lap_number&quot;:0,&quot;flag_state&quot;:8,&quot;elapsed_time&quot;:0.0,&quot;comment&quot;:&quot;&quot;,&quot;beneficiary&quot;:&quot;&quot;,&quot;time_of_day&quot;:0.0},{&quot;lap_number&quot;:0,&quot;flag_state&quot;:8,&quot;elapsed_time&quot;:0.0,&quot;comment&quot;:&quot;&quot;,&quot;beneficiary&quot;:&quot;&quot;,&quot;time_of_day&quot;:0.0},{&quot;lap_number&quot;:0,&quot;flag_state&quot;:1,&quot;elapsed_time&quot;:0.0,&quot;comment&quot;:&quot;&quot;,&quot;beneficiary&quot;:&quot;&quot;,&quot;time_of_day&quot;:0.0},{&quot;lap_number&quot;:59,&quot;flag_state&quot;:2,&quot;elapsed_time&quot;:2995.615,&quot;comment&quot;:&quot;#22, 1, 2, 4, 95, 18 Accident Frontstretch&quot;,&quot;beneficiary&quot;:&quot;98&quot;,&quot;time_of_day&quot;:0.0},{&quot;lap_number&quot;:64,&quot;flag_state&quot;:1,&quot;elapsed_time&quot;:3596.187,&quot;comment&quot; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string live_flag_cup_tally_final {

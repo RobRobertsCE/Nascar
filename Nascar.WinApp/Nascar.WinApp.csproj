@@ -170,6 +170,9 @@
   <ItemGroup>
     <None Include="Resources\weather_underground_cup_tally_final.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\live_feed_char_cup_final.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
