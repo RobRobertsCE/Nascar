@@ -11,7 +11,7 @@ namespace Nascar.Data
     [Table("Race")]
     public class Race
     {
-        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None), Key()] 
+        [DatabaseGenerated(DatabaseGeneratedOption.None), Key()] 
         public int race_id { get; set; }
         public string race_name { get; set; }
 

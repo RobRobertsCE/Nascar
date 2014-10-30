@@ -50,6 +50,7 @@
     <Compile Include="FlagState.cs" />
     <Compile Include="LapsLed.cs" />
     <Compile Include="LiveFeed.cs" />
+    <Compile Include="LiveFeedHarvester.cs" />
     <Compile Include="LiveFeedProcessor.cs" />
     <Compile Include="Migrations\201410202157309_InitialCreate.cs" />
     <Compile Include="Migrations\201410202157309_InitialCreate.Designer.cs">
@@ -68,6 +69,7 @@
     <Compile Include="PitStop.cs" />
     <Compile Include="Points.cs" />
     <Compile Include="Race.cs" />
+    <Compile Include="RawFeed.cs" />
     <Compile Include="Series.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="Track.cs" />

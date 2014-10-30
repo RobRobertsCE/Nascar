@@ -6,6 +6,8 @@ using Nascar.Models;
 
 namespace Nascar.Data
 {
+    //TODO: Remember to add left outer join to LapsLed table in SQL.
+    // TODO: Make race, series, and session-specific?
     public class LiveFeedProcessor
     {
         private NascarDbContext _context = null;
@@ -50,14 +52,18 @@ namespace Nascar.Data
             {
                 UpdateTrackSeriesRaceAndSession(model);
             }
-               
-            LiveFeed feedData = new LiveFeed(model);
-            feedData.Session = this.CurrentSession;
+            else
+            {
+                if (model.elapsed_time = LastLiveFeed.elapsed_time && model.time_of_day = LastLiveFeed.time_of_day)
+                {
+                    // Same as last live feed.. nothing to record.
+                    return;
+                }
+            }
 
-            Context.LiveFeeds.Add(feedData);
-
-            Context.SaveChanges();
-
+            // Add the new LIveFeed model.
+            LiveFeed feedData = GetNewLiveFeed(model);
+           
             // Add the vehicles 
             foreach (VehicleModel vehicleModel in model.vehicles)
             {
@@ -74,7 +80,7 @@ namespace Nascar.Data
             this.CurrentSeries = GetSeries(model);
             this.CurrentTrack = GetTrack(model);
             this.CurrentRace = GetRace(model);
-            this.CurrentSession = GetSession(model); 
+            this.CurrentSession = GetSession(model);
         }
 
         Series GetSeries(LiveFeedModel model)
@@ -88,7 +94,7 @@ namespace Nascar.Data
                 Context.RaceSeries.Add(series);
 
                 Context.SaveChanges();
-            }               
+            }
 
             return series;
         }
@@ -106,7 +112,7 @@ namespace Nascar.Data
                 Context.Races.Add(race);
 
                 Context.SaveChanges();
-            }            
+            }
 
             return race;
         }
@@ -123,7 +129,7 @@ namespace Nascar.Data
 
                 Context.SaveChanges();
             }
-              
+
             return track;
         }
 
@@ -140,11 +146,32 @@ namespace Nascar.Data
                 session.laps_in_session = model.laps_in_race;
 
                 Context.Sessions.Add(session);
-               
+
                 Context.SaveChanges();
             }
-              
+
             return session;
         }
+
+        LiveFeed GetNewLiveFeed(LiveFeedModel model)
+        {
+            LiveFeed feedData = new LiveFeed(model) { Session = this.CurrentSession };            
+            Context.LiveFeeds.Add(feedData);
+            Context.SaveChanges();
+
+            return feedData;
+        }
+        // TODO: Make unique process for read/write, separate assemblies?
+        // TODO: Add indicies
+        // TODO: add series/race/track ids to vehicle?
+        Vehicle GetVehicle(VehicleModel model)
+        {
+            return feedData.vehicles
+                .Any(v => 
+                    v.vehicle_number == model.vehicle_number &&
+                    v.driver.driver_id == model.driver.driver_id
+                    ).FirstOrDefault();
+        }
+
     }
 }

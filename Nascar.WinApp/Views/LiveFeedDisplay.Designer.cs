@@ -30,14 +30,14 @@
         {
             Nascar.Models.VehicleModel vehicleModel1 = new Nascar.Models.VehicleModel();
             this.vehiclePanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.vehicleView1 = new Nascar.WinApp.Views.VehicleView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.vehicleView1 = new Nascar.WinApp.Views.VehicleView();
             this.eventDisplay = new Nascar.WinApp.EventDisplay();
             this.eventDisplay1 = new Nascar.WinApp.EventDisplay();
             this.vehiclePanel.SuspendLayout();
@@ -54,75 +54,6 @@
             this.vehiclePanel.Name = "vehiclePanel";
             this.vehiclePanel.Size = new System.Drawing.Size(1070, 371);
             this.vehiclePanel.TabIndex = 1;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.eventDisplay);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1070, 88);
-            this.panel1.TabIndex = 2;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 72);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Driver";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(472, 72);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Lap #";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(368, 72);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(81, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Best Lap (Time)";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(264, 72);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Best Lap (MPH)";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(512, 72);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(44, 13);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "Position";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(216, 72);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(33, 13);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "Car #";
             // 
             // vehicleView1
             // 
@@ -161,6 +92,75 @@
             vehicleModel1.vehicle_number = null;
             this.vehicleView1.Vehicle = vehicleModel1;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.eventDisplay);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1070, 88);
+            this.panel1.TabIndex = 2;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(216, 72);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(33, 13);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "Car #";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(512, 72);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(44, 13);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "Position";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 72);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Driver";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(472, 72);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(35, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Lap #";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(368, 72);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(81, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Best Lap (Time)";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(264, 72);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(82, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Best Lap (MPH)";
+            // 
             // eventDisplay
             // 
             this.eventDisplay.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -169,7 +169,7 @@
             this.eventDisplay.Name = "eventDisplay";
             this.eventDisplay.Run = "<run>";
             this.eventDisplay.Series = Nascar.Models.SeriesName.Cup;
-            this.eventDisplay.Size = new System.Drawing.Size(447, 55);
+            this.eventDisplay.Size = new System.Drawing.Size(904, 55);
             this.eventDisplay.TabIndex = 0;
             this.eventDisplay.TrackName = "<event>";
             // 

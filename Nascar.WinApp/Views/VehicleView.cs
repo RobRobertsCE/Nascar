@@ -33,7 +33,7 @@ namespace Nascar.WinApp.Views
             this.driverView1.Driver = Vehicle.driver;
             this.CarNumberLabel.Text = Vehicle.vehicle_number;
             this.PositionLabel.Text = Vehicle.running_position.ToString();
-            this.BestLapTimeTextBox.Text = Vehicle.best_lap_speed.ToString();
+            this.BestLapTimeTextBox.Text = Vehicle.best_lap_time.ToString();
             this.BestLapOnTextBox.Text = Vehicle.best_lap.ToString();
             this.BestLapSpeedTextBox.Text = Vehicle.best_lap_speed.ToString();
 

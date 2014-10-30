@@ -97,7 +97,7 @@
             this.DateLabel.AutoSize = true;
             this.DateLabel.Location = new System.Drawing.Point(264, 32);
             this.DateLabel.Name = "DateLabel";
-            this.DateLabel.Size = new System.Drawing.Size(0, 13);
+            this.DateLabel.Size = new System.Drawing.Size(66, 13);
             this.DateLabel.TabIndex = 9;
             this.DateLabel.Text = "Jan. 1, 2014";
             // 
@@ -123,7 +123,7 @@
             this.Controls.Add(this.SeriesLabel);
             this.Controls.Add(this.label1);
             this.Name = "EventDisplay";
-            this.Size = new System.Drawing.Size(447, 55);
+            this.Size = new System.Drawing.Size(816, 55);
             this.ResumeLayout(false);
             this.PerformLayout();
 

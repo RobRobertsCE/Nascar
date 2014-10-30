@@ -16,8 +16,8 @@ namespace Nascar.WinApp
     public partial class Form1 : Form
     {
         string resultJson = string.Empty;
-
         LiveFeedProcessor processor = null;
+        FeedManager manager = null;
 
         public Form1()
         {
@@ -53,7 +53,6 @@ namespace Nascar.WinApp
                 Console.WriteLine(ex);
             }
         }
-        FeedManager manager = null;
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -67,12 +66,15 @@ namespace Nascar.WinApp
                     manager.LiveFeedEvent -= manager_LiveFeedEvent;
                     manager = null;
                 }
-                manager = new FeedManager(SeriesName.Truck);
+                SeriesName seriesName = GetSelectedSeries();
+                manager = new FeedManager(seriesName);
                 manager.LiveFeedStarted += manager_LiveFeedStarted;
                 manager.LiveFeedStopped += manager_LiveFeedStopped;
                 manager.LiveFeedEvent += manager_LiveFeedEvent;
 
                 manager.Start();
+
+                grpSeries.Enabled = false;
 
             }
             catch (Exception ex)
@@ -80,6 +82,21 @@ namespace Nascar.WinApp
                 MessageBox.Show(ex.Message);
                 Console.WriteLine(ex);
             }
+        }
+
+        SeriesName GetSelectedSeries()
+        {
+            if (rbCup.Checked) return SeriesName.Cup;
+            if (rbXfinity.Checked) return SeriesName.XFinity;
+            return SeriesName.Truck;
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (null == manager) return;
+            manager.Stop();
+            grpSeries.Enabled = true;
         }
 
         // truck tally final 
@@ -117,12 +134,12 @@ namespace Nascar.WinApp
             RecordFeedData(model);
             DisplayFeedData(model);
         }
-        
+
         void RecordFeedData(LiveFeedModel model)
         {
             if (null == processor)
                 processor = new LiveFeedProcessor();
-            
+
             processor.ProcessLiveFeed(model);
         }
 
@@ -135,11 +152,11 @@ namespace Nascar.WinApp
             listBox1.SuspendLayout();
             foreach (VehicleModel vehicle in model.vehicles.OrderBy((v) => v.running_position))
             {
-                listBox1.Items.Add(vehicle.driver.full_name + ": " + vehicle.last_lap_speed + " MPH");                
-            }     
-   
+                listBox1.Items.Add(vehicle.driver.full_name + ": " + vehicle.last_lap_speed + " MPH");
+            }
+
         }
-        
+
         void manager_LiveFeedEvent(object sender, LiveFeedEventArgs e)
         {
             try
@@ -148,7 +165,7 @@ namespace Nascar.WinApp
 
                 this.Invoke((MethodInvoker)delegate
                 {
-                    ProcessFeedData(e.LiveFeed);                   
+                    ProcessFeedData(e.LiveFeed);
                 });
             }
             catch (Exception ex)
@@ -171,11 +188,6 @@ namespace Nascar.WinApp
         void manager_LiveFeedStarted(object sender, EventArgs e)
         {
             Console.WriteLine("FeedManager Started");
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            manager.Stop();
         }
 
     }
