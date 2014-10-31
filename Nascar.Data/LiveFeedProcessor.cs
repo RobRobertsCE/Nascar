@@ -54,7 +54,7 @@ namespace Nascar.Data
             }
             else
             {
-                if (model.elapsed_time = LastLiveFeed.elapsed_time && model.time_of_day = LastLiveFeed.time_of_day)
+                if (model.elapsed_time == LastLiveFeed.elapsed_time && model.time_of_day == LastLiveFeed.time_of_day)
                 {
                     // Same as last live feed.. nothing to record.
                     return;
@@ -81,6 +81,29 @@ namespace Nascar.Data
             this.CurrentTrack = GetTrack(model);
             this.CurrentRace = GetRace(model);
             this.CurrentSession = GetSession(model);
+        }
+
+        // TODO: Make unique process for read/write, separate assemblies?
+        // TODO: Add indicies
+        // TODO: add series/race/track ids to vehicle?
+        Vehicle GetVehicle(VehicleModel model)
+        {
+            Vehicle vehicle = Context.Vehicles
+                .Where(v =>
+                    v.vehicle_number == model.vehicle_number &&
+                    v.Driver.driver_id == model.driver.driver_id
+                    ).FirstOrDefault();
+
+            if (null == vehicle)
+            {
+                vehicle = new Vehicle(model);
+
+                Context.Vehicles.Add(vehicle);
+
+                Context.SaveChanges();
+            }
+
+            return vehicle;
         }
 
         Series GetSeries(LiveFeedModel model)
@@ -161,17 +184,5 @@ namespace Nascar.Data
 
             return feedData;
         }
-        // TODO: Make unique process for read/write, separate assemblies?
-        // TODO: Add indicies
-        // TODO: add series/race/track ids to vehicle?
-        Vehicle GetVehicle(VehicleModel model)
-        {
-            return feedData.vehicles
-                .Any(v => 
-                    v.vehicle_number == model.vehicle_number &&
-                    v.driver.driver_id == model.driver.driver_id
-                    ).FirstOrDefault();
-        }
-
     }
 }

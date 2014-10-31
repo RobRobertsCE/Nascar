@@ -23,7 +23,8 @@ namespace Nascar.Data
         
         public LiveFeedHarvester()
         {
-            LastRawFeed = new RawFeed();
+            LastRawFeed = String.Empty;
+            _context = new NascarDbContext();
         }
 
         public void ProcessLiveFeed(string data)

@@ -64,6 +64,10 @@
     <Compile Include="Migrations\201410202240509_RenameLapsLeds.Designer.cs">
       <DependentUpon>201410202240509_RenameLapsLeds.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201410302340187_AddRawFeed.cs" />
+    <Compile Include="Migrations\201410302340187_AddRawFeed.Designer.cs">
+      <DependentUpon>201410302340187_AddRawFeed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NascarDbContext.cs" />
     <Compile Include="PitStop.cs" />
@@ -95,6 +99,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201410202240509_RenameLapsLeds.resx">
       <DependentUpon>201410202240509_RenameLapsLeds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410302340187_AddRawFeed.resx">
+      <DependentUpon>201410302340187_AddRawFeed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

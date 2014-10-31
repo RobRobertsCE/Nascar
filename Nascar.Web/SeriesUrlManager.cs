@@ -9,11 +9,14 @@ namespace Nascar.Web
     class SeriesUrlManager
     {
         //const string CupFeedUrl = @"http://www.nascar.com/live/feeds/series_1/4315/live_feed.json{0}";
-        const string CupFeedUrl = @"http://www.nascar.com/live/feeds/series_1/4316/live_feed.json{0}";
-        const string XFinityFeedUrl = @"http://www.nascar.com/live/feeds/series_2/4315/live_feed.json{0}";
-       // const string TruckFeedUrl = @"http://www.nascar.com/live/feeds/series_3/4371/live_feed.json{0}";
+        //// const string TruckFeedUrl = @"http://www.nascar.com/live/feeds/series_3/4371/live_feed.json{0}";
+
+        const string CupFeedUrl = @"http://www.nascar.com/live/feeds/series_1/4317/live_feed.json{0}";
+        const string XFinityFeedUrl = @"http://www.nascar.com/live/feeds/series_2/4325/live_feed.json{0}";
         const string TruckFeedUrl = @"http://www.nascar.com/live/feeds/series_3/4372/live_feed.json{0}";
 
+        const string SeriesFeedUrlTemplate = @"http://www.nascar.com/live/feeds/series_{0}/{1}/live_feed.json{0}";
+        
         public static string GetSeriesFeedUrl(SeriesName series)
         {
             string feedUrl = string.Empty;
@@ -41,6 +44,36 @@ namespace Nascar.Web
                     }
             }
 
+            return feedUrl;
+        }
+
+        public static string GetSeriesFeedUrl(SeriesName series, int raceId)
+        {
+            string feedUrl = string.Empty;
+            int seriesId;
+            switch (series)
+            {
+                case SeriesName.Cup:
+                    {
+                        seriesId = 1;
+                        break;
+                    }
+                case SeriesName.XFinity:
+                    {
+                        seriesId = 2;
+                        break;
+                    }
+                case SeriesName.Truck:
+                    {
+                        seriesId = 3;
+                        break;
+                    }
+                default:
+                    {
+                        throw new ArgumentException("series");
+                    }
+            }
+            feedUrl = String.Format(SeriesFeedUrlTemplate, seriesId, raceId) + "{0}";
             return feedUrl;
         }
     }
