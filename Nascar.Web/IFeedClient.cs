@@ -3,7 +3,7 @@ using Nascar.Models;
 
 namespace Nascar.Web
 {
-    interface IFeedClient
+    interface IFeedClient : IDisposable 
     {
         SeriesName Series { get; }
 
