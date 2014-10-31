@@ -15,7 +15,7 @@ namespace Nascar.Web
         const string XFinityFeedUrl = @"http://www.nascar.com/live/feeds/series_2/4325/live_feed.json{0}";
         const string TruckFeedUrl = @"http://www.nascar.com/live/feeds/series_3/4372/live_feed.json{0}";
 
-        const string SeriesFeedUrlTemplate = @"http://www.nascar.com/live/feeds/series_{0}/{1}/live_feed.json{0}";
+        const string SeriesFeedUrlTemplate = @"http://www.nascar.com/live/feeds/series_{0}/{1}/live_feed.json";
         
         public static string GetSeriesFeedUrl(SeriesName series)
         {
