@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Nascar.Data;
+using Nascar.Models;
+using Newtonsoft.Json;
 
 namespace Nascar.MockApiServer
 {
@@ -22,15 +24,19 @@ namespace Nascar.MockApiServer
             Listening,
             Busy,
             Error
-        } 
+        }
         #endregion
 
         #region fields
-        private int idx = 0;
+        private int rawFeedIdx = 0;
+        private IList<RawFeed> feeds = null;
+        private FormState currentFormState = FormState.None;
+        LiveFeedProcessor processor = null;
         #endregion
 
-        private Nascar.Data.NascarDbContext _context = null;
-        protected internal virtual Nascar.Data.NascarDbContext Context
+        #region properties
+        private NascarDbContext _context = null;
+        protected internal virtual NascarDbContext Context
         {
             get
             {
@@ -40,6 +46,7 @@ namespace Nascar.MockApiServer
                 return _context;
             }
         }
+        #endregion
 
         #region ctor/init
         public MockServer()
@@ -62,8 +69,8 @@ namespace Nascar.MockApiServer
             {
                 Console.WriteLine(ex.ToString());
             }
-           
-        } 
+
+        }
         #endregion
 
         #region form state
@@ -121,8 +128,11 @@ namespace Nascar.MockApiServer
 
             picStatusIndicator.BackColor = statusIndicatorColor;
 
-            DisplayMessage(String.Format("New State: [{0}]", newFormState.ToString()));
-        } 
+            DisplayMessage(String.Format("State Change: [{0}] to [{1}]", currentFormState.ToString(), newFormState.ToString()));
+
+            currentFormState = newFormState;
+
+        }
         #endregion
 
         #region display
@@ -131,6 +141,10 @@ namespace Nascar.MockApiServer
             txtDisplay.AppendText(message + Environment.NewLine);
             txtDisplay.SelectionStart = (txtDisplay.Text.Length - 1);
             txtDisplay.ScrollToCaret();
+        }
+        void DisplayData(string feedData)
+        {
+            txtData.Text = feedData;
         }
         #endregion
 
@@ -141,8 +155,10 @@ namespace Nascar.MockApiServer
         }
         void StartServer()
         {
+            processor = new LiveFeedProcessor();
+
             SetFormState(FormState.Listening);
-        } 
+        }
         #endregion
 
         #region stop
@@ -153,14 +169,87 @@ namespace Nascar.MockApiServer
         void StopServer()
         {
             SetFormState(FormState.Ready);
-        } 
-        #endregion      
+        }
+        #endregion
 
         #region data
         void LoadData()
         {
-            
+            using (NascarDbContext ctx = new NascarDbContext())
+            {
+                feeds = ctx.RawFeeds.OrderBy(c => c.RawFeedKey).ToList();
+            }
         }
+        RawFeed GetNextFeed()
+        {
+            RawFeed data = null;
+            
+            DisplayMessage(String.Format("Getting Feed #{0}", rawFeedIdx.ToString()));
+
+            if (rawFeedIdx < feeds.Count - 1)
+            {
+                data = feeds[rawFeedIdx];
+                rawFeedIdx++;
+            }
+            else
+            {
+                throw new ArgumentException("rawFeedIdx");
+            }
+
+            return data;
+        }
+        #endregion
+
+        #region live feed
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            LoadNextFeed();
+        }
+        void LoadNextFeed()
+        {
+            try
+            {
+                RawFeed feed = GetNextFeed();
+
+                string feedData = feed.RawFeedData;
+
+                DisplayData(feedData);
+
+                LiveFeedModel model = GetModel(feedData);
+
+                ProcessFeedModel(model);
+            }
+            catch (ArgumentException ex)
+            {
+                if (ex.ParamName == "rawFeedIdx")
+                {
+                    DisplayMessage("End of Feeds.");
+                }
+                else
+                {
+                    DisplayMessage(ex.Message);
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                DisplayMessage(ex.Message);
+                Console.WriteLine(ex.ToString());
+            }
+        }
+        LiveFeedModel GetModel(string feedData)
+        {
+            return JsonConvert.DeserializeObject<LiveFeedModel>(feedData);
+        }
+        #endregion
+
+        #region live feed processor
+
+        void ProcessFeedModel(LiveFeedModel model)
+        {
+            processor.ProcessLiveFeed(model);
+        }
+
         #endregion
     }
 }
