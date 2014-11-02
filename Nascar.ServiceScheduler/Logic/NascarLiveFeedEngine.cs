@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Nascar.Data;
 using Nascar.Models;
-using Nascar.ServiceScheduler.Data;
+using Nascar.Data.Schedule;
 using Nascar.Web;
 
 namespace Nascar.ServiceScheduler.Logic
@@ -80,7 +80,7 @@ namespace Nascar.ServiceScheduler.Logic
 
         void LoadStartSchedule()
         {
-            using (var context = new Data.ServiceSchedulerDbContext())
+            using (var context = new ServiceSchedulerDbContext())
             {
                 DateTime rightBookingNow = DateTime.Now.AddHours(-1);
                 DateTime rightBookingThen = rightBookingNow.AddMinutes(1);
@@ -99,7 +99,7 @@ namespace Nascar.ServiceScheduler.Logic
         }
         void LoadStopSchedule()
         {
-            using (var context = new Data.ServiceSchedulerDbContext())
+            using (var context = new ServiceSchedulerDbContext())
             {
                 DateTime rightBookingNow = DateTime.Now.AddHours(-1);
                 DateTime rightBookingThen = rightBookingNow.AddMinutes(1);
@@ -122,7 +122,7 @@ namespace Nascar.ServiceScheduler.Logic
         }
         void UpdateEventStatus(int id, string status)
         {
-            using (var context = new Data.ServiceSchedulerDbContext())
+            using (var context = new ServiceSchedulerDbContext())
             {
                 var eventInstance = context.ScheduledEvents.Where(s => s.scheduled_event_id == id).FirstOrDefault();
 

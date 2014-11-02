@@ -6,7 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Nascar.ServiceScheduler.Data;
+using Nascar.Data.Schedule;
 
 namespace Nascar.ServiceScheduler.Views
 {

@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Nascar.ServiceScheduler.Data;
+using Nascar.Data.Schedule;
 
 namespace Nascar.ServiceScheduler
 {
@@ -52,7 +52,7 @@ namespace Nascar.ServiceScheduler
         }
         void LoadTrack()
         {
-            using (var context = new Data.ServiceSchedulerDbContext())
+            using (var context = new ServiceSchedulerDbContext())
             {
                 _tracks = context.ScheduledTracks.ToArray();
             }
@@ -107,7 +107,7 @@ namespace Nascar.ServiceScheduler
         {
             if (null == track) return;
 
-            using (var context = new Data.ServiceSchedulerDbContext())
+            using (var context = new ServiceSchedulerDbContext())
             {
                 context.ScheduledTracks.Add(track);
 
@@ -123,7 +123,7 @@ namespace Nascar.ServiceScheduler
         void DeleteTrack(ScheduledTrack track)
         {
             if (null == track) return;
-            using (var context = new Data.ServiceSchedulerDbContext())
+            using (var context = new ServiceSchedulerDbContext())
             {
                 var selected = context.ScheduledTracks.Where(e => e.track_id == track.track_id).FirstOrDefault();
                 if (null == selected) return;

@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Nascar.ServiceScheduler.Data;
+using Nascar.Data.Schedule;
 
 namespace Nascar.ServiceScheduler
 {
@@ -223,7 +223,7 @@ namespace Nascar.ServiceScheduler
         {
             if (null == item) return;
 
-            using (var context = new Data.ServiceSchedulerDbContext())
+            using (var context = new ServiceSchedulerDbContext())
             {
                 if (isNew)
                 {
@@ -243,7 +243,7 @@ namespace Nascar.ServiceScheduler
         void Delete(ScheduledRaceSession item)
         {
             if (null == item) return;
-            using (var context = new Data.ServiceSchedulerDbContext())
+            using (var context = new ServiceSchedulerDbContext())
             {
                 var selected = context.ScheduledRaceSessions.Where(e => e.race_session_id == item.race_session_id).FirstOrDefault();
                 if (null == selected) return;

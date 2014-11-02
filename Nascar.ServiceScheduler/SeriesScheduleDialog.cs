@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Nascar.ServiceScheduler.Data;
+using Nascar.Data.Schedule;
 
 namespace Nascar.ServiceScheduler
 {
@@ -55,7 +55,7 @@ namespace Nascar.ServiceScheduler
         }
         void LoadData()
         {
-            using (var context = new Data.ServiceSchedulerDbContext())
+            using (var context = new ServiceSchedulerDbContext())
             {
                 Expression<Func<ScheduledRace, bool>> predicate = r => (
                     chkCup.Checked && ((r.series_id == 1) == chkCup.Checked))
