@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nascar.WinApp", "..\Nascar.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nascar.Data", "..\Nascar.Data\Nascar.Data.csproj", "{86338A15-33E0-4111-ACAA-1A182A1441B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nascar.ServiceScheduler", "..\Nascar.ServiceScheduler\Nascar.ServiceScheduler.csproj", "{F732C952-C52A-47D8-B510-E44D52E576FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{86338A15-33E0-4111-ACAA-1A182A1441B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86338A15-33E0-4111-ACAA-1A182A1441B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86338A15-33E0-4111-ACAA-1A182A1441B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F732C952-C52A-47D8-B510-E44D52E576FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F732C952-C52A-47D8-B510-E44D52E576FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F732C952-C52A-47D8-B510-E44D52E576FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F732C952-C52A-47D8-B510-E44D52E576FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

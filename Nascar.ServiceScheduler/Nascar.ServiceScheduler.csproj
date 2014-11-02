@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F732C952-C52A-47D8-B510-E44D52E576FB}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Nascar.ServiceScheduler</RootNamespace>
+    <AssemblyName>Nascar.ServiceScheduler</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Nascar.Models\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\Nascar.Models\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data\ScheduledEvent.cs" />
+    <Compile Include="Data\ScheduledRace.cs" />
+    <Compile Include="Data\ScheduledRaceSession.cs" />
+    <Compile Include="Data\ScheduledSeries.cs" />
+    <Compile Include="Data\ScheduledSession.cs" />
+    <Compile Include="Data\ScheduledTrack.cs" />
+    <Compile Include="Data\ServiceSchedulerDbContext.cs" />
+    <Compile Include="Logic\INascarLiveFeedEngine.cs" />
+    <Compile Include="Logic\NascarLiveFeedEngine.cs" />
+    <Compile Include="Migrations\201410312137296_InitialCreate.cs" />
+    <Compile Include="Migrations\201410312137296_InitialCreate.Designer.cs">
+      <DependentUpon>201410312137296_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411011407201_addTables.cs" />
+    <Compile Include="Migrations\201411011407201_addTables.Designer.cs">
+      <DependentUpon>201411011407201_addTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411011435388_addTracksDialogs.cs" />
+    <Compile Include="Migrations\201411011435388_addTracksDialogs.Designer.cs">
+      <DependentUpon>201411011435388_addTracksDialogs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411011513178_addedRaceDate.cs" />
+    <Compile Include="Migrations\201411011513178_addedRaceDate.Designer.cs">
+      <DependentUpon>201411011513178_addedRaceDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411011627425_addedRaceSessions.cs" />
+    <Compile Include="Migrations\201411011627425_addedRaceSessions.Designer.cs">
+      <DependentUpon>201411011627425_addedRaceSessions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411011653046_addedRaceSessionIdentityKey.cs" />
+    <Compile Include="Migrations\201411011653046_addedRaceSessionIdentityKey.Designer.cs">
+      <DependentUpon>201411011653046_addedRaceSessionIdentityKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="RaceSessionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RaceSessionDialog.Designer.cs">
+      <DependentUpon>RaceSessionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SeriesRaceDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SeriesRaceDialog.Designer.cs">
+      <DependentUpon>SeriesRaceDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SeriesScheduleDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SeriesScheduleDialog.Designer.cs">
+      <DependentUpon>SeriesScheduleDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScheduledEventDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScheduledEventDialog.Designer.cs">
+      <DependentUpon>ScheduledEventDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScheduleDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScheduleDialog.Designer.cs">
+      <DependentUpon>ScheduleDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SeriesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SeriesDialog.Designer.cs">
+      <DependentUpon>SeriesDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrackDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrackDialog.Designer.cs">
+      <DependentUpon>TrackDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RaceSeriesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RaceSeriesDialog.Designer.cs">
+      <DependentUpon>RaceSeriesDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RaceSessionsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RaceSessionsDialog.Designer.cs">
+      <DependentUpon>RaceSessionsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TracksDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TracksDialog.Designer.cs">
+      <DependentUpon>TracksDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ScheduledEventView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\ScheduledEventView.Designer.cs">
+      <DependentUpon>ScheduledEventView.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Migrations\201410312137296_InitialCreate.resx">
+      <DependentUpon>201410312137296_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411011407201_addTables.resx">
+      <DependentUpon>201411011407201_addTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411011435388_addTracksDialogs.resx">
+      <DependentUpon>201411011435388_addTracksDialogs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411011513178_addedRaceDate.resx">
+      <DependentUpon>201411011513178_addedRaceDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411011627425_addedRaceSessions.resx">
+      <DependentUpon>201411011627425_addedRaceSessions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411011653046_addedRaceSessionIdentityKey.resx">
+      <DependentUpon>201411011653046_addedRaceSessionIdentityKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RaceSessionDialog.resx">
+      <DependentUpon>RaceSessionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SeriesRaceDialog.resx">
+      <DependentUpon>SeriesRaceDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SeriesScheduleDialog.resx">
+      <DependentUpon>SeriesScheduleDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScheduledEventDialog.resx">
+      <DependentUpon>ScheduledEventDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ScheduleDialog.resx">
+      <DependentUpon>ScheduleDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SeriesDialog.resx">
+      <DependentUpon>SeriesDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrackDialog.resx">
+      <DependentUpon>TrackDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RaceSeriesDialog.resx">
+      <DependentUpon>RaceSeriesDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RaceSessionsDialog.resx">
+      <DependentUpon>RaceSessionsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TracksDialog.resx">
+      <DependentUpon>TracksDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ScheduledEventView.resx">
+      <DependentUpon>ScheduledEventView.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nascar.Data\Nascar.Data.csproj">
+      <Project>{86338a15-33e0-4111-acaa-1a182a1441b7}</Project>
+      <Name>Nascar.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nascar.Models\Nascar.Models\Nascar.Models.csproj">
+      <Project>{a2f2fa60-f876-4e93-9890-4eb9673acae3}</Project>
+      <Name>Nascar.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nascar.Web\Nascar.Web.csproj">
+      <Project>{55b57058-d783-483a-b3d4-881d4a47c403}</Project>
+      <Name>Nascar.Web</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
