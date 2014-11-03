@@ -54,7 +54,7 @@ namespace Nascar.Data
         {
             pit_stops = new List<PitStop>();
             laps_led = new List<LapsLed>();
-            Driver = new Driver();
+            //Driver = new Driver();
         }
 
         public Vehicle(VehicleModel model)
@@ -91,7 +91,7 @@ namespace Nascar.Data
             } 
   
             driver_id = model.driver.driver_id;
-            Driver = new Driver(model.driver);
+            //Driver = new Driver(model.driver);
 
             foreach (PitStopModel pitStopModel in model.pit_stops)
             {

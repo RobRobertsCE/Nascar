@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnAll = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
             this.picStatusIndicator = new System.Windows.Forms.PictureBox();
             this.btnStop = new System.Windows.Forms.Button();
@@ -36,6 +37,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.txtDisplay = new System.Windows.Forms.TextBox();
             this.txtData = new System.Windows.Forms.TextBox();
+            this.chkDebug = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picStatusIndicator)).BeginInit();
             this.panel2.SuspendLayout();
@@ -43,6 +45,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.chkDebug);
+            this.panel1.Controls.Add(this.btnAll);
             this.panel1.Controls.Add(this.btnNext);
             this.panel1.Controls.Add(this.picStatusIndicator);
             this.panel1.Controls.Add(this.btnStop);
@@ -50,8 +54,18 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(492, 40);
+            this.panel1.Size = new System.Drawing.Size(601, 40);
             this.panel1.TabIndex = 0;
+            // 
+            // btnAll
+            // 
+            this.btnAll.Location = new System.Drawing.Point(336, 8);
+            this.btnAll.Name = "btnAll";
+            this.btnAll.Size = new System.Drawing.Size(88, 23);
+            this.btnAll.TabIndex = 5;
+            this.btnAll.Text = "Get All Feeds";
+            this.btnAll.UseVisualStyleBackColor = true;
+            this.btnAll.Click += new System.EventHandler(this.btnAll_Click);
             // 
             // btnNext
             // 
@@ -103,7 +117,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 270);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(5);
-            this.panel2.Size = new System.Drawing.Size(492, 100);
+            this.panel2.Size = new System.Drawing.Size(601, 100);
             this.panel2.TabIndex = 1;
             // 
             // txtDisplay
@@ -113,7 +127,7 @@
             this.txtDisplay.Multiline = true;
             this.txtDisplay.Name = "txtDisplay";
             this.txtDisplay.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtDisplay.Size = new System.Drawing.Size(482, 90);
+            this.txtDisplay.Size = new System.Drawing.Size(591, 90);
             this.txtDisplay.TabIndex = 0;
             // 
             // txtData
@@ -123,14 +137,24 @@
             this.txtData.Multiline = true;
             this.txtData.Name = "txtData";
             this.txtData.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtData.Size = new System.Drawing.Size(492, 230);
+            this.txtData.Size = new System.Drawing.Size(601, 230);
             this.txtData.TabIndex = 2;
+            // 
+            // chkDebug
+            // 
+            this.chkDebug.AutoSize = true;
+            this.chkDebug.Location = new System.Drawing.Point(496, 16);
+            this.chkDebug.Name = "chkDebug";
+            this.chkDebug.Size = new System.Drawing.Size(58, 17);
+            this.chkDebug.TabIndex = 6;
+            this.chkDebug.Text = "Debug";
+            this.chkDebug.UseVisualStyleBackColor = true;
             // 
             // MockServer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(492, 370);
+            this.ClientSize = new System.Drawing.Size(601, 370);
             this.Controls.Add(this.txtData);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -138,6 +162,7 @@
             this.Text = "MockServer";
             this.Load += new System.EventHandler(this.MockServer_Load);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picStatusIndicator)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
@@ -156,5 +181,7 @@
         private System.Windows.Forms.TextBox txtDisplay;
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.TextBox txtData;
+        private System.Windows.Forms.Button btnAll;
+        private System.Windows.Forms.CheckBox chkDebug;
     }
 }

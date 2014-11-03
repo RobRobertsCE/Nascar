@@ -31,7 +31,7 @@ namespace Nascar.MockApiServer
         private int rawFeedIdx = 0;
         private IList<RawFeed> feeds = null;
         private FormState currentFormState = FormState.None;
-        LiveFeedProcessor processor = null;
+        ILiveFeedProcessor processor = null;
         #endregion
 
         #region properties
@@ -84,12 +84,14 @@ namespace Nascar.MockApiServer
                     {
                         btnStart.Enabled = false;
                         btnStop.Enabled = false;
+                        btnNext.Enabled = false;
                         break;
                     }
                 case FormState.Loading:
                     {
                         btnStart.Enabled = false;
                         btnStop.Enabled = false;
+                        btnNext.Enabled = false;
                         break;
                     }
                 case FormState.Ready:
@@ -97,13 +99,15 @@ namespace Nascar.MockApiServer
                         statusIndicatorColor = Color.LightGray;
                         btnStart.Enabled = true;
                         btnStop.Enabled = false;
+                        btnNext.Enabled = false;
                         break;
                     }
                 case FormState.Listening:
                     {
-                        statusIndicatorColor = Color.LightGreen;
+                        statusIndicatorColor = Color.DarkGreen;
                         btnStart.Enabled = false;
                         btnStop.Enabled = true;
+                        btnNext.Enabled = true;
                         break;
                     }
                 case FormState.Busy:
@@ -111,6 +115,7 @@ namespace Nascar.MockApiServer
                         statusIndicatorColor = Color.LimeGreen;
                         btnStart.Enabled = false;
                         btnStop.Enabled = false;
+                        btnNext.Enabled = false;
                         break;
                     }
                 case FormState.Error:
@@ -118,6 +123,7 @@ namespace Nascar.MockApiServer
                         statusIndicatorColor = Color.Red;
                         btnStart.Enabled = false;
                         btnStop.Enabled = true;
+                        btnNext.Enabled = false;
                         break;
                     }
                 default:
@@ -127,7 +133,9 @@ namespace Nascar.MockApiServer
             }
 
             picStatusIndicator.BackColor = statusIndicatorColor;
-
+            picStatusIndicator.Invalidate();
+            this.Invalidate();
+            Application.DoEvents();
             DisplayMessage(String.Format("State Change: [{0}] to [{1}]", currentFormState.ToString(), newFormState.ToString()));
 
             currentFormState = newFormState;
@@ -155,8 +163,15 @@ namespace Nascar.MockApiServer
         }
         void StartServer()
         {
-            processor = new LiveFeedProcessor();
+            SetFormState(FormState.Busy);
 
+            if (chkDebug.Checked)
+                processor = new LiveFeedProcessor();
+            else
+                processor = new LiveFeedDebugger();
+
+            rawFeedIdx = 0;
+            LoadData();
             SetFormState(FormState.Listening);
         }
         #endregion
@@ -243,13 +258,33 @@ namespace Nascar.MockApiServer
         }
         #endregion
 
-        #region live feed processor
-
+        #region process feed 
         void ProcessFeedModel(LiveFeedModel model)
         {
             processor.ProcessLiveFeed(model);
         }
+        #endregion
 
+        #region process all feeds
+        private void btnAll_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                while (rawFeedIdx < feeds.Count - 1)
+                {
+                    RawFeed feed = GetNextFeed();
+                    string feedData = feed.RawFeedData;
+                    LiveFeedModel model = GetModel(feedData);
+                    ProcessFeedModel(model);                    
+                }
+
+                processor.Display();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
         #endregion
     }
 }

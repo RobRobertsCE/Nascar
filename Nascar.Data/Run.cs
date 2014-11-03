@@ -8,57 +8,33 @@ using Nascar.Models;
 
 namespace Nascar.Data
 {
-    [Table("Session")]
-    public class Session
+    [Table("Run")]
+    public class Run
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key()]
-        public int session_id { get; set; }
-        private int _runId = 0;
-        public int run_id
-        {
-            get
-            {
-                return _runId;
-            }
-            set
-            {
-                _runId = value;
-                session_id = run_id;
-            }
-        }
-        public string session_name { get; set; }
-        public int session_type { get; set; }
-        public int laps_in_session { get; set; }
+        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None), Key, Column(Order = 0), ForeignKey("Race")]
+        public int race_id { get; set; }
+        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None), Key, Column(Order=1)]
+        public int run_id { get; set; }
+        public string run_name { get; set; }
+        public int run_type { get; set; }
+        public int laps_in_race { get; set; }
 
         public virtual IList<LiveFeed> live_feeds { get; set; }
 
-        [ForeignKey("Race")]
-        public int race_id { get; set; }
         public virtual Race Race { get; set; }
 
-        public Session()
+        public Run()
         {
             live_feeds = new List<LiveFeed>();
         }
-
-        public Session(int session_id, int run_id, int race_id, string session_name, int session_type, int laps_in_session)
-            : this()
-        {
-            this.session_id = session_id;
-            this.run_id = run_id;
-            this.race_id = race_id;
-            this.session_name = session_name;
-            this.session_type = session_type;
-            this.laps_in_session = laps_in_session;
-        }
-
+        
         public void ApplyToModel(LiveFeedModel model)
         {
             model.race_id = race_id;
-            model.run_id = run_id; //session_id
-            model.run_type = session_type;
-            model.run_name = session_name;
-            model.laps_in_race = laps_in_session;
+            model.run_id = run_id; 
+            model.run_type = run_type;
+            model.run_name = run_name;
+            model.laps_in_race = laps_in_race;
 
             //foreach (Vehicle vehicle in vehicles)
             //{
@@ -131,3 +107,4 @@ namespace Nascar.Data
         }
     }
 }
+

@@ -8,7 +8,7 @@ namespace Nascar.Data
 {
     //TODO: Remember to add left outer join to LapsLed table in SQL.
     // TODO: Make race, series, and session-specific?
-    public class LiveFeedProcessor
+    public class LiveFeedProcessor : Nascar.Data.ILiveFeedProcessor
     {
         private NascarDbContext _context = null;
         protected internal virtual NascarDbContext Context
@@ -28,8 +28,8 @@ namespace Nascar.Data
 
         public Track CurrentTrack { get; set; }
         public Series CurrentSeries { get; set; }
-        public Session CurrentSession { get; set; }
         public Race CurrentRace { get; set; }
+        public Run CurrentRun { get; set; }
 
         public LiveFeedProcessor()
         {
@@ -50,60 +50,30 @@ namespace Nascar.Data
         {
             if ((model.series_id != LastLiveFeed.series_id) || (model.run_id != LastLiveFeed.run_id) || (model.track_id != LastLiveFeed.track_id) || (model.race_id != LastLiveFeed.race_id))
             {
-                UpdateTrackSeriesRaceAndSession(model);
+                UpdateTrackSeriesRaceAndRun(model);
             }
             else
             {
                 if (model.elapsed_time == LastLiveFeed.elapsed_time && model.time_of_day == LastLiveFeed.time_of_day)
                 {
-                    // Same as last live feed.. nothing to record.
                     return;
                 }
             }
 
-            // Add the new LIveFeed model.
-            LiveFeed feedData = GetNewLiveFeed(model);
+            LiveFeed feedData = GetLiveFeed(model);
            
-            // Add the vehicles 
             foreach (VehicleModel vehicleModel in model.vehicles)
             {
-                Vehicle vehicle = new Vehicle(vehicleModel);
-               
-                feedData.vehicles.Add(vehicle);
-            }
-
-            Context.SaveChanges();                
+                Vehicle vehicle = GetVehicle(vehicleModel, feedData);                
+            }         
         }
 
-        void UpdateTrackSeriesRaceAndSession(LiveFeedModel model)
+        void UpdateTrackSeriesRaceAndRun(LiveFeedModel model)
         {
             this.CurrentSeries = GetSeries(model);
             this.CurrentTrack = GetTrack(model);
             this.CurrentRace = GetRace(model);
-            this.CurrentSession = GetSession(model);
-        }
-
-        // TODO: Make unique process for read/write, separate assemblies?
-        // TODO: Add indicies
-        // TODO: add series/race/track ids to vehicle?
-        Vehicle GetVehicle(VehicleModel model)
-        {
-            Vehicle vehicle = Context.Vehicles
-                .Where(v =>
-                    v.vehicle_number == model.vehicle_number &&
-                    v.Driver.driver_id == model.driver.driver_id
-                    ).FirstOrDefault();
-
-            if (null == vehicle)
-            {
-                vehicle = new Vehicle(model);
-
-                Context.Vehicles.Add(vehicle);
-
-                Context.SaveChanges();
-            }
-
-            return vehicle;
+            this.CurrentRun = GetRun(model);
         }
 
         Series GetSeries(LiveFeedModel model)
@@ -156,33 +126,95 @@ namespace Nascar.Data
             return track;
         }
 
-        Session GetSession(LiveFeedModel model)
+        Run GetRun(LiveFeedModel model)
         {
-            Session session = Context.Sessions.Where(s => s.run_id == model.run_id).FirstOrDefault();
+                Run run = CurrentRace.Runs.Where(s => s.run_id == model.run_id && s.race_id == model.race_id).FirstOrDefault();
+                if (null == run)
+                {
+                    run = new Run()
+                    {
+                        run_id = model.run_id,
+                        race_id = model.race_id,
+                        run_name = model.run_name,
+                        run_type = model.run_type,
+                        laps_in_race = model.laps_in_race
+                    };
+                    Context.Runs.Add(run);
+                    Context.SaveChanges();
+                }
+                return run;
+        }
 
-            if (null == session)
+        LiveFeed GetLiveFeed(LiveFeedModel model)
+        {
+            LiveFeed feed = Context.LiveFeeds
+              .Where(f =>
+                  f.race_id == model.race_id &&
+                  f.run_id == model.run_id
+                  ).FirstOrDefault();
+
+            if (null == feed)
             {
-                session = new Session() { run_id = model.run_id };
-                session.race_id = this.CurrentRace.race_id;
-                session.session_name = model.run_name;
-                session.session_type = model.run_type;
-                session.laps_in_session = model.laps_in_race;
+                feed = new LiveFeed(model);
+                this.CurrentRun.live_feeds.Add(feed);
+                Context.SaveChanges();
+            }
 
-                Context.Sessions.Add(session);
+            return feed;
+        }
+
+        Vehicle GetVehicle(VehicleModel model, LiveFeed feedData)
+        {
+            Vehicle vehicle = Context.Vehicles
+                .Where(v =>
+                    v.vehicle_number == model.vehicle_number &&
+                    v.Driver.driver_id == model.driver.driver_id
+                    ).FirstOrDefault();
+
+            if (null == vehicle)
+            {
+                vehicle = new Vehicle(model);
+                vehicle.live_feed_id = feedData.live_feed_id;
+                vehicle.Driver = GetDriver(model.driver,vehicle);
+
+                feedData.vehicles.Add(vehicle);
 
                 Context.SaveChanges();
             }
 
-            return session;
+            return vehicle;
         }
 
-        LiveFeed GetNewLiveFeed(LiveFeedModel model)
+        Driver GetDriver(DriverModel model, Vehicle vehicle)
         {
-            LiveFeed feedData = new LiveFeed(model) { Session = this.CurrentSession };            
-            Context.LiveFeeds.Add(feedData);
-            Context.SaveChanges();
+            Driver driver = Context.Drivers
+                .Where(d =>
+                    d.driver_id == vehicle.driver_id
+                    ).FirstOrDefault();
 
-            return feedData;
+            if (null==driver)
+            {
+                driver = new Driver(model);
+                Context.Drivers.Add(driver);
+                Context.SaveChanges();
+            }
+
+            return driver;
+        }
+
+        void GetLapsLed()
+        {
+
+        }
+
+        void GetPitStops()
+        {
+
+        }
+
+        void ILiveFeedProcessor.Display()
+        {
+            throw new NotImplementedException();
         }
     }
 }

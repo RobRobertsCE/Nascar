@@ -11,8 +11,12 @@ namespace Nascar.Data
     [Table("LiveFeed")]
     public class LiveFeed
     {
-        [Key()]
+        [Key, Column(Order = 0)]
         public int live_feed_id { get; set; }
+        [Column(Order=1), ForeignKey("Run")]
+        public int race_id { get; set; }
+        [Column(Order = 2), ForeignKey("Run")]
+        public int run_id { get; set; }
         public double elapsed_time { get; set; }
         public int lap_number { get; set; }
         public int flag_state { get; set; }
@@ -23,9 +27,11 @@ namespace Nascar.Data
         public int number_of_lead_changes { get; set; }
         public int number_of_leaders { get; set; }
 
-        [ForeignKey("Session")]
-        public int session_id { get; set; }
-        public virtual Session Session { get; set; }
+        //[ForeignKey("Session")]
+        //public int session_id { get; set; }
+        //public virtual Session Session { get; set; }
+
+        public virtual Run Run { get; set; }
 
         public virtual ICollection<Vehicle> vehicles { get; set; }
 
@@ -37,6 +43,8 @@ namespace Nascar.Data
         public LiveFeed(LiveFeedModel model)
             : this()
         {
+            race_id = model.race_id;
+            run_id = model.run_id;
             elapsed_time = model.elapsed_time;
             lap_number = model.lap_number;
             flag_state = model.flag_state;

@@ -44,11 +44,13 @@ namespace Nascar.Data
         public int series_id { get; set; }
         public virtual Series Series { get; set; }
 
-        public virtual ICollection<Session> sessions { get; set; }
+        //public virtual ICollection<Session> sessions { get; set; }
+
+        public virtual ICollection<Run> Runs { get; set; }
 
         public Race()
         {
-            sessions = new List<Session>();
+            Runs = new List<Run>();
         }
 
 

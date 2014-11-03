@@ -48,8 +48,10 @@
   <ItemGroup>
     <Compile Include="Driver.cs" />
     <Compile Include="FlagState.cs" />
+    <Compile Include="ILiveFeedProcessor.cs" />
     <Compile Include="LapsLed.cs" />
     <Compile Include="LiveFeed.cs" />
+    <Compile Include="LiveFeedDebugger.cs" />
     <Compile Include="LiveFeedHarvester.cs" />
     <Compile Include="LiveFeedProcessor.cs" />
     <Compile Include="Migrations\201410202157309_InitialCreate.cs" />
@@ -68,12 +70,29 @@
     <Compile Include="Migrations\201410302340187_AddRawFeed.Designer.cs">
       <DependentUpon>201410302340187_AddRawFeed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201411021925555_driver_id_not_identity.cs" />
+    <Compile Include="Migrations\201411021925555_driver_id_not_identity.Designer.cs">
+      <DependentUpon>201411021925555_driver_id_not_identity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411022018319_session_id_not_identity.cs" />
+    <Compile Include="Migrations\201411022018319_session_id_not_identity.Designer.cs">
+      <DependentUpon>201411022018319_session_id_not_identity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411031317008_session_id_identity.cs" />
+    <Compile Include="Migrations\201411031317008_session_id_identity.Designer.cs">
+      <DependentUpon>201411031317008_session_id_identity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411031846206_addRun2.cs" />
+    <Compile Include="Migrations\201411031846206_addRun2.Designer.cs">
+      <DependentUpon>201411031846206_addRun2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NascarDbContext.cs" />
     <Compile Include="PitStop.cs" />
     <Compile Include="Points.cs" />
     <Compile Include="Race.cs" />
     <Compile Include="RawFeed.cs" />
+    <Compile Include="Run.cs" />
     <Compile Include="Series.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="Track.cs" />
@@ -102,6 +121,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201410302340187_AddRawFeed.resx">
       <DependentUpon>201410302340187_AddRawFeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411021925555_driver_id_not_identity.resx">
+      <DependentUpon>201411021925555_driver_id_not_identity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411022018319_session_id_not_identity.resx">
+      <DependentUpon>201411022018319_session_id_not_identity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411031317008_session_id_identity.resx">
+      <DependentUpon>201411031317008_session_id_identity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411031846206_addRun2.resx">
+      <DependentUpon>201411031846206_addRun2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
