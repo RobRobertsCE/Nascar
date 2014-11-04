@@ -13,25 +13,27 @@ namespace Nascar.Data
     {
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None), Key, Column(Order = 0), ForeignKey("Race")]
         public int race_id { get; set; }
-        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None), Key, Column(Order=1)]
+        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None), Key, Column(Order = 1)]
         public int run_id { get; set; }
         public string run_name { get; set; }
         public int run_type { get; set; }
         public int laps_in_race { get; set; }
 
         public virtual IList<LiveFeed> live_feeds { get; set; }
+        public virtual IList<Vehicle> vehicles { get; set; }
 
         public virtual Race Race { get; set; }
 
         public Run()
         {
             live_feeds = new List<LiveFeed>();
+            vehicles = new List<Vehicle>();
         }
-        
+
         public void ApplyToModel(LiveFeedModel model)
         {
             model.race_id = race_id;
-            model.run_id = run_id; 
+            model.run_id = run_id;
             model.run_type = run_type;
             model.run_name = run_name;
             model.laps_in_race = laps_in_race;

@@ -164,11 +164,11 @@ namespace Nascar.MockApiServer
         void StartServer()
         {
             SetFormState(FormState.Busy);
-
+            
             if (chkDebug.Checked)
-                processor = new LiveFeedProcessor();
-            else
                 processor = new LiveFeedDebugger();
+            else
+                processor = new LiveFeedProcessor();
 
             rawFeedIdx = 0;
             LoadData();

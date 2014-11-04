@@ -12,7 +12,7 @@ namespace Nascar.Data
         public virtual DbSet<PitStop> PitStops { get; set; }
         public virtual DbSet<Vehicle> Vehicles { get; set; }
         public virtual DbSet<Race> Races { get; set; }
-        //public virtual DbSet<Session> Sessions { get; set; }
+        public virtual DbSet<VehicleRunStat> VehicleRunStats { get; set; }
         public virtual DbSet<Run> Runs { get; set; }
         public virtual DbSet<Series> RaceSeries { get; set; }
         public virtual DbSet<Track> Tracks { get; set; }

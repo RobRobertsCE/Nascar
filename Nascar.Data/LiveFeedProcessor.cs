@@ -6,10 +6,9 @@ using Nascar.Models;
 
 namespace Nascar.Data
 {
-    //TODO: Remember to add left outer join to LapsLed table in SQL.
-    // TODO: Make race, series, and session-specific?
     public class LiveFeedProcessor : Nascar.Data.ILiveFeedProcessor
     {
+        #region properties
         private NascarDbContext _context = null;
         protected internal virtual NascarDbContext Context
         {
@@ -21,22 +20,24 @@ namespace Nascar.Data
                 return _context;
             }
         }
-        
+
         public IList<LiveFeedModel> LiveFeedList { get; protected internal set; }
-
         public LiveFeedModel LastLiveFeed { get; protected internal set; }
-
         public Track CurrentTrack { get; set; }
         public Series CurrentSeries { get; set; }
         public Race CurrentRace { get; set; }
         public Run CurrentRun { get; set; }
+        #endregion
 
+        #region ctor
         public LiveFeedProcessor()
         {
             LiveFeedList = new List<LiveFeedModel>();
             LastLiveFeed = new LiveFeedModel();
         }
+        #endregion
 
+        #region Process Feed
         public void ProcessLiveFeed(LiveFeedModel model)
         {
             this.LiveFeedList.Add(model);
@@ -61,11 +62,11 @@ namespace Nascar.Data
             }
 
             LiveFeed feedData = GetLiveFeed(model);
-           
+
             foreach (VehicleModel vehicleModel in model.vehicles)
             {
-                Vehicle vehicle = GetVehicle(vehicleModel, feedData);                
-            }         
+                Vehicle vehicle = GetVehicle(vehicleModel, feedData);
+            }
         }
 
         void UpdateTrackSeriesRaceAndRun(LiveFeedModel model)
@@ -75,7 +76,9 @@ namespace Nascar.Data
             this.CurrentRace = GetRace(model);
             this.CurrentRun = GetRun(model);
         }
+        #endregion
 
+        #region GET data methods
         Series GetSeries(LiveFeedModel model)
         {
             Series series = Context.RaceSeries.Where(s => s.series_id == model.series_id).FirstOrDefault();
@@ -128,21 +131,21 @@ namespace Nascar.Data
 
         Run GetRun(LiveFeedModel model)
         {
-                Run run = CurrentRace.Runs.Where(s => s.run_id == model.run_id && s.race_id == model.race_id).FirstOrDefault();
-                if (null == run)
+            Run run = CurrentRace.Runs.Where(s => s.run_id == model.run_id && s.race_id == model.race_id).FirstOrDefault();
+            if (null == run)
+            {
+                run = new Run()
                 {
-                    run = new Run()
-                    {
-                        run_id = model.run_id,
-                        race_id = model.race_id,
-                        run_name = model.run_name,
-                        run_type = model.run_type,
-                        laps_in_race = model.laps_in_race
-                    };
-                    Context.Runs.Add(run);
-                    Context.SaveChanges();
-                }
-                return run;
+                    run_id = model.run_id,
+                    race_id = model.race_id,
+                    run_name = model.run_name,
+                    run_type = model.run_type,
+                    laps_in_race = model.laps_in_race
+                };
+                Context.Runs.Add(run);
+                Context.SaveChanges();
+            }
+            return run;
         }
 
         LiveFeed GetLiveFeed(LiveFeedModel model)
@@ -167,18 +170,58 @@ namespace Nascar.Data
         {
             Vehicle vehicle = Context.Vehicles
                 .Where(v =>
+                    v.race_id == feedData.race_id &&
+                    v.run_id == feedData.run_id &&
                     v.vehicle_number == model.vehicle_number &&
                     v.Driver.driver_id == model.driver.driver_id
                     ).FirstOrDefault();
 
             if (null == vehicle)
             {
-                vehicle = new Vehicle(model);
-                vehicle.live_feed_id = feedData.live_feed_id;
-                vehicle.Driver = GetDriver(model.driver,vehicle);
+                vehicle = new Vehicle(model, feedData.race_id, feedData.run_id, feedData.lap_number);
 
-                feedData.vehicles.Add(vehicle);
+                vehicle.Driver = GetDriver(model.driver, vehicle);
 
+                CurrentRun.vehicles.Add(vehicle);
+
+                Context.SaveChanges();
+            }
+            else
+            {
+                if (!(vehicle.vehicle_elapsed_time == model.vehicle_elapsed_time))
+                {
+                    vehicle.qualifying_status = model.qualifying_status;
+                    vehicle.status = model.status;
+                    vehicle.is_on_track = model.is_on_track;
+
+                    vehicle.average_restart_speed = model.average_restart_speed;
+                    vehicle.average_running_position = model.average_running_position;
+
+                    vehicle.average_speed = model.average_speed;
+                    vehicle.best_lap = model.best_lap;
+                    vehicle.best_lap_speed = model.best_lap_speed;
+                    vehicle.best_lap_time = model.best_lap_time;
+                    vehicle.vehicle_elapsed_time = model.vehicle_elapsed_time;
+
+                    vehicle.fastest_laps_run = model.fastest_laps_run;
+                    vehicle.laps_completed = model.laps_completed;
+                    vehicle.last_lap_speed = model.last_lap_speed;
+                    vehicle.last_lap_time = model.last_lap_time;
+
+                    vehicle.passes_made = model.passes_made;
+                    vehicle.passing_differential = model.passing_differential;
+                    vehicle.running_position = model.running_position;
+                    vehicle.delta = model.delta;
+                    vehicle.times_passed = model.times_passed;
+                    vehicle.quality_passes = model.quality_passes;
+
+                    Context.SaveChanges();
+                }
+            }
+
+            if (!vehicle.stats.Any(s => s.lap_number == feedData.lap_number))
+            {
+                vehicle.stats.Add(new VehicleRunStat(model, feedData.race_id, feedData.run_id, feedData.lap_number));
                 Context.SaveChanges();
             }
 
@@ -192,7 +235,7 @@ namespace Nascar.Data
                     d.driver_id == vehicle.driver_id
                     ).FirstOrDefault();
 
-            if (null==driver)
+            if (null == driver)
             {
                 driver = new Driver(model);
                 Context.Drivers.Add(driver);
@@ -202,19 +245,13 @@ namespace Nascar.Data
             return driver;
         }
 
-        void GetLapsLed()
-        {
+        #endregion
 
-        }
-
-        void GetPitStops()
-        {
-
-        }
-
+        #region ILiveFeedProcessor.Display
         void ILiveFeedProcessor.Display()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("ILiveFeedProcessor.Display NOT IMPLEMENTED"); ;
         }
+        #endregion
     }
 }

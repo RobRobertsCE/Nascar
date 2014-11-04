@@ -9,18 +9,30 @@ namespace Nascar.Data
     [Table("Vehicle")]
     public class Vehicle
     {
-        [Key()]
+        [Key, Column(Order=0)]
         public int vehicle_id { get; set; }
 
         public string vehicle_number { get; set; }
 
+        [Column(Order = 1), ForeignKey("Run")]
+        public int race_id { get; set; }
+        [Column(Order = 2), ForeignKey("Run")]
+        public int run_id { get; set; }
+
+        public string sponsor_name { get; set; }
+        public int starting_position { get; set; }
+        public string vehicle_manufacturer { get; set; }
+        // update as required VVV 
+        public int qualifying_status { get; set; }
+        public bool is_on_track { get; set; }
+        public int status { get; set; }
+        
         public double average_restart_speed { get; set; }
         public double average_running_position { get; set; }
         public double average_speed { get; set; }
         public int best_lap { get; set; }
         public double best_lap_speed { get; set; }
         public double best_lap_time { get; set; }
-        public string vehicle_manufacturer { get; set; }
         public double vehicle_elapsed_time { get; set; }
         public int fastest_laps_run { get; set; }
         public int laps_completed { get; set; }
@@ -28,23 +40,18 @@ namespace Nascar.Data
         public double last_lap_time { get; set; }
         public int passes_made { get; set; }
         public int passing_differential { get; set; }
-        public int qualifying_status { get; set; }
         public int running_position { get; set; }
-        public int status { get; set; }
         public double delta { get; set; }
-        public string sponsor_name { get; set; }
-        public int starting_position { get; set; }
         public int times_passed { get; set; }
         public int quality_passes { get; set; }
-        public bool is_on_track { get; set; }
 
         public IList<LapsLed> laps_led { get; set; }
 
         public virtual IList<PitStop> pit_stops { get; set; }
 
-        [ForeignKey("LiveFeed")]
-        public int live_feed_id { get; set; }
-        public virtual LiveFeed LiveFeed { get; set; }
+        public virtual IList<VehicleRunStat> stats { get; set; }
+
+        public virtual Run Run { get; set; }
 
         [ForeignKey("Driver")]
         public virtual int driver_id { get; set; }
@@ -54,12 +61,14 @@ namespace Nascar.Data
         {
             pit_stops = new List<PitStop>();
             laps_led = new List<LapsLed>();
-            //Driver = new Driver();
+            stats = new List<VehicleRunStat>();
         }
 
-        public Vehicle(VehicleModel model)
+        public Vehicle(VehicleModel model, int race_id, int run_id, int lap_number)
             : this()
         {
+            this.race_id = race_id;
+            this.run_id = run_id;
             average_restart_speed = model.average_restart_speed;
             average_running_position = model.average_running_position;
             average_speed = model.average_speed;
@@ -87,16 +96,17 @@ namespace Nascar.Data
             
             foreach (LapsLedModel lapsLedModel in model.laps_led)
             {
-                laps_led.Add(new LapsLed() { start_lap = lapsLedModel.start_lap, end_lap = lapsLedModel.end_lap, vehicle_id = this.vehicle_id, live_feed_id = this.live_feed_id });
+                laps_led.Add(new LapsLed() { start_lap = lapsLedModel.start_lap, end_lap = lapsLedModel.end_lap, vehicle_id = this.vehicle_id });
             } 
   
             driver_id = model.driver.driver_id;
-            //Driver = new Driver(model.driver);
 
             foreach (PitStopModel pitStopModel in model.pit_stops)
             {
                 pit_stops.Add(new PitStop(pitStopModel) { vehicle_number = this.vehicle_number });
             }
+
+            stats.Add(new VehicleRunStat(model, race_id, run_id, lap_number));
         }
 
         public void ApplyToModel(VehicleModel model)

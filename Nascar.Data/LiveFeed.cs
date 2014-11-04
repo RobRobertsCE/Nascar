@@ -27,17 +27,11 @@ namespace Nascar.Data
         public int number_of_lead_changes { get; set; }
         public int number_of_leaders { get; set; }
 
-        //[ForeignKey("Session")]
-        //public int session_id { get; set; }
-        //public virtual Session Session { get; set; }
-
         public virtual Run Run { get; set; }
-
-        public virtual ICollection<Vehicle> vehicles { get; set; }
 
         public LiveFeed()
         {
-            vehicles = new List<Vehicle>();
+           
         }
 
         public LiveFeed(LiveFeedModel model)
