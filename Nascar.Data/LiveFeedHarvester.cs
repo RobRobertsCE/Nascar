@@ -34,6 +34,5 @@ namespace Nascar.Data
             _context.RawFeeds.Add(new RawFeed(data));
             _context.SaveChanges();
         }
-
     }
 }

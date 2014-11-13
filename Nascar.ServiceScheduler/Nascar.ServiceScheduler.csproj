@@ -53,8 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Logic\INascarLiveFeedEngine.cs" />
-    <Compile Include="Logic\NascarLiveFeedEngine.cs" />
     <Compile Include="RaceSessionDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -178,6 +176,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Nascar.Api\ClassLibrary1\Nascar.Api.csproj">
+      <Project>{8323069b-7b08-47d8-bc69-bd0d21692a03}</Project>
+      <Name>Nascar.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Nascar.Data.Schedule\Nascar.Data.Schedule.csproj">
       <Project>{70b7384b-85b3-41ba-b733-f73e44b0ce07}</Project>
       <Name>Nascar.Data.Schedule</Name>
@@ -189,10 +191,6 @@
     <ProjectReference Include="..\Nascar.Models\Nascar.Models\Nascar.Models.csproj">
       <Project>{a2f2fa60-f876-4e93-9890-4eb9673acae3}</Project>
       <Name>Nascar.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Nascar.Web\Nascar.Web.csproj">
-      <Project>{55b57058-d783-483a-b3d4-881d4a47c403}</Project>
-      <Name>Nascar.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

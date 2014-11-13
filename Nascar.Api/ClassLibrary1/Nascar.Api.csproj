@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FB35830B-CA83-450A-97E6-928F0C37D341}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{8323069B-7B08-47D8-BC69-BD0D21692A03}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nascar.MockApiServer</RootNamespace>
-    <AssemblyName>Nascar.MockApiServer</AssemblyName>
+    <RootNamespace>Nascar.Api</RootNamespace>
+    <AssemblyName>Nascar.Api</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,75 +30,103 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Nascar.Models\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\Nascar.Models\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\Nascar.Models\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\..\Nascar.Models\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Nascar.Models\packages\Newtonsoft.Json.6.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\Nascar.Models\packages\Newtonsoft.Json.6.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MockServer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MockServer.Designer.cs">
-      <DependentUpon>MockServer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="ApiEngineState.cs" />
+    <Compile Include="ApiFeedEngine.cs" />
+    <Compile Include="Delegates.cs" />
+    <Compile Include="EventStartedEventArgs.cs" />
+    <Compile Include="EventStoppedEventArgs.cs" />
+    <Compile Include="FeedEventArgs.cs" />
+    <Compile Include="IApiFeedEngine.cs" />
+    <Compile Include="ILiveFeedProcessor.cs" />
+    <Compile Include="LiveFeedDebugger.cs" />
+    <Compile Include="LiveFeedEventArgs.cs" />
+    <Compile Include="ClientBase.cs" />
+    <Compile Include="FeedManager.cs" />
+    <Compile Include="IApiFeedProcessor.cs" />
+    <Compile Include="IFeedClient.cs" />
+    <Compile Include="LiveFeedClient.cs" />
+    <Compile Include="LiveFeedProcessor.cs" />
+    <Compile Include="LiveFeedReader.cs" />
+    <Compile Include="ReplayClient.cs" />
+    <Compile Include="ReplayManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MockServer.resx">
-      <DependentUpon>MockServer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+    <Compile Include="RawFeedHarvester.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
+    <Compile Include="ResourceManager.cs" />
+    <Compile Include="SeriesUrlManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Nascar.Api\ClassLibrary1\Nascar.Api.csproj">
-      <Project>{8323069b-7b08-47d8-bc69-bd0d21692a03}</Project>
-      <Name>Nascar.Api</Name>
+    <ProjectReference Include="..\..\Nascar.Data.Schedule\Nascar.Data.Schedule.csproj">
+      <Project>{70b7384b-85b3-41ba-b733-f73e44b0ce07}</Project>
+      <Name>Nascar.Data.Schedule</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Nascar.Data\Nascar.Data.csproj">
+    <ProjectReference Include="..\..\Nascar.Data\Nascar.Data.csproj">
       <Project>{86338a15-33e0-4111-acaa-1a182a1441b7}</Project>
       <Name>Nascar.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Nascar.Models\Nascar.Models\Nascar.Models.csproj">
+    <ProjectReference Include="..\..\Nascar.Models\Nascar.Models\Nascar.Models.csproj">
       <Project>{a2f2fa60-f876-4e93-9890-4eb9673acae3}</Project>
       <Name>Nascar.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chevy_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cup_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cwts_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ford_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nascar_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nns_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ram_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toyota_logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

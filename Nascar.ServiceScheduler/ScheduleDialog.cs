@@ -8,15 +8,15 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Windows.Forms;
+using Nascar.Api;
 using Nascar.Data.Schedule;
-using Nascar.ServiceScheduler.Logic;
 
 namespace Nascar.ServiceScheduler
 {
     public partial class ScheduleDialog : Form
     {
         #region fields
-        private INascarLiveFeedEngine _engine = null;
+        private IApiFeedEngine _engine = null;
         private IList<RaceEventView> _schedule = null;
         #endregion
 
@@ -67,8 +67,6 @@ namespace Nascar.ServiceScheduler
         {
             using (var context = new ScheduleDbContext())
             {
-                //_schedule = context.RaceEventViews.Include("RaceSession").Include("RaceSession.Race.Track").Include("RaceSession.Race.Series").OrderBy(s => s.scheduled_event_start).ToArray();
-
                 Expression<Func<RaceEventView, bool>> predicate = r => (
                   chkCup.Checked && ((r.RaceSession.Race.series_id == 1) == chkCup.Checked))
                   || (chkNationwide.Checked && ((r.RaceSession.Race.series_id == 2) == chkNationwide.Checked))
@@ -235,7 +233,7 @@ namespace Nascar.ServiceScheduler
             if (null != _engine)
                 _engine.Stop();
 
-            _engine = new NascarLiveFeedEngine();
+            _engine = new ApiFeedEngine();
             _engine.Start();
         }
         void StopFeedHarvester()

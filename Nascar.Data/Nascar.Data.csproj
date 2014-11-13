@@ -48,13 +48,8 @@
   <ItemGroup>
     <Compile Include="Driver.cs" />
     <Compile Include="FlagState.cs" />
-    <Compile Include="ILiveFeedProcessor.cs" />
     <Compile Include="LapsLed.cs" />
     <Compile Include="LiveFeed.cs" />
-    <Compile Include="LiveFeedDebugger.cs" />
-    <Compile Include="LiveFeedHarvester.cs" />
-    <Compile Include="LiveFeedProcessor.cs" />
-    <Compile Include="LiveFeedReader.cs" />
     <Compile Include="Migrations\201410202157309_InitialCreate.cs" />
     <Compile Include="Migrations\201410202157309_InitialCreate.Designer.cs">
       <DependentUpon>201410202157309_InitialCreate.cs</DependentUpon>

@@ -15,8 +15,7 @@ namespace Nascar.ServiceScheduler
     public partial class SeriesScheduleDialog : Form
     {
         #region fields
-        //private IList<Race> _data = null;
-        private IList<RaceView> _data = null;
+       private IList<RaceView> _data = null;
         #endregion
 
         #region properties
