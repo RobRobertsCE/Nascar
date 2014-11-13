@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Nascar.Models.VehicleModel vehicleModel1 = new Nascar.Models.VehicleModel();
+            Nascar.Api.Models.VehicleModel vehicleModel1 = new Nascar.Api.Models.VehicleModel();
             this.vehiclePanel = new System.Windows.Forms.FlowLayoutPanel();
             this.vehicleView1 = new Nascar.WinApp.Views.VehicleView();
             this.panel1 = new System.Windows.Forms.Panel();

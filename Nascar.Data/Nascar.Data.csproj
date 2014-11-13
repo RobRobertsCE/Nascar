@@ -109,12 +109,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Nascar.Models\Nascar.Models\Nascar.Api.Models.csproj">
-      <Project>{a2f2fa60-f876-4e93-9890-4eb9673acae3}</Project>
-      <Name>Nascar.Api.Models</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Migrations\201410202157309_InitialCreate.resx">
       <DependentUpon>201410202157309_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
@@ -145,6 +139,12 @@
     <EmbeddedResource Include="Migrations\201411032134244_addVehicleRunStat.resx">
       <DependentUpon>201411032134244_addVehicleRunStat.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nascar.Models\Nascar.Models\Nascar.Api.Models.csproj">
+      <Project>{a2f2fa60-f876-4e93-9890-4eb9673acae3}</Project>
+      <Name>Nascar.Api.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

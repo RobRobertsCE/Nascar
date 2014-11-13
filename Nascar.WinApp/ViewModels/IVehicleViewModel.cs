@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using Nascar.Api.Models;
 
 namespace Nascar.WinApp.Views
 {
@@ -38,7 +39,7 @@ namespace Nascar.WinApp.Views
         int StartingPosition { get; }
         double TenLapAverage { get; }
         double TwentyLapAverage { get; }
-        Nascar.Models.VehicleModel Vehicle { get; set; }
+        VehicleModel Vehicle { get; set; }
         string VehicleNumber { get; }
         Image ManufacturerImage { get; }
         Image VehicleNumberImage { get; }

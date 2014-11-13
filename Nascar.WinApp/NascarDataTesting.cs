@@ -34,8 +34,8 @@ namespace Nascar.WinApp
         #endregion
 
         #region fields
-        LiveFeedProcessor processor = null;
-        LiveFeedHarvester harvester = null;
+        ILiveFeedProcessor processor = null;
+        IApiFeedProcessor harvester = null;
         FeedManager manager = null;
         ReplayManager replayManager = null;
         int feedCount = 0;
@@ -322,9 +322,9 @@ namespace Nascar.WinApp
                 SetRawFeedIndicatorState(IndicatorState.Busy);
 
                 if (null == harvester)
-                    harvester = new LiveFeedHarvester();
+                    harvester = new RawFeedHarvester();
 
-                harvester.ProcessLiveFeed(rawData);
+                harvester.ProcessFeedData (rawData);
 
                 SetRawFeedIndicatorState(IndicatorState.Ready);
             }

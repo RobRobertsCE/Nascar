@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Nascar.Models.DriverModel driverModel1 = new Nascar.Models.DriverModel();
+            Nascar.Api.Models.DriverModel driverModel1 = new Nascar.Api.Models.DriverModel();
             this.BestLapSpeedTextBox = new System.Windows.Forms.TextBox();
             this.BestLapOnTextBox = new System.Windows.Forms.TextBox();
             this.BestLapTimeTextBox = new System.Windows.Forms.TextBox();

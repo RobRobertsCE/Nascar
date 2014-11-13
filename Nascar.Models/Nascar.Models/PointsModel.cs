@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Nascar.Models
+namespace Nascar.Api.Models
 {
     public class PointsModel
     {

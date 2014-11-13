@@ -1,4 +1,4 @@
-﻿namespace Nascar.Models
+﻿namespace Nascar.Api.Models
 {
     public class DriverModel
     {

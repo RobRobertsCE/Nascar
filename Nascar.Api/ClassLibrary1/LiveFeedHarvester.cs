@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Nascar.Api
 {
-    public class RawFeedHarvester : Nascar.Api.IApiFeedProcessor
+    public class RawFeedHarvester : IApiFeedProcessor
     {
         private NascarDbContext _context = null;       
 

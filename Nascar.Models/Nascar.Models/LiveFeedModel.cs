@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Nascar.Models
+namespace Nascar.Api.Models
 {
     public class LiveFeedModel
     {
