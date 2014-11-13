@@ -322,7 +322,7 @@ namespace Nascar.WinApp
                 SetRawFeedIndicatorState(IndicatorState.Busy);
 
                 if (null == harvester)
-                    harvester = new RawFeedHarvester();
+                    harvester = new LiveFeedHarvester();
 
                 harvester.ProcessFeedData (rawData);
 

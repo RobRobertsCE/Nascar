@@ -295,7 +295,7 @@ namespace Nascar.Api
         void HarvestRawData(string rawData)
         {
             if (null == harvester)
-                harvester = new RawFeedHarvester();
+                harvester = new LiveFeedHarvester();
 
             harvester.ProcessFeedData(rawData);
         }

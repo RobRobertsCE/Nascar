@@ -6,13 +6,13 @@ using System.Text;
 
 namespace Nascar.Api
 {
-    public class RawFeedHarvester : IApiFeedProcessor
+    public class LiveFeedHarvester : IApiFeedProcessor
     {
         private NascarDbContext _context = null;       
 
         public string LastFeedData { get; protected internal set; }
 
-        public RawFeedHarvester()
+        public LiveFeedHarvester()
         {
             LastFeedData = String.Empty;
             _context = new NascarDbContext();
