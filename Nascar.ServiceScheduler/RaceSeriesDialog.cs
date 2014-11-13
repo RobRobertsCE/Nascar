@@ -13,15 +13,15 @@ namespace Nascar.ServiceScheduler
     public partial class RaceSeriesDialog : Form
     {
         #region fields
-        private IList<ScheduledSeries> _data = null; 
+        private IList<Series> _data = null; 
         #endregion
 
         #region properties
-        private ScheduledSeries Selected
+        private Series Selected
         {
             get
             {
-                return (ScheduledSeries)dataGridView1.CurrentRow.DataBoundItem;
+                return (Series)dataGridView1.CurrentRow.DataBoundItem;
             }
         }
         #endregion
@@ -54,9 +54,9 @@ namespace Nascar.ServiceScheduler
         }
         void LoadData()
         {
-            using (var context = new ServiceSchedulerDbContext())
+            using (var context = new ScheduleDbContext())
             {
-                _data = context.ScheduledRaceSeries.ToArray();
+                _data = context.Series.ToArray();
             }
         }
         void DisplayData()
@@ -80,7 +80,7 @@ namespace Nascar.ServiceScheduler
         #region add new
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            this.DisplayDialog(new ScheduledSeries());
+            this.DisplayDialog(new Series());
         }
         #endregion
 
@@ -93,7 +93,7 @@ namespace Nascar.ServiceScheduler
         #endregion
 
         #region ItemDialog
-        void DisplayDialog(ScheduledSeries itemToDisplay)
+        void DisplayDialog(Series itemToDisplay)
         {
             SeriesDialog dialog = new SeriesDialog(itemToDisplay);
 
@@ -105,13 +105,13 @@ namespace Nascar.ServiceScheduler
         #endregion
 
         #region data methods
-        void Save(ScheduledSeries item, bool isNew)
+        void Save(Series item, bool isNew)
         {
             if (null == item) return;
 
             using (var context = GetContext())
             {
-                context.ScheduledRaceSeries.Add(item);
+                context.Series.Add(item);
 
                 context.Entry(item).State = isNew ?
                                    EntityState.Added :
@@ -122,21 +122,21 @@ namespace Nascar.ServiceScheduler
 
             UpdateDisplay();
         }
-        void Delete(ScheduledSeries item)
+        void Delete(Series item)
         {
             if (null == item) return;
             using (var context = GetContext())
             {
-                var selected = context.ScheduledRaceSeries.Where(e => e.series_id == item.series_id).FirstOrDefault();
+                var selected = context.Series.Where(e => e.series_id == item.series_id).FirstOrDefault();
                 if (null == selected) return;
-                context.ScheduledRaceSeries.Remove(selected);
+                context.Series.Remove(selected);
                 context.SaveChanges();
             }
             UpdateDisplay();
         }
-        ServiceSchedulerDbContext GetContext()
+        ScheduleDbContext GetContext()
         {
-            return new ServiceSchedulerDbContext();
+            return new ScheduleDbContext();
         }
         #endregion               
     }

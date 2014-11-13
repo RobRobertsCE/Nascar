@@ -44,11 +44,16 @@
             this.btnStartStop = new System.Windows.Forms.ToolStripButton();
             this.txtGreenLight = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnReload = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.filterPanel = new System.Windows.Forms.Panel();
+            this.chkTruck = new System.Windows.Forms.CheckBox();
+            this.chkNationwide = new System.Windows.Forms.CheckBox();
+            this.chkCup = new System.Windows.Forms.CheckBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.filterPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -72,7 +77,7 @@
             this.toolStripSeparator6});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(603, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(953, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -188,15 +193,6 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 25);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(603, 269);
-            this.dataGridView1.TabIndex = 1;
-            // 
             // btnReload
             // 
             this.btnReload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -212,12 +208,76 @@
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 56);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(953, 383);
+            this.dataGridView1.TabIndex = 1;
+            // 
+            // filterPanel
+            // 
+            this.filterPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.filterPanel.Controls.Add(this.chkTruck);
+            this.filterPanel.Controls.Add(this.chkNationwide);
+            this.filterPanel.Controls.Add(this.chkCup);
+            this.filterPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.filterPanel.Location = new System.Drawing.Point(0, 25);
+            this.filterPanel.Name = "filterPanel";
+            this.filterPanel.Size = new System.Drawing.Size(953, 31);
+            this.filterPanel.TabIndex = 4;
+            // 
+            // chkTruck
+            // 
+            this.chkTruck.AutoSize = true;
+            this.chkTruck.Checked = true;
+            this.chkTruck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkTruck.Location = new System.Drawing.Point(256, 8);
+            this.chkTruck.Name = "chkTruck";
+            this.chkTruck.Size = new System.Drawing.Size(161, 17);
+            this.chkTruck.TabIndex = 2;
+            this.chkTruck.Text = "Camping World Truck Series";
+            this.chkTruck.UseVisualStyleBackColor = true;
+            this.chkTruck.CheckedChanged += new System.EventHandler(this.chkSeries_CheckedChanged);
+            // 
+            // chkNationwide
+            // 
+            this.chkNationwide.AutoSize = true;
+            this.chkNationwide.Checked = true;
+            this.chkNationwide.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkNationwide.Location = new System.Drawing.Point(128, 8);
+            this.chkNationwide.Name = "chkNationwide";
+            this.chkNationwide.Size = new System.Drawing.Size(111, 17);
+            this.chkNationwide.TabIndex = 1;
+            this.chkNationwide.Text = "Nationwide Series";
+            this.chkNationwide.UseVisualStyleBackColor = true;
+            this.chkNationwide.CheckedChanged += new System.EventHandler(this.chkSeries_CheckedChanged);
+            // 
+            // chkCup
+            // 
+            this.chkCup.AutoSize = true;
+            this.chkCup.Checked = true;
+            this.chkCup.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkCup.Location = new System.Drawing.Point(8, 8);
+            this.chkCup.Name = "chkCup";
+            this.chkCup.Size = new System.Drawing.Size(107, 17);
+            this.chkCup.TabIndex = 0;
+            this.chkCup.Text = "Sprint Cup Series";
+            this.chkCup.UseVisualStyleBackColor = true;
+            this.chkCup.CheckedChanged += new System.EventHandler(this.chkSeries_CheckedChanged);
+            // 
             // ScheduleDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(603, 294);
+            this.ClientSize = new System.Drawing.Size(953, 439);
             this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.filterPanel);
             this.Controls.Add(this.toolStrip1);
             this.Name = "ScheduleDialog";
             this.Text = "Feed Scheduler";
@@ -225,6 +285,8 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.filterPanel.ResumeLayout(false);
+            this.filterPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -250,5 +312,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripButton btnReload;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.Panel filterPanel;
+        private System.Windows.Forms.CheckBox chkTruck;
+        private System.Windows.Forms.CheckBox chkNationwide;
+        private System.Windows.Forms.CheckBox chkCup;
     }
 }

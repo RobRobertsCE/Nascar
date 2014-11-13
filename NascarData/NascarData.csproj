@@ -48,7 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Driver.cs" />
     <Compile Include="EventSchedule.cs" />
     <Compile Include="FlagState.cs" />

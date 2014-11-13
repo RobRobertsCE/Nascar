@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Windows.Forms;
 using Nascar.Data.Schedule;
@@ -15,17 +17,25 @@ namespace Nascar.ServiceScheduler
     {
         #region fields
         private INascarLiveFeedEngine _engine = null;
-        private IList<ScheduledEvent> _schedule = null;
+        private IList<RaceEventView> _schedule = null;
         #endregion
 
         #region properties
-        private ScheduledEvent SelectedEvent
+        //private RaceEvent SelectedEvent
+        //{
+        //    get
+        //    {
+        //        return (RaceEvent)dataGridView1.CurrentRow.DataBoundItem;
+        //    }
+        //}
+
+        private RaceEventView SelectedEventView
         {
             get
             {
-                return (ScheduledEvent)dataGridView1.CurrentRow.DataBoundItem;
+                return (RaceEventView)dataGridView1.CurrentRow.DataBoundItem;
             }
-        } 
+        }
         #endregion
 
         #region ctor / load
@@ -37,14 +47,14 @@ namespace Nascar.ServiceScheduler
         private void ScheduleDialog_Load(object sender, EventArgs e)
         {
             UpdateScheduleDisplay();
-        } 
+        }
         #endregion
 
         #region close form
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
-        } 
+        }
         #endregion
 
         #region display schedule
@@ -55,14 +65,39 @@ namespace Nascar.ServiceScheduler
         }
         void LoadSchedule()
         {
-            using (var context = new ServiceSchedulerDbContext())
+            using (var context = new ScheduleDbContext())
             {
-                _schedule = context.ScheduledEvents.ToArray();
+                //_schedule = context.RaceEventViews.Include("RaceSession").Include("RaceSession.Race.Track").Include("RaceSession.Race.Series").OrderBy(s => s.scheduled_event_start).ToArray();
+
+                Expression<Func<RaceEventView, bool>> predicate = r => (
+                  chkCup.Checked && ((r.RaceSession.Race.series_id == 1) == chkCup.Checked))
+                  || (chkNationwide.Checked && ((r.RaceSession.Race.series_id == 2) == chkNationwide.Checked))
+                  || (chkTruck.Checked && ((r.RaceSession.Race.series_id == 3) == chkTruck.Checked));
+
+                _schedule = context.RaceEventViews.Include("RaceSession").Include("RaceSession.Race.Track").Include("RaceSession.Race.Series").Where(predicate).OrderBy(r => r.scheduled_event_start).ToArray();
             }
         }
         void DisplaySchedule()
         {
             this.dataGridView1.DataSource = _schedule;
+            this.dataGridView1.Columns["scheduled_event_id"].Visible = false;
+            this.dataGridView1.Columns["race_session_id"].Visible = false;
+            this.dataGridView1.Columns["race_id"].Visible = false;
+            this.dataGridView1.Columns["RaceSession"].Visible = false;
+
+            this.dataGridView1.Columns["track_name"].DisplayIndex = 0;
+            this.dataGridView1.Columns["track_name"].HeaderText = "Track";
+            this.dataGridView1.Columns["series_name"].DisplayIndex = 1;
+            this.dataGridView1.Columns["series_name"].HeaderText = "Series";
+            this.dataGridView1.Columns["session_name"].DisplayIndex = 2;
+            this.dataGridView1.Columns["session_name"].HeaderText = "Session";
+            this.dataGridView1.Columns["sequence"].DisplayIndex = 3;
+            this.dataGridView1.Columns["sequence"].HeaderText = "Sequence";
+            this.dataGridView1.Columns["status"].HeaderText = "Status";
+            this.dataGridView1.Columns["enabled"].HeaderText = "Enabled";
+            this.dataGridView1.Columns["scheduled_event_start"].HeaderText = "Start";
+            this.dataGridView1.Columns["scheduled_event_end"].HeaderText = "End";
+
         }
         #endregion
 
@@ -73,28 +108,40 @@ namespace Nascar.ServiceScheduler
         }
         void DeleteSelectedEvent()
         {
-            if (null == SelectedEvent) return;
-            DeleteEvent(SelectedEvent);
-        } 
+            if (null == SelectedEventView) return;
+            DeleteEvent(SelectedEventView.scheduled_event_id);
+        }
         #endregion
-        
+
         #region add new event to schedule
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            this.DisplayScheduledEventDialog(new ScheduledEvent());
-        }      
+            this.DisplayScheduledEventDialog(new RaceEvent());
+        }
         #endregion
 
         #region edit an existing event
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            if (null == SelectedEvent) return;
-            DisplayScheduledEventDialog(SelectedEvent);
+            if (null == SelectedEventView) return;
+            DisplayScheduledEventDialog(SelectedEventView);
         }
         #endregion
 
         #region ScheduledEventDialog
-        void DisplayScheduledEventDialog(ScheduledEvent scheduledEvent)
+        void DisplayScheduledEventDialog(RaceEventView scheduledEventView)
+        {
+            RaceEvent raceEvent = null;
+
+            using (var context = new ScheduleDbContext())
+            {
+                raceEvent = context.RaceEvents.Include("RaceSession").Include("RaceSession.Race.Track").Include("RaceSession.Race.Series").Where(r => r.scheduled_event_id == scheduledEventView.scheduled_event_id).FirstOrDefault();
+            }
+
+            if (raceEvent != null)
+                DisplayScheduledEventDialog(raceEvent);
+        }
+        void DisplayScheduledEventDialog(RaceEvent scheduledEvent)
         {
             ScheduledEventDialog dialog = new ScheduledEventDialog(scheduledEvent);
 
@@ -106,31 +153,28 @@ namespace Nascar.ServiceScheduler
         #endregion
 
         #region data methods
-        void SaveEvent(ScheduledEvent scheduledEvent)
+        void SaveEvent(RaceEvent scheduledEvent)
         {
             if (null == scheduledEvent) return;
 
-            using (var context = new ServiceSchedulerDbContext())
+            using (var context = new ScheduleDbContext())
             {
-                context.ScheduledEvents.Add(scheduledEvent);
+                context.RaceEvents.AddOrUpdate(scheduledEvent);
+
                 if (scheduledEvent.status == "Not Saved") scheduledEvent.status = "Saved";
-                context.Entry(scheduledEvent).State = scheduledEvent.scheduled_event_id == 0 ?
-                                   EntityState.Added :
-                                   EntityState.Modified; 
 
                 context.SaveChanges();
             }
 
             UpdateScheduleDisplay();
         }
-        void DeleteEvent(ScheduledEvent scheduledEvent)
+        void DeleteEvent(int scheduled_event_id)
         {
-            if (null == scheduledEvent) return;
-            using (var context = new ServiceSchedulerDbContext())
+            using (var context = new ScheduleDbContext())
             {
-                var selected = context.ScheduledEvents.Where(e => e.scheduled_event_id == scheduledEvent.scheduled_event_id).FirstOrDefault();
+                var selected = context.RaceEvents.Where(e => e.scheduled_event_id == scheduled_event_id).FirstOrDefault();
                 if (null == selected) return;
-                context.ScheduledEvents.Remove(selected);
+                context.RaceEvents.Remove(selected);
                 context.SaveChanges();
             }
             UpdateScheduleDisplay();
@@ -166,12 +210,13 @@ namespace Nascar.ServiceScheduler
         {
             SeriesScheduleDialog dialog = new SeriesScheduleDialog();
             dialog.ShowDialog(this);
-        } 
+            UpdateScheduleDisplay();
+        }
         #endregion
 
         private void btnStartStop_Click(object sender, EventArgs e)
         {
-            if (btnStartStop.Text=="Start")
+            if (btnStartStop.Text == "Start")
             {
                 StartFeedHarvester();
                 btnStartStop.Text = "Stop";
@@ -200,6 +245,11 @@ namespace Nascar.ServiceScheduler
         }
 
         private void btnReload_Click(object sender, EventArgs e)
+        {
+            UpdateScheduleDisplay();
+        }
+
+        private void chkSeries_CheckedChanged(object sender, EventArgs e)
         {
             UpdateScheduleDisplay();
         }

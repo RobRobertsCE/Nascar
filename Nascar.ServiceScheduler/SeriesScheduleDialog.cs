@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,15 +15,27 @@ namespace Nascar.ServiceScheduler
     public partial class SeriesScheduleDialog : Form
     {
         #region fields
-        private IList<ScheduledRace> _data = null;
+        //private IList<Race> _data = null;
+        private IList<RaceView> _data = null;
         #endregion
 
         #region properties
-        private ScheduledRace Selected
+        private Race Selected
         {
             get
             {
-                return (ScheduledRace)dataGridView1.CurrentRow.DataBoundItem;
+                var rv = (RaceView)dataGridView1.CurrentRow.DataBoundItem;
+                using (var context = GetContext())
+                {
+                    return context.Races.Include("Track").Include("Series").Where(e => e.race_id == rv.race_id).FirstOrDefault();
+                }
+            }
+        }
+        private RaceView SelectedRaceView
+        {
+            get
+            {
+                return (RaceView)dataGridView1.CurrentRow.DataBoundItem;
             }
         }
         #endregion
@@ -55,18 +68,18 @@ namespace Nascar.ServiceScheduler
         }
         void LoadData()
         {
-            using (var context = new ServiceSchedulerDbContext())
-            {
-                Expression<Func<ScheduledRace, bool>> predicate = r => (
-                    chkCup.Checked && ((r.series_id == 1) == chkCup.Checked))
-                    || (chkNationwide.Checked && ((r.series_id == 2) == chkNationwide.Checked))
-                    || (chkTruck.Checked && ((r.series_id == 3) == chkTruck.Checked));
+            using (var context = new ScheduleDbContext())
+            {               
+                Expression<Func<RaceView, bool>> predicate = r => (
+                   chkCup.Checked && ((r.series_id == 1) == chkCup.Checked))
+                   || (chkNationwide.Checked && ((r.series_id == 2) == chkNationwide.Checked))
+                   || (chkTruck.Checked && ((r.series_id == 3) == chkTruck.Checked));
 
-                _data = context.ScheduledRaces.Include("Track").Include("Series").Where(predicate).OrderBy(r => r.race_date).ToArray();
+                _data = context.RaceViews.Include("Track").Include("Series").Where(predicate).OrderBy(r => r.race_date).ToArray();
 
             }
         }
-       
+
         void DisplayData()
         {
             this.dataGridView1.DataSource = _data;
@@ -90,7 +103,7 @@ namespace Nascar.ServiceScheduler
         #region add new
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            this.DisplayDialog(new ScheduledRace());
+            this.DisplayDialog(new Race());
         }
         #endregion
 
@@ -103,62 +116,56 @@ namespace Nascar.ServiceScheduler
         #endregion
 
         #region ItemDialog
-        void DisplayDialog(ScheduledRace itemToDisplay)
+        void DisplayDialog(Race itemToDisplay)
         {
             SeriesRaceDialog dialog = new SeriesRaceDialog(itemToDisplay);
 
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
                 this.Save(dialog.Race, dialog.IsNew);
+
+                UpdateDisplay();
             }
         }
         #endregion
 
         #region data methods
-        void Save(ScheduledRace item, bool isNew)
+        void Save(Race item, bool isNew)
         {
             if (null == item) return;
 
             using (var context = GetContext())
             {
-                if (isNew)
-                {
-                    context.ScheduledRaces.Add(item);
-                }
-                else
-                {
-                    context.ScheduledRaces.Attach(item); 
-                    context.Entry(item).State = EntityState.Modified;
-                }
-                
+                context.Races.AddOrUpdate(item);
+
                 context.SaveChanges();
             }
 
             UpdateDisplay();
         }
-        void Delete(ScheduledRace item)
+        void Delete(Race item)
         {
             if (null == item) return;
             using (var context = GetContext())
             {
-                var selected = context.ScheduledRaces.Where(e => e.series_id == item.series_id).FirstOrDefault();
+                var selected = context.Races.Where(e => e.series_id == item.series_id).FirstOrDefault();
                 if (null == selected) return;
-                context.ScheduledRaces.Remove(selected);
+                context.Races.Remove(selected);
                 context.SaveChanges();
             }
             UpdateDisplay();
         }
-        ServiceSchedulerDbContext GetContext()
+        ScheduleDbContext GetContext()
         {
-            return new ServiceSchedulerDbContext();
+            return new ScheduleDbContext();
         }
         #endregion
 
         #region filtering
-        private void chkCup_CheckedChanged(object sender, EventArgs e)
+        private void chkSeries_CheckedChanged(object sender, EventArgs e)
         {
             UpdateDisplay();
-        } 
+        }
         #endregion
 
         #region sessions
@@ -167,12 +174,12 @@ namespace Nascar.ServiceScheduler
             if (null == Selected) return;
             DisplaySessionsDialog(Selected);
         }
-        void DisplaySessionsDialog(ScheduledRace race)
+        void DisplaySessionsDialog(Race race)
         {
             RaceSessionsDialog dialog = new RaceSessionsDialog(race);
             dialog.ShowDialog(this);
 
-        } 
+        }
         #endregion
     }
 }

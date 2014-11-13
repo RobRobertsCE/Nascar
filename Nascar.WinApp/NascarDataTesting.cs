@@ -37,6 +37,7 @@ namespace Nascar.WinApp
         LiveFeedProcessor processor = null;
         LiveFeedHarvester harvester = null;
         FeedManager manager = null;
+        ReplayManager replayManager = null;
         int feedCount = 0;
         DateTime startTime;
         #endregion
@@ -289,7 +290,7 @@ namespace Nascar.WinApp
 
         void DisplayFeedData(LiveFeedModel model)
         {
-            liveFeedDisplay1.UpdateDisplay(model);
+            liveFeedDisplay1.Model = model;
         }
         #endregion
 
@@ -364,6 +365,7 @@ namespace Nascar.WinApp
         }
 
         #endregion
+
         private class RaceEvent
         {
             public int race_id { get; set; }
@@ -401,6 +403,133 @@ namespace Nascar.WinApp
         {
             currentRaceId++;
             textBox1.Text = currentRaceId.ToString();
+        }
+
+        private void startReplay_Click(object sender, EventArgs e)
+        {
+            StartReplay();
+        }
+        void StartReplay()
+        {
+            try
+            {
+                if (null == replayManager)
+                {
+                    InitializeFeedStats();
+
+                    SetControlState(DisableControls);
+
+                    InitializeReplayManager();
+                }
+                replayManager.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Console.WriteLine(ex);
+            }
+        }
+        void InitializeReplayManager()
+        {
+            if (null != replayManager)
+            {
+                replayManager.Stop();
+                replayManager.LiveFeedStarted -= manager_LiveFeedStarted;
+                replayManager.LiveFeedRawData -= manager_RawFeedEvent;
+                replayManager.LiveFeedStopped -= manager_LiveFeedStopped;
+                replayManager.LiveFeedEvent -= manager_ReplayEvent;
+                replayManager.Dispose();
+                if (null != replayManager) replayManager = null;
+            }
+            lblRaceId.Text = String.Format("RaceId: {0}", currentRaceId);
+            replayManager = new ReplayManager(SelectedSeries, currentRaceId);
+            replayManager.LiveFeedStarted += manager_LiveFeedStarted;
+            replayManager.LiveFeedStopped += manager_LiveFeedStopped;
+            if (chkHarvest.Checked)
+            {
+                //replayManager.LiveFeedRawData += manager_RawFeedEvent;
+                SetRawFeedIndicatorState(IndicatorState.Ready);
+            }
+            if (chkProcess.Checked)
+            {
+                replayManager.LiveFeedEvent += manager_ReplayEvent;
+                SetFeedIndicatorState(IndicatorState.Ready);
+            }
+        }
+        void manager_ReplayStarted(object sender, EventArgs e)
+        {
+            Console.WriteLine("ReplayManager Started");
+        }
+        private void stopReplay_Click(object sender, EventArgs e)
+        {
+            StopReplay();
+        }
+        void StopReplay()
+        {
+            try
+            {
+                if (null == replayManager) return;
+                replayManager.Stop();
+
+                SetControlState(EnableControls);
+                SetFeedIndicatorState(IndicatorState.Off);
+                SetRawFeedIndicatorState(IndicatorState.Off);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Console.WriteLine(ex);
+            }
+        }
+        void manager_ReplayStopped(object sender, EventArgs e)
+        {
+            Console.WriteLine("ReplayManager Stopped");
+        }
+        void manager_ReplayEvent(object sender, LiveFeedEventArgs e)
+        {
+            try
+            {
+                //txtRunName.SetPropertyThreadSafe(() => txtRunName.Text, e.LiveFeed.run_name);
+
+                this.Invoke((MethodInvoker)delegate
+                {
+                    ProcessReplayData(e.LiveFeed);
+                });
+
+                this.Invoke((MethodInvoker)delegate
+                {
+                    UpdateFeedCount();
+                });
+            }
+            catch (Exception ex)
+            {
+                this.Invoke((MethodInvoker)delegate
+                {
+                    SetFeedIndicatorState(IndicatorState.Error);
+                });
+                MessageBox.Show(ex.Message);
+                Console.WriteLine(ex);
+            }
+        }
+        void ProcessReplayData(LiveFeedModel model)
+        {
+            SetFeedIndicatorState(IndicatorState.Busy);
+
+            DisplayFeedData(model);
+
+            SetFeedIndicatorState(IndicatorState.Ready);
+        }
+
+        private void pauseReplay_Click(object sender, EventArgs e)
+        {
+            if (null == replayManager) return;
+            replayManager.Pause();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (null == replayManager) return;
+            replayManager.GetSingleFeed();
         }
     }
 }

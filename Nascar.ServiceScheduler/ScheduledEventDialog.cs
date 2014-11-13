@@ -12,7 +12,7 @@ namespace Nascar.ServiceScheduler
 {
     public partial class ScheduledEventDialog : Form
     {
-        public ScheduledEvent ScheduledEvent
+        public RaceEvent ScheduledEvent
         {
             get
             {
@@ -20,7 +20,7 @@ namespace Nascar.ServiceScheduler
             }           
         }
 
-        public ScheduledEventDialog(ScheduledEvent scheduledEvent)
+        public ScheduledEventDialog(RaceEvent scheduledEvent)
         {
             InitializeComponent();
             this.eventView1.ScheduledEvent = scheduledEvent;

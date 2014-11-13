@@ -8,7 +8,7 @@ namespace Nascar.ServiceScheduler.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.ScheduledRace",
+                "dbo.Race",
                 c => new
                     {
                         race_id = c.Int(nullable: false),
@@ -17,13 +17,13 @@ namespace Nascar.ServiceScheduler.Migrations
                         sequence = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.race_id)
-                .ForeignKey("dbo.ScheduledSeries", t => t.series_id, cascadeDelete: true)
-                .ForeignKey("dbo.ScheduledTrack", t => t.track_id, cascadeDelete: true)
+                .ForeignKey("dbo.Series", t => t.series_id, cascadeDelete: true)
+                .ForeignKey("dbo.Track", t => t.track_id, cascadeDelete: true)
                 .Index(t => t.track_id)
                 .Index(t => t.series_id);
             
             CreateTable(
-                "dbo.ScheduledSeries",
+                "dbo.Series",
                 c => new
                     {
                         series_id = c.Int(nullable: false),
@@ -32,7 +32,7 @@ namespace Nascar.ServiceScheduler.Migrations
                 .PrimaryKey(t => t.series_id);
             
             CreateTable(
-                "dbo.ScheduledTrack",
+                "dbo.Track",
                 c => new
                     {
                         track_id = c.Int(nullable: false),
@@ -41,7 +41,7 @@ namespace Nascar.ServiceScheduler.Migrations
                 .PrimaryKey(t => t.track_id);
             
             CreateTable(
-                "dbo.ScheduledRaceSession",
+                "dbo.RaceSession",
                 c => new
                     {
                         race_session_id = c.Int(nullable: false),
@@ -50,13 +50,13 @@ namespace Nascar.ServiceScheduler.Migrations
                         sequence = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.race_session_id)
-                .ForeignKey("dbo.ScheduledRace", t => t.race_id, cascadeDelete: true)
-                .ForeignKey("dbo.ScheduledSession", t => t.session_id, cascadeDelete: true)
+                .ForeignKey("dbo.Race", t => t.race_id, cascadeDelete: true)
+                .ForeignKey("dbo.Session", t => t.session_id, cascadeDelete: true)
                 .Index(t => t.race_id)
                 .Index(t => t.session_id);
             
             CreateTable(
-                "dbo.ScheduledSession",
+                "dbo.Session",
                 c => new
                     {
                         session_id = c.Int(nullable: false),
@@ -68,19 +68,19 @@ namespace Nascar.ServiceScheduler.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.ScheduledRaceSession", "session_id", "dbo.ScheduledSession");
-            DropForeignKey("dbo.ScheduledRaceSession", "race_id", "dbo.ScheduledRace");
-            DropForeignKey("dbo.ScheduledRace", "track_id", "dbo.ScheduledTrack");
-            DropForeignKey("dbo.ScheduledRace", "series_id", "dbo.ScheduledSeries");
-            DropIndex("dbo.ScheduledRaceSession", new[] { "session_id" });
-            DropIndex("dbo.ScheduledRaceSession", new[] { "race_id" });
-            DropIndex("dbo.ScheduledRace", new[] { "series_id" });
-            DropIndex("dbo.ScheduledRace", new[] { "track_id" });
-            DropTable("dbo.ScheduledSession");
-            DropTable("dbo.ScheduledRaceSession");
-            DropTable("dbo.ScheduledTrack");
-            DropTable("dbo.ScheduledSeries");
-            DropTable("dbo.ScheduledRace");
+            DropForeignKey("dbo.RaceSession", "session_id", "dbo.Session");
+            DropForeignKey("dbo.RaceSession", "race_id", "dbo.Race");
+            DropForeignKey("dbo.Race", "track_id", "dbo.Track");
+            DropForeignKey("dbo.Race", "series_id", "dbo.Series");
+            DropIndex("dbo.RaceSession", new[] { "session_id" });
+            DropIndex("dbo.RaceSession", new[] { "race_id" });
+            DropIndex("dbo.Race", new[] { "series_id" });
+            DropIndex("dbo.Race", new[] { "track_id" });
+            DropTable("dbo.Session");
+            DropTable("dbo.RaceSession");
+            DropTable("dbo.Track");
+            DropTable("dbo.Series");
+            DropTable("dbo.Race");
         }
     }
 }

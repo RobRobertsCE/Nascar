@@ -55,13 +55,12 @@ namespace Nascar.Web
         #endregion
 
         #region consts
-        const double DefaultTimerInterval = 20000; 
+        const double DefaultTimerInterval = 10000; 
         #endregion
 
         #region fields
         Timer feedTimer = null; 
-        IFeedClient feedClient = null;
-        string rawFeed = String.Empty;
+        IFeedClient feedClient = null;        
         #endregion
 
         #region props
@@ -176,7 +175,7 @@ namespace Nascar.Web
         }
         protected internal void BeginLiveFeedEvent()
         {
-            rawFeed = feedClient.GetData();
+            string rawFeed = feedClient.GetData();
             OnLiveFeedRawData(rawFeed);
             LiveFeedModel model = GetModel(rawFeed);
             OnLiveFeedEvent(model);

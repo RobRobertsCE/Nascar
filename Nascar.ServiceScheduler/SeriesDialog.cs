@@ -14,8 +14,8 @@ namespace Nascar.ServiceScheduler
     {
         public bool IsNew { get; set; }
 
-        private ScheduledSeries _series = null;
-        public ScheduledSeries Series
+        private Series _series = null;
+        public Series Series
         { 
             get 
             { return _series; } 
@@ -26,10 +26,10 @@ namespace Nascar.ServiceScheduler
         }
 
         public SeriesDialog()
-            : this(new ScheduledSeries())
+            : this(new Series())
         {  }
 
-        public SeriesDialog(ScheduledSeries series)
+        public SeriesDialog(Series series)
         {
             InitializeComponent();
             this.Series = series;

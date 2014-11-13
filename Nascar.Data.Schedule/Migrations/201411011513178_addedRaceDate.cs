@@ -7,12 +7,12 @@ namespace Nascar.ServiceScheduler.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.ScheduledRace", "race_date", c => c.DateTime(nullable: false));
+            AddColumn("dbo.Race", "race_date", c => c.DateTime(nullable: false));
         }
         
         public override void Down()
         {
-            DropColumn("dbo.ScheduledRace", "race_date");
+            DropColumn("dbo.Race", "race_date");
         }
     }
 }

@@ -7,19 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Nascar.Data.Schedule;
+using System.Data.Entity.Migrations;
 
 namespace Nascar.ServiceScheduler
 {
     public partial class TracksDialog : Form
     {
-        private IList<ScheduledTrack> _tracks = null;
+        private IList<Track> _tracks = null;
 
         #region properties
-        private ScheduledTrack SelectedTrack
+        private Track SelectedTrack
         {
             get
             {
-                return (ScheduledTrack)dataGridView1.CurrentRow.DataBoundItem;
+                return (Track)dataGridView1.CurrentRow.DataBoundItem;
             }
         }
         #endregion
@@ -52,9 +53,9 @@ namespace Nascar.ServiceScheduler
         }
         void LoadTrack()
         {
-            using (var context = new ServiceSchedulerDbContext())
+            using (var context = new ScheduleDbContext())
             {
-                _tracks = context.ScheduledTracks.ToArray();
+                _tracks = context.Tracks.ToArray();
             }
         }
         void DisplayTrack()
@@ -78,7 +79,7 @@ namespace Nascar.ServiceScheduler
         #region add new Track
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            this.DisplayTrackDialog(new ScheduledTrack());
+            this.DisplayTrackDialog(new Track());
         }
         #endregion
 
@@ -91,7 +92,7 @@ namespace Nascar.ServiceScheduler
         #endregion
 
         #region ScheduledTrackDialog
-        void DisplayTrackDialog(ScheduledTrack TrackdEvent)
+        void DisplayTrackDialog(Track TrackdEvent)
         {
             TrackDialog dialog = new TrackDialog(TrackdEvent);
 
@@ -103,31 +104,31 @@ namespace Nascar.ServiceScheduler
         #endregion
 
         #region data methods
-        void SaveTrack(ScheduledTrack track, bool isNew)
+        void SaveTrack(Track track, bool isNew)
         {
             if (null == track) return;
 
-            using (var context = new ServiceSchedulerDbContext())
+            using (var context = new ScheduleDbContext())
             {
-                context.ScheduledTracks.Add(track);
+                context.Tracks.AddOrUpdate(track);
 
-                context.Entry(track).State = isNew ?
-                                   EntityState.Added :
-                                   EntityState.Modified;
+                //context.Entry(track).State = isNew ?
+                //                   EntityState.Added :
+                //                   EntityState.Modified;
 
                 context.SaveChanges();
             }
 
             UpdateTrackDisplay();
         }
-        void DeleteTrack(ScheduledTrack track)
+        void DeleteTrack(Track track)
         {
             if (null == track) return;
-            using (var context = new ServiceSchedulerDbContext())
+            using (var context = new ScheduleDbContext())
             {
-                var selected = context.ScheduledTracks.Where(e => e.track_id == track.track_id).FirstOrDefault();
+                var selected = context.Tracks.Where(e => e.track_id == track.track_id).FirstOrDefault();
                 if (null == selected) return;
-                context.ScheduledTracks.Remove(selected);
+                context.Tracks.Remove(selected);
                 context.SaveChanges();
             }
             UpdateTrackDisplay();

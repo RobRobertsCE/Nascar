@@ -34,6 +34,8 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.txtId = new System.Windows.Forms.TextBox();
             this.txtName = new System.Windows.Forms.TextBox();
+            this.txtLength = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -59,7 +61,7 @@
             // btnOk
             // 
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Location = new System.Drawing.Point(8, 64);
+            this.btnOk.Location = new System.Drawing.Point(8, 88);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 2;
@@ -69,7 +71,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(272, 64);
+            this.btnCancel.Location = new System.Drawing.Point(272, 88);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 3;
@@ -90,11 +92,30 @@
             this.txtName.Size = new System.Drawing.Size(264, 20);
             this.txtName.TabIndex = 5;
             // 
+            // txtLength
+            // 
+            this.txtLength.Location = new System.Drawing.Point(80, 56);
+            this.txtLength.Name = "txtLength";
+            this.txtLength.Size = new System.Drawing.Size(100, 20);
+            this.txtLength.TabIndex = 7;
+            // 
+            // label3
+            // 
+            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label3.Location = new System.Drawing.Point(8, 56);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(72, 20);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Length";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // TrackDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(355, 97);
+            this.ClientSize = new System.Drawing.Size(355, 118);
+            this.Controls.Add(this.txtLength);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.txtId);
             this.Controls.Add(this.btnCancel);
@@ -118,5 +139,7 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.TextBox txtLength;
+        private System.Windows.Forms.Label label3;
     }
 }

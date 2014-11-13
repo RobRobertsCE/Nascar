@@ -14,8 +14,8 @@ namespace Nascar.ServiceScheduler
     {
         public bool IsNew { get; set; }
 
-        private ScheduledTrack _track = null;
-        public ScheduledTrack Track { 
+        private Track _track = null;
+        public Track Track { 
             get 
             { return _track; } 
             private set 
@@ -25,10 +25,10 @@ namespace Nascar.ServiceScheduler
         }
 
         public TrackDialog()
-            :this(new ScheduledTrack())
+            :this(new Track())
         {  }
 
-        public TrackDialog(ScheduledTrack track)
+        public TrackDialog(Track track)
         {
             InitializeComponent();
             this.Track = track;
@@ -41,6 +41,7 @@ namespace Nascar.ServiceScheduler
             if (null == _track) return;
             this.txtId.DataBindings.Add(new Binding("Text", Track, "track_id"));
             this.txtName.DataBindings.Add(new Binding("Text", Track, "track_name"));
+            this.txtLength.DataBindings.Add(new Binding("Text", Track, "track_length"));
         }
     }
 }

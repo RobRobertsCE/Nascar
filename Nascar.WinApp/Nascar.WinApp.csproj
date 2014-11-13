@@ -56,6 +56,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ViewModels\GreenFlagRun.cs" />
+    <Compile Include="ViewModels\IVehicleViewModel.cs" />
+    <Compile Include="ViewModels\LapTimeData.cs" />
+    <Compile Include="Views\VehicleStatView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\VehicleStatView.Designer.cs">
+      <DependentUpon>VehicleStatView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\VehicleViewModel.cs" />
     <Compile Include="Views\DriverView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -75,6 +85,7 @@
     <Compile Include="NascarDataTesting.Designer.cs">
       <DependentUpon>NascarDataTesting.cs</DependentUpon>
     </Compile>
+    <Compile Include="FlagStateChanged.cs" />
     <Compile Include="Views\LiveFeedDisplay.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -95,6 +106,15 @@
     <Compile Include="Views\VehicleView.Designer.cs">
       <DependentUpon>VehicleView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\VehicleViewModelList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\VehicleViewModelList.Designer.cs">
+      <DependentUpon>VehicleViewModelList.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Views\VehicleStatView.resx">
+      <DependentUpon>VehicleStatView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\DriverView.resx">
       <DependentUpon>DriverView.cs</DependentUpon>
     </EmbeddedResource>
@@ -122,6 +142,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\VehicleView.resx">
       <DependentUpon>VehicleView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\VehicleViewModelList.resx">
+      <DependentUpon>VehicleViewModelList.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="packages.config" />
@@ -172,6 +195,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\live_feed_char_cup_final.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toyota_logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

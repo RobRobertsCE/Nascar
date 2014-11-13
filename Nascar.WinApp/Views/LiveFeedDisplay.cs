@@ -13,36 +13,153 @@ namespace Nascar.WinApp
 {
     public partial class LiveFeedDisplay : UserControl
     {
-        bool eventSet = false;
+        FlagStateChanged FlagStateChangeEvent;
+
+        LiveFeedModel last_model;
+
+        LiveFeedModel current_model;
+        public LiveFeedModel Model
+        {
+            get
+            {
+                return current_model;
+            }
+            set
+            {
+                current_model = value;
+                UpdateDisplay(current_model);
+                last_model = current_model;
+            }
+        }
 
         public LiveFeedDisplay()
         {
             InitializeComponent();
-        }
 
-        public void UpdateDisplay(LiveFeedModel model)
-        {
-            if (!eventSet)
-            {
-                SetEvent(model);
-            }
-                        
             vehiclePanel.Controls.Clear();
-
-            foreach (VehicleModel vehicle in model.vehicles.OrderBy(p=>p.running_position))
-            {
-                vehiclePanel.Controls.Add(new VehicleView(vehicle));
-            }
-           
         }
 
-        void SetEvent(LiveFeedModel model)
+        void UpdateDisplay(LiveFeedModel model)
         {
-            eventDisplay.TrackName = model.track_name;
-            eventDisplay.Run = model.run_name;
-            eventDisplay.EventDate = model.created;
-            eventDisplay.Series = (SeriesName)model.series_id;
-            eventSet = true;
+            if (null == model) return;
+
+            try
+            {
+                this.SuspendLayout();
+                UpdateFlagState(model);
+                UpdateEvent(model);
+                UpdateVehicles(model);
+                UpdateMovers();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                this.ResumeLayout();
+            }
         }
+
+        void UpdateFlagState(LiveFeedModel model)
+        {
+            if (null == last_model) return;
+
+            if (model.flag_state != last_model.flag_state)
+            {
+                FlagStateChangeEvent.Invoke((FlagState)last_model.flag_state, (FlagState)model.flag_state, model.lap_number);
+            }
+        }
+
+        void UpdateEvent(LiveFeedModel model)
+        {
+            eventDisplay.Model = model;
+        }
+
+        void UpdateVehicles(LiveFeedModel model)
+        {
+            double lastDelta = 0;
+            foreach (VehicleModel vehicle in model.vehicles.OrderBy(p => p.running_position))
+            {
+                var view = GetVehicleView(vehicle.vehicle_number); 
+
+                view.DistanceBehind = vehicle.delta - lastDelta;
+
+                view.Vehicle = vehicle; // << updates done here
+
+                this.vehiclePanel.Controls.SetChildIndex(view, vehicle.running_position - 1);
+                
+                lastDelta = vehicle.delta;
+            }
+
+            this.vehicleViewModelList1.UpdateDisplay(model);
+        }
+
+        VehicleView GetVehicleView(string vehicle_number)
+        {
+            var view = vehiclePanel.Controls.OfType<VehicleView>().Where(v => v.VehicleNumber == vehicle_number).FirstOrDefault();
+
+            if (null == view)
+            {
+                view = new VehicleView();
+                FlagStateChangeEvent += view.FlagStateChangedHandler;
+                view.Disposed += view_Disposed;
+                vehiclePanel.Controls.Add(view);
+            }
+
+            return view;
+        }
+        void view_Disposed(object sender, EventArgs e)
+        {
+            FlagStateChangeEvent += ((VehicleView)sender).FlagStateChangedHandler;
+        }
+
+        #region List Displays
+        void UpdateMovers()
+        {
+            UpdateBestRun();
+            UpdateWorstRun();
+            UpdateBestRace();
+            UpdateWorstRace();
+            Update5LapAverage();
+            Update10LapAverage();
+            Update20LapAverage();
+            UpdateBestLastLap();
+
+            eventDisplay1.Invalidate();
+        }
+        void UpdateBestRun()
+        {
+            eventDisplay.SetRunMovers(vehiclePanel.Controls.OfType<VehicleView>().OrderByDescending(v => v.RunPlusMinus).Take(5).ToList());
+        }
+        void UpdateWorstRun()
+        {
+            eventDisplay.SetRunFallers(vehiclePanel.Controls.OfType<VehicleView>().OrderBy(v => v.RunPlusMinus).Take(5).ToList());
+        }
+        void UpdateBestRace()
+        {
+            eventDisplay.SetRaceMovers(vehiclePanel.Controls.OfType<VehicleView>().OrderByDescending(v => v.RacePlusMinus).Take(5).ToList());
+        }
+        void UpdateWorstRace()
+        {
+            eventDisplay.SetRaceFallers(vehiclePanel.Controls.OfType<VehicleView>().OrderBy(v => v.RacePlusMinus).Take(5).ToList());
+        }
+        void Update5LapAverage()
+        {
+            eventDisplay.Set5LapAverage(vehiclePanel.Controls.OfType<VehicleView>().Where(v => v.FiveLapAverage > 0).OrderBy(v => v.FiveLapAverage).Take(5).ToList());
+        }
+        void Update10LapAverage()
+        {
+            eventDisplay.Set10LapAverage(vehiclePanel.Controls.OfType<VehicleView>().Where(v => v.TenLapAverage > 0).OrderBy(v => v.TenLapAverage).Take(5).ToList());
+        }
+        void Update20LapAverage()
+        {
+            eventDisplay.Set20LapAverage(vehiclePanel.Controls.OfType<VehicleView>().Where(v => v.TwentyLapAverage > 0).OrderBy(v => v.TwentyLapAverage).Take(5).ToList());
+        }
+        void UpdateBestLastLap()
+        {
+            eventDisplay.SetBestLastLaps(vehiclePanel.Controls.OfType<VehicleView>().Where(v => v.Vehicle.last_lap_time > 0).OrderBy(v => v.Vehicle.last_lap_time).Take(5).ToList());
+        } 
+        #endregion
     }
 }

@@ -14,7 +14,7 @@ namespace Nascar.Web
     {       
         public LiveFeedClient(SeriesName series)
             :base(series)
-        {        }
+        { }
         public LiveFeedClient(SeriesName series, int raceId)
             : base(series, raceId)
         { }

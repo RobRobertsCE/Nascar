@@ -5,8 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Nascar.Data.Schedule
 {
-    [Table("ScheduledEvent")]
-    public class ScheduledEvent
+    [Table("RaceEvent")]
+    public class RaceEvent
     {
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity), Key()]
         public int scheduled_event_id { get; set; }
@@ -23,7 +23,7 @@ namespace Nascar.Data.Schedule
         public DateTime scheduled_event_end { get; set; }
 
 
-        public ScheduledEvent()
+        public RaceEvent()
         {
             scheduled_event_start = DateTime.Now;
             scheduled_event_end = DateTime.Now;

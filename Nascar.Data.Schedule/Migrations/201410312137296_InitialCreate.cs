@@ -8,7 +8,7 @@ namespace Nascar.ServiceScheduler.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.ScheduledEvent",
+                "dbo.RaceEvent",
                 c => new
                     {
                         scheduled_event_id = c.Int(nullable: false, identity: true),
@@ -30,7 +30,7 @@ namespace Nascar.ServiceScheduler.Migrations
         
         public override void Down()
         {
-            DropTable("dbo.ScheduledEvent");
+            DropTable("dbo.RaceEvent");
         }
     }
 }

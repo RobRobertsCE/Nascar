@@ -115,6 +115,16 @@ namespace Nascar.WinApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap toyota_logo {
+            get {
+                object obj = ResourceManager.GetObject("toyota_logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {&quot;lap_number&quot;:95,&quot;elapsed_time&quot;:7094.0,&quot;flag_state&quot;:9,&quot;race_id&quot;:4371,&quot;laps_in_race&quot;:95,&quot;laps_to_go&quot;:0,&quot;vehicles&quot;:[{&quot;average_restart_speed&quot;:181.355,&quot;average_running_position&quot;:13.758,&quot;average_speed&quot;:132.621,&quot;best_lap&quot;:64,&quot;best_lap_speed&quot;:187.813,&quot;best_lap_time&quot;:50.987,&quot;vehicle_manufacturer&quot;:&quot;Frd&quot;,&quot;vehicle_number&quot;:&quot;19&quot;,&quot;driver&quot;:{&quot;driver_id&quot;:4065,&quot;full_name&quot;:&quot;Tyler Reddick #&quot;,&quot;first_name&quot;:&quot;Tyler&quot;,&quot;last_name&quot;:&quot;Reddick #&quot;,&quot;is_in_chase&quot;:false},&quot;vehicle_elapsed_time&quot;:6939.1424,&quot;fastest_laps_run&quot;:1,&quot;laps_completed&quot;: [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string truck_live_feed_tally_final {

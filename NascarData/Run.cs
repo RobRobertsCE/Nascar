@@ -26,7 +26,7 @@ namespace NascarData
         public int run_id { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(100)]
         public string run_name { get; set; }
 
         public int run_type { get; set; }

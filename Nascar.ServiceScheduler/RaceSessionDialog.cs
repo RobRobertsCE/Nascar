@@ -12,10 +12,8 @@ namespace Nascar.ServiceScheduler
 {
     public partial class RaceSessionDialog : Form
     {
-        public bool IsNew { get; set; }
-
-        private ScheduledRaceSession _raceSession = null;
-        public ScheduledRaceSession RaceSession
+        private RaceSession _raceSession = null;
+        public RaceSession RaceSession
         { 
             get 
             { return _raceSession; } 
@@ -26,25 +24,24 @@ namespace Nascar.ServiceScheduler
         }
 
         public RaceSessionDialog()
-            : this(new ScheduledRaceSession())
+            : this(new RaceSession())
         {  }
 
-        public RaceSessionDialog(ScheduledRaceSession raceSession)
+        public RaceSessionDialog(RaceSession raceSession)
         {
             InitializeComponent();
             this.RaceSession = raceSession;
-            this.IsNew = (this.RaceSession.race_session_id==0);
             PopulateSessionControl();
             SetBindings();
-            ScheduledRace race  = GetRace(raceSession.race_id);
+            Race race  = GetRace(raceSession.race_id);
             this.Text = race.Series.series_name + " - " + race.Track.track_name;
         }
 
-        ScheduledRace GetRace(int race_id)
+        Race GetRace(int race_id)
         {
-            using (var context = new ServiceSchedulerDbContext())
+            using (var context = new ScheduleDbContext())
             {
-                return context.ScheduledRaces.Include("Series").Include("Track").Where(r => r.race_id == race_id).FirstOrDefault();
+                return context.Races.Include("Series").Include("Track").Where(r => r.race_id == race_id).FirstOrDefault();
             }
         }
 
@@ -53,9 +50,9 @@ namespace Nascar.ServiceScheduler
             this.cboSessions.DataSource = null;
             this.cboSessions.DisplayMember = "session_name";
             this.cboSessions.ValueMember = "session_id";
-            using (var context = new ServiceSchedulerDbContext())
+            using (var context = new ScheduleDbContext())
             {
-                this.cboSessions.DataSource = context.ScheduledSessions.OrderBy(s => s.session_id).ToList();
+                this.cboSessions.DataSource = context.Sessions.OrderBy(s => s.session_id).ToList();
             }
         }
         void SetBindings()
@@ -69,7 +66,7 @@ namespace Nascar.ServiceScheduler
 
         private void dtStart_ValueChanged(object sender, EventArgs e)
         {
-            dtEnd.Value = dtStart.Value.AddHours(1);
+            dtEnd.Value = dtStart.Value;
         }
 
         private void btnSchedule_Click(object sender, EventArgs e)

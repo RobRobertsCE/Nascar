@@ -12,8 +12,8 @@ namespace Nascar.ServiceScheduler.Views
 {
     public partial class ScheduledEventView : UserControl
     {
-        private ScheduledEvent _scheduledEvent = null;
-        public ScheduledEvent ScheduledEvent
+        private RaceEvent _scheduledEvent = null;
+        public RaceEvent ScheduledEvent
         {
             get
             {
@@ -58,12 +58,13 @@ namespace Nascar.ServiceScheduler.Views
         }
         void PopulateTrackControl()
         {
-            using (var context = new Nascar.Data.NascarDbContext())
+            this.cboTrack.ValueMember = "track_id";
+            this.cboTrack.DisplayMember = "track_name";
+            using (var context = GetContext())
             {
                 this.cboTrack.DataSource = context.Tracks.OrderBy(t => t.track_name).ToList();
             }
-            this.cboTrack.ValueMember = "track_id";
-            this.cboTrack.DisplayMember = "track_name";
+          
         }
         void PopulateSessionControl()
         {
@@ -72,9 +73,9 @@ namespace Nascar.ServiceScheduler.Views
             this.cboSession.ValueMember = "id";
 
             IList<NameIdModel> sessionList = new List<NameIdModel>();
-            sessionList.Add(new NameIdModel(0, "Practice"));
-            sessionList.Add(new NameIdModel(1, "Qualifying"));
-            sessionList.Add(new NameIdModel(2, "Race"));
+            sessionList.Add(new NameIdModel(1, "Practice"));
+            sessionList.Add(new NameIdModel(2, "Qualifying"));
+            sessionList.Add(new NameIdModel(3, "Race"));
 
             this.cboSession.DataSource = sessionList;
             this.cboSession.SelectedIndex = -1;
@@ -84,16 +85,17 @@ namespace Nascar.ServiceScheduler.Views
             this.cboSeries.DataSource = null;
             this.cboSeries.DisplayMember = "series_name";
             this.cboSeries.ValueMember = "series_id";
-            using (var context = new Nascar.Data.NascarDbContext())
+            using (var context = GetContext())
             {
-                this.cboSeries.DataSource = context.RaceSeries.Where(s => s.series_id > 0).OrderBy(s => s.series_id).ToList();
+                this.cboSeries.DataSource = context.Series.Where(s => s.series_id > 0).OrderBy(s => s.series_id).ToList();
             }
         }
 
         void AddBindings()
         {
-            this.cboTrack.DataBindings.Add("SelectedValue", ScheduledEvent, "track_id", true, DataSourceUpdateMode.OnValidation);
-            this.cboSession.DataBindings.Add("SelectedValue", ScheduledEvent, "session_id", true, DataSourceUpdateMode.OnValidation);
+            this.cboTrack.DataBindings.Add("SelectedValue", ScheduledEvent, "RaceSession.Race.track_id", true, DataSourceUpdateMode.OnValidation);
+            this.cboSession.DataBindings.Add("SelectedValue", ScheduledEvent, "RaceSession.session_id", true, DataSourceUpdateMode.OnValidation);
+            this.cboSeries.DataBindings.Add("SelectedValue", ScheduledEvent, "RaceSession.Race.series_id", true, DataSourceUpdateMode.OnValidation);
             this.dtStart.DataBindings.Add("Value", ScheduledEvent, "scheduled_event_start", true, DataSourceUpdateMode.OnValidation);
             this.dtEnd.DataBindings.Add("Value", ScheduledEvent, "scheduled_event_end", true, DataSourceUpdateMode.OnValidation);
             this.chkEnabled.DataBindings.Add("Checked", ScheduledEvent, "enabled", true, DataSourceUpdateMode.OnValidation);
@@ -106,10 +108,15 @@ namespace Nascar.ServiceScheduler.Views
 
             if (null != cboTrack.SelectedItem)
             {
-                Nascar.Data.Track model = (Nascar.Data.Track)cboTrack.SelectedItem;
-                ScheduledEvent.track_id = model.track_id;
-                ScheduledEvent.track_name = model.track_name;
+                Nascar.Data.Schedule.Track model = (Nascar.Data.Schedule.Track)cboTrack.SelectedItem;
+                ScheduledEvent.RaceSession.Race.track_id = model.track_id;
+                ScheduledEvent.RaceSession.Race.Track.track_name = model.track_name;
             }
+        }
+
+        private Nascar.Data.Schedule.ScheduleDbContext GetContext()
+        {
+            return new Nascar.Data.Schedule.ScheduleDbContext();
         }
     }
 }

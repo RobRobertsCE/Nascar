@@ -46,63 +46,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201410312137296_InitialCreate.cs" />
-    <Compile Include="Migrations\201410312137296_InitialCreate.Designer.cs">
-      <DependentUpon>201410312137296_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\Configuration.cs">
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Migrations\201411011407201_addTables.cs" />
-    <Compile Include="Migrations\201411011407201_addTables.Designer.cs">
-      <DependentUpon>201411011407201_addTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411011435388_addTracksDialogs.cs" />
-    <Compile Include="Migrations\201411011435388_addTracksDialogs.Designer.cs">
-      <DependentUpon>201411011435388_addTracksDialogs.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411011513178_addedRaceDate.cs" />
-    <Compile Include="Migrations\201411011513178_addedRaceDate.Designer.cs">
-      <DependentUpon>201411011513178_addedRaceDate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411011627425_addedRaceSessions.cs" />
-    <Compile Include="Migrations\201411011627425_addedRaceSessions.Designer.cs">
-      <DependentUpon>201411011627425_addedRaceSessions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411011653046_addedRaceSessionIdentityKey.cs" />
-    <Compile Include="Migrations\201411011653046_addedRaceSessionIdentityKey.Designer.cs">
-      <DependentUpon>201411011653046_addedRaceSessionIdentityKey.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScheduledEvent.cs" />
-    <Compile Include="ScheduledRace.cs" />
-    <Compile Include="ScheduledRaceSession.cs" />
-    <Compile Include="ScheduledSeries.cs" />
-    <Compile Include="ScheduledSession.cs" />
-    <Compile Include="ScheduledTrack.cs" />
-    <Compile Include="ServiceSchedulerDbContext.cs" />
+    <Compile Include="RaceEvent.cs" />
+    <Compile Include="Race.cs" />
+    <Compile Include="RaceEventView.cs" />
+    <Compile Include="RaceSession.cs" />
+    <Compile Include="RaceSessionView.cs" />
+    <Compile Include="RaceView.cs" />
+    <Compile Include="Series.cs" />
+    <Compile Include="Session.cs" />
+    <Compile Include="Track.cs" />
+    <Compile Include="ScheduleDbContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201410312137296_InitialCreate.resx">
-      <DependentUpon>201410312137296_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411011407201_addTables.resx">
-      <DependentUpon>201411011407201_addTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411011435388_addTracksDialogs.resx">
-      <DependentUpon>201411011435388_addTracksDialogs.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411011513178_addedRaceDate.resx">
-      <DependentUpon>201411011513178_addedRaceDate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411011627425_addedRaceSessions.resx">
-      <DependentUpon>201411011627425_addedRaceSessions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411011653046_addedRaceSessionIdentityKey.resx">
-      <DependentUpon>201411011653046_addedRaceSessionIdentityKey.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

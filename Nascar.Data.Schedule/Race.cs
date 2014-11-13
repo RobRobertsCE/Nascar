@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Nascar.Data.Schedule
 {
-    [Table("ScheduledRace")]
-    public class ScheduledRace
+    [Table("Race")]
+    public class Race
     {
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None), Key()]
         public int race_id { get; set; }
@@ -15,11 +15,11 @@ namespace Nascar.Data.Schedule
         public DateTime race_date { get; set; }
 
         [ForeignKey("track_id")]
-        public virtual ScheduledTrack Track { get; set; }
+        public virtual Track Track { get; set; }
         [ForeignKey("series_id")]
-        public virtual ScheduledSeries Series { get; set; }
+        public virtual Series Series { get; set; }
 
-        public ScheduledRace()
+        public Race()
         {
             race_date = DateTime.Now;
         }

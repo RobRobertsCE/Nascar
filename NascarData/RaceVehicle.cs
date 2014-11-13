@@ -15,7 +15,7 @@ namespace NascarData
         }
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int vehicle_id { get; set; }
 
         public int race_id { get; set; }

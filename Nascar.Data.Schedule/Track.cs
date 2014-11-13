@@ -4,11 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Nascar.Data.Schedule
 {
-    [Table("ScheduledSession")]
-    public class ScheduledSession
+    [Table("Track")]
+    public class Track
     {
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None), Key()]
-        public int session_id { get; set; }
-        public string session_name { get; set; }
+        public int track_id { get; set; }
+        public double track_length { get; set; }
+        public string track_name { get; set; }
     }
 }

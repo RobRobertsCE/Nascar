@@ -25,5 +25,10 @@ namespace Nascar.Data
         {
 
         }
+        public NascarDbContext(string connection)
+            :base(connection)
+        {
+            
+        }
     }
 }

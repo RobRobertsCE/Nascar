@@ -14,8 +14,8 @@ namespace Nascar.ServiceScheduler
     {
         public bool IsNew { get; set; }
 
-        private ScheduledRace _race = null;
-        public ScheduledRace Race
+        private Race _race = null;
+        public Race Race
         { 
             get 
             { return _race; } 
@@ -26,10 +26,10 @@ namespace Nascar.ServiceScheduler
         }
 
         public SeriesRaceDialog()
-            : this(new ScheduledRace())
+            : this(new Race())
         {  }
 
-        public SeriesRaceDialog(ScheduledRace series)
+        public SeriesRaceDialog(Race series)
         {
             InitializeComponent();
             this.Race = series;
@@ -45,9 +45,9 @@ namespace Nascar.ServiceScheduler
         }
         void PopulateTrackControl()
         {
-            using (var context = new ServiceSchedulerDbContext())
+            using (var context = new ScheduleDbContext())
             {
-                this.cboTrack.DataSource = context.ScheduledTracks.OrderBy(t => t.track_name).ToList();
+                this.cboTrack.DataSource = context.Tracks.OrderBy(t => t.track_name).ToList();
             }
             this.cboTrack.ValueMember = "track_id";
             this.cboTrack.DisplayMember = "track_name";
@@ -57,9 +57,9 @@ namespace Nascar.ServiceScheduler
             this.cboSeries.DataSource = null;
             this.cboSeries.DisplayMember = "series_name";
             this.cboSeries.ValueMember = "series_id";
-            using (var context = new ServiceSchedulerDbContext())
+            using (var context = new ScheduleDbContext())
             {
-                this.cboSeries.DataSource = context.ScheduledRaceSeries.Where(s => s.series_id > 0).OrderBy(s => s.series_id).ToList();
+                this.cboSeries.DataSource = context.Series.Where(s => s.series_id > 0).OrderBy(s => s.series_id).ToList();
             }
         }
         void SetBindings()

@@ -11,8 +11,8 @@ namespace Nascar.ServiceScheduler.Logic
     public class NascarLiveFeedEngine : Nascar.ServiceScheduler.Logic.INascarLiveFeedEngine
     {
         LiveFeedHarvester harvester = null;
-        IList<ScheduledEvent> startSchedule = null;
-        IList<ScheduledEvent> stopSchedule = null;
+        IList<RaceEvent> startSchedule = null;
+        IList<RaceEvent> stopSchedule = null;
         IList<FeedManager> managers = new List<FeedManager>();
         IList<int> race_ids = new List<int>();
         System.Timers.Timer updateTimer = null;
@@ -80,18 +80,18 @@ namespace Nascar.ServiceScheduler.Logic
 
         void LoadStartSchedule()
         {
-            using (var context = new ServiceSchedulerDbContext())
+            using (var context = new ScheduleDbContext())
             {
                 DateTime rightBookingNow = DateTime.Now.AddHours(-1);
                 DateTime rightBookingThen = rightBookingNow.AddMinutes(1);
-                startSchedule = context.ScheduledEvents.Where(s => s.scheduled_event_start >= rightBookingNow).ToList();
+                startSchedule = context.RaceEvents.Where(s => s.scheduled_event_start >= rightBookingNow).ToList();
             }
         }
         void CheckForStarts()
         {
             DateTime rightBookingNow = DateTime.Now.AddHours(-1);
             DateTime rightBookingThen = DateTime.Now.AddMinutes(5);
-            foreach (ScheduledEvent evt in startSchedule.Where(s => s.scheduled_event_start > rightBookingNow && s.scheduled_event_start < rightBookingThen && s.status != "Running" && s.enabled == true))
+            foreach (RaceEvent evt in startSchedule.Where(s => s.scheduled_event_start > rightBookingNow && s.scheduled_event_start < rightBookingThen && s.status != "Running" && s.enabled == true))
             {
                 Console.WriteLine(("DateCheck " + (evt.scheduled_event_start > rightBookingNow).ToString()));
                 StartEvent(evt);
@@ -99,44 +99,44 @@ namespace Nascar.ServiceScheduler.Logic
         }
         void LoadStopSchedule()
         {
-            using (var context = new ServiceSchedulerDbContext())
+            using (var context = new ScheduleDbContext())
             {
                 DateTime rightBookingNow = DateTime.Now.AddHours(-1);
                 DateTime rightBookingThen = rightBookingNow.AddMinutes(1);
-                stopSchedule = context.ScheduledEvents.Where(s => s.scheduled_event_end > rightBookingNow && s.status == "Running" && s.enabled == true).ToList();
+                stopSchedule = context.RaceEvents.Where(s => s.scheduled_event_end > rightBookingNow && s.status == "Running" && s.enabled == true).ToList();
             }
         }
         void CheckForStops()
         {
             DateTime rightBookingNow = DateTime.Now;
-            foreach (ScheduledEvent evt in stopSchedule.Where(s => s.scheduled_event_end < rightBookingNow))
+            foreach (RaceEvent evt in stopSchedule.Where(s => s.scheduled_event_end < rightBookingNow))
             {
                 StopEvent(evt.scheduled_event_id);
             }
         }
-        void StartEvent(ScheduledEvent evt)
+        void StartEvent(RaceEvent evt)
         {
-            Console.WriteLine("Starting event : " + evt.race_id);
+            Console.WriteLine("Starting event : " + evt.RaceSession.race_id);
             UpdateEventStatus(evt.scheduled_event_id, "Running");
             LaunchEventManager(evt);
         }
         void UpdateEventStatus(int id, string status)
         {
-            using (var context = new ServiceSchedulerDbContext())
+            using (var context = new ScheduleDbContext())
             {
-                var eventInstance = context.ScheduledEvents.Where(s => s.scheduled_event_id == id).FirstOrDefault();
+                var eventInstance = context.RaceEvents.Where(s => s.scheduled_event_id == id).FirstOrDefault();
 
                 eventInstance.status = status;
 
                 context.SaveChanges();
             }
         }
-        void LaunchEventManager(ScheduledEvent evt)
+        void LaunchEventManager(RaceEvent evt)
         {
-            FeedManager manager = InitializeManager((SeriesName)evt.series_id, evt.race_id);
+            FeedManager manager = InitializeManager((SeriesName)evt.RaceSession.Race.Series.series_id, evt.RaceSession.race_id);
             manager.scheduled_event_id = evt.scheduled_event_id;
             managers.Add(manager);
-            race_ids.Add(evt.race_id);
+            race_ids.Add(evt.RaceSession.race_id);
             manager.Start();
         }
         FeedManager InitializeManager(SeriesName SelectedSeries, int currentRaceId)

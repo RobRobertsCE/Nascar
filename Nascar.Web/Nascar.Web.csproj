@@ -36,6 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,9 +51,21 @@
     <Compile Include="LiveFeedClient.cs" />
     <Compile Include="LiveFeedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ReplayClient.cs" />
+    <Compile Include="ReplayManager.cs" />
+    <Compile Include="ResourceManager.cs" />
     <Compile Include="SeriesUrlManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Nascar.Data\Nascar.Data.csproj">
+      <Project>{86338a15-33e0-4111-acaa-1a182a1441b7}</Project>
+      <Name>Nascar.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Nascar.Models\Nascar.Models\Nascar.Models.csproj">
       <Project>{a2f2fa60-f876-4e93-9890-4eb9673acae3}</Project>
       <Name>Nascar.Models</Name>
@@ -60,6 +73,36 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chevy_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cup_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cwts_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ford_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nascar_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nns_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ram_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toyota_logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

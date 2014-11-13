@@ -34,12 +34,12 @@
             this.btnEdit = new System.Windows.Forms.ToolStripButton();
             this.btnClose = new System.Windows.Forms.ToolStripButton();
             this.btnDelete = new System.Windows.Forms.ToolStripButton();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnSchedule = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnAddAnother = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -58,7 +58,7 @@
             this.toolStripSeparator3});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(417, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(623, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -103,17 +103,6 @@
             this.btnDelete.Text = "Delete";
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 25);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(417, 149);
-            this.dataGridView1.TabIndex = 2;
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -127,6 +116,7 @@
             this.btnSchedule.Name = "btnSchedule";
             this.btnSchedule.Size = new System.Drawing.Size(59, 22);
             this.btnSchedule.Text = "Schedule";
+            this.btnSchedule.Click += new System.EventHandler(this.btnSchedule_Click);
             // 
             // toolStripSeparator2
             // 
@@ -148,14 +138,25 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 25);
+            this.dataGridView1.MultiSelect = false;
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(623, 264);
+            this.dataGridView1.TabIndex = 2;
+            // 
             // RaceSessionsDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(417, 174);
+            this.ClientSize = new System.Drawing.Size(623, 289);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.toolStrip1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "RaceSessionsDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Sessions";

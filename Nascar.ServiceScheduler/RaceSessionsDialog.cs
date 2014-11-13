@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,21 +13,32 @@ namespace Nascar.ServiceScheduler
 {
     public partial class RaceSessionsDialog : Form
     {
-        private IList<ScheduledRaceSession> _data = null;
-        private ScheduledRace _race = null;
+       private IList<RaceSessionView> _data = null;
+        private Race _race = null;
 
         #region properties
-        private ScheduledRaceSession Selected
+        private RaceSession Selected
         {
             get
             {
-                return (ScheduledRaceSession)dataGridView1.CurrentRow.DataBoundItem;
+                var rv = (RaceSessionView)dataGridView1.CurrentRow.DataBoundItem;
+                using (var context = GetContext())
+                {
+                    return context.RaceSessions.Include("Race").Include("Race.Track").Include("Race.Series").Include("Session").Where(e => e.race_session_id == rv.race_session_id).FirstOrDefault();
+                }
+            }
+        }
+        private RaceSessionView SelectedView
+        {
+            get
+            {
+                return (RaceSessionView)dataGridView1.CurrentRow.DataBoundItem;
             }
         }
         #endregion
 
         #region ctor/init
-        public RaceSessionsDialog(ScheduledRace race)
+        public RaceSessionsDialog(Race race)
         {
             InitializeComponent();
             _race = race;
@@ -55,18 +67,32 @@ namespace Nascar.ServiceScheduler
         }
         void LoadData()
         {
-            using (var context = new ServiceSchedulerDbContext())
+            using (var context = GetContext())
             {
-                _data = context.ScheduledRaceSessions.Include("Race").Include("Race.Series").Include("Race.Track").Where(s => s.race_id == _race.race_id).OrderBy(t => t.start_time).ToList();
+               _data = context.RaceSessionViews.Include("Race").Include("Race.Series").Include("Race.Track").Where(s => s.race_id == _race.race_id).OrderBy(t => t.start_time).ToList();
             }
         }
         void DisplayData()
         {
             this.dataGridView1.DataSource = _data;
+            this.dataGridView1.Columns["race_session_id"].Visible = false;
+            this.dataGridView1.Columns["race_id"].Visible = false; 
+            this.dataGridView1.Columns["session_id"].Visible = false;
+            this.dataGridView1.Columns["track_id"].Visible = false;
+            this.dataGridView1.Columns["track_name"].Visible = false;
+            this.dataGridView1.Columns["series_id"].Visible = false;
+            this.dataGridView1.Columns["series_name"].Visible = false;
+            this.dataGridView1.Columns["Session"].Visible = false;
             this.dataGridView1.Columns["Race"].Visible = false;
             this.dataGridView1.Columns["Session"].Visible = false;
-            if (this.dataGridView1.Rows.Count>0)
+            this.dataGridView1.Columns["Track"].Visible = false;
+            this.dataGridView1.Columns["Series"].Visible = false;
+            if (this.dataGridView1.Rows.Count > 0)
                 this.dataGridView1.Rows[this.dataGridView1.Rows.Count - 1].Selected = true;
+        }
+        ScheduleDbContext GetContext()
+        {
+            return new ScheduleDbContext();
         }
         #endregion
 
@@ -85,15 +111,15 @@ namespace Nascar.ServiceScheduler
         #region add new
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            this.DisplayDialog(new ScheduledRaceSession() { race_id = _race.race_id, sequence=1, session_id = 1, start_time = _race.race_date, end_time = _race.race_date });
+            this.DisplayDialog(new RaceSession() { race_id = _race.race_id, sequence = 1, session_id = 1, start_time = _race.race_date, end_time = _race.race_date });
         }
         #endregion
-        
+
         #region add next
 
         private void btnAddAnother_Click(object sender, EventArgs e)
         {
-            ScheduledRaceSession nextSession = new ScheduledRaceSession() { race_id = _race.race_id };
+            RaceSession nextSession = new RaceSession() { race_id = _race.race_id };
 
             if (null != Selected)
             {
@@ -207,52 +233,94 @@ namespace Nascar.ServiceScheduler
         #endregion
 
         #region RaceSessionDialog
-        void DisplayDialog(ScheduledRaceSession selected)
+        void DisplayDialog(RaceSession selected)
         {
             RaceSessionDialog dialog = new RaceSessionDialog(selected);
 
             if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
-                this.Save(dialog.RaceSession, dialog.IsNew);
+                this.Save(dialog.RaceSession);
             }
         }
         #endregion
 
         #region data methods
-        void Save(ScheduledRaceSession item, bool isNew)
+        void Save(RaceSession item)
         {
             if (null == item) return;
 
-            using (var context = new ServiceSchedulerDbContext())
+            using (var context = GetContext())
             {
-                if (isNew)
-                {
-                    context.ScheduledRaceSessions.Add(item);
-                }
-                else
-                {
-                    context.ScheduledRaceSessions.Attach(item);
-                    context.Entry(item).State = EntityState.Modified;
-                }
+                context.RaceSessions.AddOrUpdate(item);
 
                 context.SaveChanges();
             }
 
             UpdateDisplay();
         }
-        void Delete(ScheduledRaceSession item)
+        void Delete(RaceSession item)
         {
             if (null == item) return;
-            using (var context = new ServiceSchedulerDbContext())
+            using (var context = GetContext())
             {
-                var selected = context.ScheduledRaceSessions.Where(e => e.race_session_id == item.race_session_id).FirstOrDefault();
+                var selected = context.RaceSessions.Where(e => e.race_session_id == item.race_session_id).FirstOrDefault();
                 if (null == selected) return;
-                context.ScheduledRaceSessions.Remove(selected);
+                context.RaceSessions.Remove(selected);
                 context.SaveChanges();
             }
             UpdateDisplay();
         }
         #endregion
+
+#region  Add to Schedule
+        private void btnSchedule_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var context = GetContext())
+                {
+                    if (null == Selected) return;
+
+                    RaceSession session =  context.RaceSessions.Include("Race").Include("Race.Track").Include("Race.Series").Include("Session").Where(s => s.race_session_id == Selected.race_session_id).FirstOrDefault();;
+
+                    var scheduledEvent = context.RaceEvents.Include("RaceSession").Include("RaceSession.Race.Track").Include("RaceSession.Race.Series").Where(s => s.race_session_id == session.race_session_id).FirstOrDefault();
+                   
+                    if (null==scheduledEvent)
+                    {
+                        scheduledEvent =  new RaceEvent()
+                        {
+                            race_session_id = session.race_session_id,
+                            status = "Not Saved",
+                            enabled = true,
+                            scheduled_event_start = session.start_time,
+                            scheduled_event_end = session.end_time
+                        };
+                        context.RaceEvents.Add(scheduledEvent);
+                        scheduledEvent.race_session_id = session.race_session_id;
+                        scheduledEvent.RaceSession = session;
+                    }
+
+                    ScheduledEventDialog dialog = new ScheduledEventDialog(scheduledEvent);
+
+                    if (DialogResult.OK == dialog.ShowDialog(this))
+                    {
+                        scheduledEvent.status = "Saved";
+                        
+                        context.SaveChanges();
+
+                        UpdateDisplay();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+
+#endregion
 
     }
 }
