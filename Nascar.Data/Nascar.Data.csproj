@@ -109,9 +109,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Nascar.Models\Nascar.Models\Nascar.Models.csproj">
+    <ProjectReference Include="..\Nascar.Models\Nascar.Models\Nascar.Api.Models.csproj">
       <Project>{a2f2fa60-f876-4e93-9890-4eb9673acae3}</Project>
-      <Name>Nascar.Models</Name>
+      <Name>Nascar.Api.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

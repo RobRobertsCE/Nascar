@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Nascar.Data;
-using Nascar.Models;
+using Nascar.Api.Models;
 
 namespace Nascar.Api
 {

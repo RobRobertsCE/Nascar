@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nascar.Models", "Nascar.Models\Nascar.Models.csproj", "{A2F2FA60-F876-4E93-9890-4EB9673ACAE3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nascar.Api.Models", "Nascar.Models\Nascar.Api.Models.csproj", "{A2F2FA60-F876-4E93-9890-4EB9673ACAE3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nascar.WinApp", "..\Nascar.WinApp\Nascar.WinApp.csproj", "{FCE32B6E-0F69-4521-B810-97C4C52527A7}"
 EndProject

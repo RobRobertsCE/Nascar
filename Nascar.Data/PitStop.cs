@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Nascar.Models;
+using Nascar.Api.Models;
 
 namespace Nascar.Data
 {

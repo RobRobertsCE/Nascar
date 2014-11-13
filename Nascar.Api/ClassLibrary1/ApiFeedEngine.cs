@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Timers;
 using Nascar.Data.Schedule;
-using Nascar.Models;
+using Nascar.Api.Models;
 
 namespace Nascar.Api
 {

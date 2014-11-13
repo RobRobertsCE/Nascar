@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Nascar.Api;
-using Nascar.Models;
+using Nascar.Api.Models;
 using Nascar.Data;
 using Newtonsoft.Json;
 

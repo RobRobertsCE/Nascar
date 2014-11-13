@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Nascar.Models;
+using Nascar.Api.Models;
 using Nascar.Data;
 using Nascar.Api;
 

@@ -188,9 +188,9 @@
       <Project>{86338a15-33e0-4111-acaa-1a182a1441b7}</Project>
       <Name>Nascar.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Nascar.Models\Nascar.Models\Nascar.Models.csproj">
+    <ProjectReference Include="..\Nascar.Models\Nascar.Models\Nascar.Api.Models.csproj">
       <Project>{a2f2fa60-f876-4e93-9890-4eb9673acae3}</Project>
-      <Name>Nascar.Models</Name>
+      <Name>Nascar.Api.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
