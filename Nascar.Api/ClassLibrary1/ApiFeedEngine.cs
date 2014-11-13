@@ -206,13 +206,13 @@ namespace Nascar.Api
 
             foreach (RaceEvent evt in eventSchedule)
             {
-                if (evt.scheduled_event_start <= DateTime.Now && evt.scheduled_event_end >= DateTime.Now && evt.status == "Saved")
+                if (evt.scheduled_event_start <= DateTime.Now && evt.scheduled_event_end >= DateTime.Now && (evt.status == "Saved" || evt.status == "Stopped"))
                 {
                     StartEvent(evt);
                     continue;
 
                 }
-                if (evt.scheduled_event_start <= DateTime.Now && evt.scheduled_event_end >= DateTime.Now && evt.status == "Saved")
+                if (evt.scheduled_event_start <= DateTime.Now && evt.scheduled_event_end >= DateTime.Now && (evt.status == "Running" || evt.status == "Stopped"))
                 {
                     if (!managers.Any(m => m.scheduled_event_id == evt.scheduled_event_id))
                     {
@@ -389,7 +389,7 @@ namespace Nascar.Api
                 Expression<Func<RaceEvent, bool>> schedulePredicate = r => (
                     DbFunctions.TruncateTime(r.scheduled_event_start) >= today &&
                     DbFunctions.TruncateTime(r.scheduled_event_end) <= today &&
-                    r.status == "Saved" &&
+                    (r.status == "Saved" || r.status == "Running" || r.status == "Stopped") &&
                     r.enabled == true);
 
                 eventSchedule = context.RaceEvents

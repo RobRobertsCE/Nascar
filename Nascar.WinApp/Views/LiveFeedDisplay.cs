@@ -51,9 +51,9 @@ namespace Nascar.WinApp
                 UpdateVehicles(model);
                 UpdateMovers();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine(ex.ToString());
             }
             finally
             {

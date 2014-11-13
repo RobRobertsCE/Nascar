@@ -386,7 +386,11 @@ namespace Nascar.WinApp.Views
         {
             LapTimeData lapData = new LapTimeData { LapNumber = model.laps_completed, IsOnTrack = model.is_on_track, LapTime = model.last_lap_time, FlagState = current_flag_state, LeaderDelta = model.delta, PositionDelta = DistanceBehind };
             Laps.Add(lapData);
-
+            if (null == this.currentRun)
+            {
+                this.currentRun = new GreenFlagRun(model.laps_completed, model.running_position, GreenFlagRuns.Count);
+                GreenFlagRuns.Add(this.currentRun);
+            }
             if (this.currentRun.is_active )
                 this.currentRun.AddLapData(lapData);
         }
@@ -440,7 +444,7 @@ namespace Nascar.WinApp.Views
             if (new_state == FlagState.Green)
             {
                 this.currentRun = new GreenFlagRun(lap_number, model.running_position, GreenFlagRuns.Count);
-
+                GreenFlagRuns.Add(this.currentRun);
                 last_yellow_lap = lap_number;
                 position_at_last_green = model.running_position;
                 RestartPositionTextBox.Text = position_at_last_green.ToString();

@@ -219,7 +219,7 @@ namespace Nascar.WinApp
                 manager.LiveFeedRawData += manager_RawFeedEvent;
                 SetRawFeedIndicatorState(IndicatorState.Ready);
             }
-            if (chkProcess.Checked)
+            if (chkProcess.Checked || chkDisplay.Checked)
             {
                 manager.LiveFeedEvent += manager_LiveFeedEvent;
                 SetFeedIndicatorState(IndicatorState.Ready);
@@ -245,8 +245,6 @@ namespace Nascar.WinApp
         {
             try
             {
-                //txtRunName.SetPropertyThreadSafe(() => txtRunName.Text, e.LiveFeed.run_name);
-
                 this.Invoke((MethodInvoker)delegate
                 {
                     ProcessFeedData(e.LiveFeed);
@@ -272,7 +270,8 @@ namespace Nascar.WinApp
         {
             SetFeedIndicatorState(IndicatorState.Busy);
 
-            RecordFeedData(model);
+            if (chkProcess.Checked)
+                RecordFeedData(model);
 
             if (chkDisplay.Checked)
                 DisplayFeedData(model);
@@ -299,10 +298,13 @@ namespace Nascar.WinApp
         {
             try
             {
-                this.Invoke((MethodInvoker)delegate
+                if (chkHarvest.Checked)
                 {
-                    HarvestRawData(rawFeedData);
-                });
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        HarvestRawData(rawFeedData);
+                    });
+                }
             }
             catch (Exception ex)
             {

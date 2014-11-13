@@ -30,19 +30,9 @@ namespace Nascar.Api.WinServices
                     EventLogSource, EventLogName);
             }
             apiHarvesterEventLog.Source = EventLogSource;
-            apiHarvesterEventLog.Log = EventLogName;
-
-            // Set up a timer to trigger every minute.
-            System.Timers.Timer timer = new System.Timers.Timer();
-            timer.Interval = 60000; // 60 seconds
-            timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
-            timer.Start();
+            apiHarvesterEventLog.Log = EventLogName;          
         }
-        public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
-        {
-            // TODO: Insert monitoring activities here.
-            apiHarvesterEventLog.WriteEntry("KeepAlive", EventLogEntryType.Information, eventId++);
-        }
+       
         protected override void OnStart(string[] args)
         {
             apiHarvesterEventLog.WriteEntry("In OnStart");
@@ -55,10 +45,7 @@ namespace Nascar.Api.WinServices
             catch (Exception ex)
             {
                 apiHarvesterEventLog.WriteEntry(ex.ToString(), EventLogEntryType.Error, eventId++);
-            }
-            
-
-            
+            }   
         }
 
         void InitializeFeedHarvester()
@@ -125,25 +112,25 @@ namespace Nascar.Api.WinServices
 
         protected override void OnStop()
         {
-            apiHarvesterEventLog.WriteEntry("In OnStop");
+            apiHarvesterEventLog.WriteEntry("ApiFeedEngine Stopped");
             StopFeedHarvester();
         }
 
         protected override void OnContinue()
         {
-            apiHarvesterEventLog.WriteEntry("In OnContinue.");
+            apiHarvesterEventLog.WriteEntry("ApiFeedEngine Continued");
             ContinueFeedHarvester();
         }
 
         protected override void OnPause()
         {
-            apiHarvesterEventLog.WriteEntry("In OnPause.");
+            apiHarvesterEventLog.WriteEntry("IApiFeedEngine Paused");
             PauseFeedHarvester();
         }
 
         protected override void OnShutdown()
         {
-            apiHarvesterEventLog.WriteEntry("In OnShutdown.");
+            apiHarvesterEventLog.WriteEntry("ApiFeedEngine Shutdown");
             StopFeedHarvester();
         }  
     }
