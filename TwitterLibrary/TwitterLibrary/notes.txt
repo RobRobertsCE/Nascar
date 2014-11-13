@@ -1,0 +1,23 @@
+﻿Access level	Read-only (modify app permissions)
+Consumer Key (API Key)	xB4e5G2xgsubdbdLjZ7L81HhF (manage keys and access tokens)
+Callback URL	http://www.nascar.com
+Sign in with Twitter	No
+App-only authentication	https://api.twitter.com/oauth2/token
+Request token URL	https://api.twitter.com/oauth/request_token
+Authorize URL	https://api.twitter.com/oauth/authorize
+Access token URL	https://api.twitter.com/oauth/access_token
+
+Consumer Key (API Key)	xB4e5G2xgsubdbdLjZ7L81HhF
+Consumer Secret (API Secret)	dnEA0W7ggDOVAgDOa1CCrXPS4GtvK0ZjkYysygNIVficebOJuK
+Access Level	Read-only (modify app permissions)
+Owner	GoDuke4382
+Owner ID	18801972
+
+
+Your Access Token
+This access token can be used to make API requests on your own account's behalf. Do not share your access token secret with anyone.
+Access Token	18801972-jW3uT1jpN11wIQYZLKh5svc7fbzSL4T0hze2rihyG
+Access Token Secret	x3QAW1vIziReWl2BIdZZggcKN9iiUy1QR9SNMVw3IVoFL
+Access Level	Read-only
+Owner	GoDuke4382
+Owner ID	18801972

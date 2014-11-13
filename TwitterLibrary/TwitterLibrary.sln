@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterLibrary", "TwitterLibrary\TwitterLibrary.csproj", "{9E003638-C004-47CE-98F1-0743AD3C150C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterLibraryTestApp", "TwitterLibraryTestApp\TwitterLibraryTestApp.csproj", "{589A40A9-FB60-4320-A2CA-002FC86512CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E003638-C004-47CE-98F1-0743AD3C150C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E003638-C004-47CE-98F1-0743AD3C150C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E003638-C004-47CE-98F1-0743AD3C150C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E003638-C004-47CE-98F1-0743AD3C150C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{589A40A9-FB60-4320-A2CA-002FC86512CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{589A40A9-FB60-4320-A2CA-002FC86512CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{589A40A9-FB60-4320-A2CA-002FC86512CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{589A40A9-FB60-4320-A2CA-002FC86512CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
