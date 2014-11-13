@@ -60,8 +60,11 @@ namespace Nascar.ServiceScheduler
         #region display schedule
         void UpdateScheduleDisplay()
         {
-            LoadSchedule();
-            DisplaySchedule();
+            this.Invoke((MethodInvoker)delegate
+            {
+                LoadSchedule();
+                DisplaySchedule();
+            });           
         }
         void LoadSchedule()
         {
@@ -78,9 +81,9 @@ namespace Nascar.ServiceScheduler
         void DisplaySchedule()
         {
             this.dataGridView1.DataSource = _schedule;
-            this.dataGridView1.Columns["scheduled_event_id"].Visible = false;
-            this.dataGridView1.Columns["race_session_id"].Visible = false;
-            this.dataGridView1.Columns["race_id"].Visible = false;
+            //this.dataGridView1.Columns["scheduled_event_id"].Visible = false;
+            //this.dataGridView1.Columns["race_session_id"].Visible = false;
+            //this.dataGridView1.Columns["race_id"].Visible = false;
             this.dataGridView1.Columns["RaceSession"].Visible = false;
 
             this.dataGridView1.Columns["track_name"].DisplayIndex = 0;
@@ -95,7 +98,9 @@ namespace Nascar.ServiceScheduler
             this.dataGridView1.Columns["enabled"].HeaderText = "Enabled";
             this.dataGridView1.Columns["scheduled_event_start"].HeaderText = "Start";
             this.dataGridView1.Columns["scheduled_event_end"].HeaderText = "End";
-
+            this.dataGridView1.Columns["scheduled_event_id"].DisplayIndex = 8;
+            this.dataGridView1.Columns["race_session_id"].DisplayIndex = 8;
+            this.dataGridView1.Columns["race_id"].DisplayIndex = 8;
         }
         #endregion
 
@@ -157,10 +162,10 @@ namespace Nascar.ServiceScheduler
 
             using (var context = new ScheduleDbContext())
             {
+                if (scheduledEvent.status != "Saved") scheduledEvent.status = "Saved";
+
                 context.RaceEvents.AddOrUpdate(scheduledEvent);
-
-                if (scheduledEvent.status == "Not Saved") scheduledEvent.status = "Saved";
-
+                
                 context.SaveChanges();
             }
 
@@ -234,12 +239,32 @@ namespace Nascar.ServiceScheduler
                 _engine.Stop();
 
             _engine = new ApiFeedEngine();
+            _engine.LiveFeedEngineError += _engine_LiveFeedEngineError;
+            _engine.EventFeedStarted += _engine_EventFeedStarted;
+            _engine.EventFeedStopped += _engine_EventFeedStopped;
             _engine.Start();
+        }
+
+        void _engine_EventFeedStopped(object sender, EventStoppedEventArgs e)
+        {
+            UpdateScheduleDisplay();
+        }
+
+        void _engine_EventFeedStarted(object sender, EventStartedEventArgs e)
+        {
+            UpdateScheduleDisplay();
+        }
+
+        void _engine_LiveFeedEngineError(object sender, Exception e)
+        {
+            UpdateScheduleDisplay();
         }
         void StopFeedHarvester()
         {
             if (null != _engine)
                 _engine.Stop();
+            _engine.LiveFeedEngineError -= _engine_LiveFeedEngineError;
+            
         }
 
         private void btnReload_Click(object sender, EventArgs e)
@@ -248,6 +273,11 @@ namespace Nascar.ServiceScheduler
         }
 
         private void chkSeries_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateScheduleDisplay();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
         {
             UpdateScheduleDisplay();
         }

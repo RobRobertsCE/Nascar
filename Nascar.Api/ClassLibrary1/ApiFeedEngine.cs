@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Timers;
-using Nascar.Data.Schedule;
 using Nascar.Api.Models;
+using Nascar.Data.Schedule;
+using System.Data.Entity;
 
 namespace Nascar.Api
 {
@@ -169,7 +171,7 @@ namespace Nascar.Api
                 StopAllEvents();
                 SetStateReady();
                 OnLiveFeedEngineStopped();
-            }
+            }           
             catch (Exception ex)
             {
                 this.ErrorHandler(ex);
@@ -201,20 +203,28 @@ namespace Nascar.Api
         void UpdateManagers()
         {
             DateTime currentDateTime = DateTime.Now;
-            foreach (RaceEvent evt in eventSchedule.Where(s => s.scheduled_event_start >= currentDateTime && s.status == "Saved"))
+
+            foreach (RaceEvent evt in eventSchedule)
             {
-                StartEvent(evt);
-            }
-            foreach (RaceEvent evt in eventSchedule.Where(s => s.scheduled_event_start <= currentDateTime && s.status == "Running"))
-            {
-                if (!managers.Any(m => m.scheduled_event_id == evt.scheduled_event_id))
+                if (evt.scheduled_event_start <= DateTime.Now && evt.scheduled_event_end >= DateTime.Now && evt.status == "Saved")
                 {
                     StartEvent(evt);
+                    continue;
+
                 }
-            }
-            foreach (RaceEvent evt in eventSchedule.Where(s => s.scheduled_event_end < currentDateTime && s.status == "Running"))
-            {
-                StopEvent(evt.scheduled_event_id);
+                if (evt.scheduled_event_start <= DateTime.Now && evt.scheduled_event_end >= DateTime.Now && evt.status == "Saved")
+                {
+                    if (!managers.Any(m => m.scheduled_event_id == evt.scheduled_event_id))
+                    {
+                        StartEvent(evt);
+                        continue;
+                    }
+                }
+                if (evt.scheduled_event_start <= DateTime.Now && evt.scheduled_event_end <= DateTime.Now && evt.status == "Running")
+                {
+                    StopEvent(evt.scheduled_event_id);
+                    continue;
+                }
             }
         }
         #endregion
@@ -247,19 +257,52 @@ namespace Nascar.Api
         #region event start
         void StartEvent(RaceEvent evt)
         {
-            if (managers.Any(m => m.scheduled_event_id != evt.scheduled_event_id))
+            if (!managers.Any(m => m.scheduled_event_id == evt.scheduled_event_id))
             {
-                LaunchEventManager(evt);
-                UpdateEventStatus(evt.scheduled_event_id, "Running");
-                Console.WriteLine("Started Event : " + evt.RaceSession.race_id);
+                if (LaunchEventManager(evt))
+                {
+                    UpdateEventStatus(evt.scheduled_event_id, "Running");
+                    Console.WriteLine("Started Event : " + evt.RaceSession.race_id);
+                }
+                else
+                {
+                    Console.WriteLine("Error Starting Event : " + evt.RaceSession.race_id);
+                }
             }
         }
-        void LaunchEventManager(RaceEvent evt)
+        bool LaunchEventManager(RaceEvent evt)
         {
-            FeedManager manager = InitializeManager((SeriesName)evt.RaceSession.Race.Series.series_id, evt.RaceSession.race_id);
-            manager.scheduled_event_id = evt.scheduled_event_id;
-            managers.Add(manager);
-            manager.Start();
+            FeedManager manager = null;
+            try
+            {
+                manager = InitializeManager((SeriesName)evt.RaceSession.Race.Series.series_id, evt.RaceSession.race_id);
+                manager.scheduled_event_id = evt.scheduled_event_id;
+                managers.Add(manager);
+                manager.Start();
+                return true;
+            }
+            catch (System.Net.WebException ex)
+            {
+                if (ex.Status == System.Net.WebExceptionStatus.ProtocolError)
+                {
+                    // 404 not found, probably wrong race_id. 
+                    DisableEvent(evt.scheduled_event_id);
+                    if (null!=manager)
+                    {
+                        managers.Remove(manager);
+                        manager.Stop();
+                    }
+                    OnLiveFeedEngineError(ex);
+                }
+                else
+                    this.ErrorHandler(ex); 
+            }
+            catch (Exception ex)
+            {
+                this.ErrorHandler(ex); 
+            }
+
+            return false;          
         }
         FeedManager InitializeManager(SeriesName SelectedSeries, int currentRaceId)
         {
@@ -323,12 +366,38 @@ namespace Nascar.Api
                     this.OnEventFeedStopped(scheduled_event_id, race_id);
             }
         }
+        void DisableEvent(int scheduled_event_id)
+        {
+            using (var context = new ScheduleDbContext())
+            {
+                var eventInstance = context.RaceEvents.Include("RaceSession").Where(s => s.scheduled_event_id == scheduled_event_id).FirstOrDefault();
+                eventInstance.status = "Error";
+                int race_id = eventInstance.RaceSession.race_id;
+                eventInstance.enabled = false;
+
+                context.SaveChanges();
+
+                this.OnEventFeedStopped(scheduled_event_id, race_id);
+            }
+        }
         void LoadEventSchedule()
         {
             using (var context = GetContext())
             {
                 DateTime today = DateTime.Now.Date;
-                eventSchedule = context.RaceEvents.Where(s => s.enabled == true && s.scheduled_event_start.Date == today && (s.status == "Saved" || s.status == "Running")).ToList();
+
+                Expression<Func<RaceEvent, bool>> schedulePredicate = r => (
+                    DbFunctions.TruncateTime(r.scheduled_event_start) >= today &&
+                    DbFunctions.TruncateTime(r.scheduled_event_end) <= today &&
+                    r.status == "Saved" &&
+                    r.enabled == true);
+
+                eventSchedule = context.RaceEvents
+                    .Include("RaceSession")
+                    .Include("RaceSession.Race.Track")
+                    .Include("RaceSession.Race.Series")
+                    .Where(schedulePredicate).ToList();
+                //s => s.enabled == true && s.scheduled_event_start >= today && (s.status == "Saved" || s.status == "Running")).ToList();
             }
         }
         #endregion

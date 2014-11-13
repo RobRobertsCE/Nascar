@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScheduleDialog));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
@@ -51,6 +52,7 @@
             this.chkTruck = new System.Windows.Forms.CheckBox();
             this.chkNationwide = new System.Windows.Forms.CheckBox();
             this.chkCup = new System.Windows.Forms.CheckBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.filterPanel.SuspendLayout();
@@ -271,6 +273,12 @@
             this.chkCup.UseVisualStyleBackColor = true;
             this.chkCup.CheckedChanged += new System.EventHandler(this.chkSeries_CheckedChanged);
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 10000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // ScheduleDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -316,5 +324,6 @@
         private System.Windows.Forms.CheckBox chkTruck;
         private System.Windows.Forms.CheckBox chkNationwide;
         private System.Windows.Forms.CheckBox chkCup;
+        private System.Windows.Forms.Timer timer1;
     }
 }
