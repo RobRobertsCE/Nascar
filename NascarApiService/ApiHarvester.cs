@@ -22,7 +22,7 @@ namespace Nascar.Api.WinServices
         public ApiHarvester()
         {
             InitializeComponent();
-            this.AutoLog = false;
+            this.AutoLog = true;
             apiHarvesterEventLog = new System.Diagnostics.EventLog();
             if (!System.Diagnostics.EventLog.SourceExists(EventLogSource))
             {
@@ -35,7 +35,6 @@ namespace Nascar.Api.WinServices
        
         protected override void OnStart(string[] args)
         {
-            apiHarvesterEventLog.WriteEntry("In OnStart");
             try
             {
                 InitializeFeedHarvester();
@@ -44,19 +43,29 @@ namespace Nascar.Api.WinServices
             }
             catch (Exception ex)
             {
-                apiHarvesterEventLog.WriteEntry(ex.ToString(), EventLogEntryType.Error, eventId++);
+                var binData = Encoding.ASCII.GetBytes(ex.StackTrace);
+                apiHarvesterEventLog.WriteEntry(String.Format("Error in OnStart: {0}", ex.ToString()), EventLogEntryType.Error, eventId++, 1, binData);
             }   
         }
 
         void InitializeFeedHarvester()
         {
-            _engine = new ApiFeedEngine();
+            try
+            {
+                _engine = new ApiFeedEngine();
 
-            _engine.EventFeedStarted += _engine_EventFeedStarted;
-            _engine.EventFeedStopped += _engine_EventFeedStopped;
-            _engine.LiveFeedEngineError += _engine_LiveFeedEngineError;
-            _engine.LiveFeedEngineStarted += _engine_LiveFeedEngineStarted;
-            _engine.LiveFeedEngineStopped += _engine_LiveFeedEngineStopped;
+                _engine.EventFeedStarted += _engine_EventFeedStarted;
+                _engine.EventFeedStopped += _engine_EventFeedStopped;
+                _engine.LiveFeedEngineError += _engine_LiveFeedEngineError;
+                _engine.LiveFeedEngineStarted += _engine_LiveFeedEngineStarted;
+                _engine.LiveFeedEngineStopped += _engine_LiveFeedEngineStopped;
+            }
+            catch (Exception ex)
+            {
+                var binData = Encoding.ASCII.GetBytes(ex.StackTrace);
+                apiHarvesterEventLog.WriteEntry(String.Format("Error in InitializeFeedHarvester: {0}", ex.ToString()), EventLogEntryType.Error, eventId++, 1, binData);
+            }  
+          
         }
 
         void _engine_LiveFeedEngineStopped(object sender, EventArgs e)
@@ -112,25 +121,25 @@ namespace Nascar.Api.WinServices
 
         protected override void OnStop()
         {
-            apiHarvesterEventLog.WriteEntry("ApiFeedEngine Stopped");
+            apiHarvesterEventLog.WriteEntry("Nascar Api Service Stopped");
             StopFeedHarvester();
         }
 
         protected override void OnContinue()
         {
-            apiHarvesterEventLog.WriteEntry("ApiFeedEngine Continued");
+            apiHarvesterEventLog.WriteEntry("Nascar Api Service Continued");
             ContinueFeedHarvester();
         }
 
         protected override void OnPause()
         {
-            apiHarvesterEventLog.WriteEntry("IApiFeedEngine Paused");
+            apiHarvesterEventLog.WriteEntry("Nascar Api Service Paused");
             PauseFeedHarvester();
         }
 
         protected override void OnShutdown()
         {
-            apiHarvesterEventLog.WriteEntry("ApiFeedEngine Shutdown");
+            apiHarvesterEventLog.WriteEntry("Nascar Api Service Shutdown");
             StopFeedHarvester();
         }  
     }

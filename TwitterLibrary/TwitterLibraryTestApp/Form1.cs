@@ -45,5 +45,20 @@ namespace TwitterLibraryTestApp
                 Console.WriteLine(ex.ToString());
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            //Twitterinvi
+            try
+            {
+                if (null == r) r = new TwitterReader();
+                r.Twitterinvi();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+        }
     }
 }
