@@ -70,10 +70,13 @@ namespace Nascar.ServiceScheduler
         {
             using (var context = new ScheduleDbContext())
             {
-                Expression<Func<RaceEventView, bool>> predicate = r => (
+                DateTime today = DateTime.Now.Date;
+
+                Expression<Func<RaceEventView, bool>> predicate = r => ((
                   chkCup.Checked && ((r.RaceSession.Race.series_id == 1) == chkCup.Checked))
                   || (chkNationwide.Checked && ((r.RaceSession.Race.series_id == 2) == chkNationwide.Checked))
-                  || (chkTruck.Checked && ((r.RaceSession.Race.series_id == 3) == chkTruck.Checked));
+                  || (chkTruck.Checked && ((r.RaceSession.Race.series_id == 3) == chkTruck.Checked))
+                  && (chkTodayOnly.Checked && ((DbFunctions.TruncateTime(r.scheduled_event_start) == today) == chkTodayOnly.Checked)));
 
                 _schedule = context.RaceEventViews.Include("RaceSession").Include("RaceSession.Race.Track").Include("RaceSession.Race.Series").Where(predicate).OrderBy(r => r.scheduled_event_start).ToArray();
             }

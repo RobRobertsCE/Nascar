@@ -92,7 +92,7 @@ namespace Nascar.WinApp
                 lastDelta = vehicle.delta;
             }
 
-            this.vehicleViewModelList1.UpdateDisplay(model);
+           // this.vehicleViewModelList1.UpdateDisplay(model);
         }
 
         VehicleView GetVehicleView(string vehicle_number)

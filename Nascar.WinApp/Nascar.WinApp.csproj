@@ -39,6 +39,8 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\Nascar.Models\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualBasic.PowerPacks, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Nascar.Models\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -56,9 +58,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StopwatchDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StopwatchDialog.Designer.cs">
+      <DependentUpon>StopwatchDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrackViewDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrackViewDialog.Designer.cs">
+      <DependentUpon>TrackViewDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\GreenFlagRun.cs" />
     <Compile Include="ViewModels\IVehicleViewModel.cs" />
     <Compile Include="ViewModels\LapTimeData.cs" />
+    <Compile Include="Views\ReplaySelectionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ReplaySelectionDialog.Designer.cs">
+      <DependentUpon>ReplaySelectionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StopwatchView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\StopwatchView.Designer.cs">
+      <DependentUpon>StopwatchView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TrackView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\TrackView.Designer.cs">
+      <DependentUpon>TrackView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\VehicleStatView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -112,6 +144,21 @@
     <Compile Include="Views\VehicleViewModelList.Designer.cs">
       <DependentUpon>VehicleViewModelList.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="StopwatchDialog.resx">
+      <DependentUpon>StopwatchDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrackViewDialog.resx">
+      <DependentUpon>TrackViewDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ReplaySelectionDialog.resx">
+      <DependentUpon>ReplaySelectionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\StopwatchView.resx">
+      <DependentUpon>StopwatchView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\TrackView.resx">
+      <DependentUpon>TrackView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\VehicleStatView.resx">
       <DependentUpon>VehicleStatView.cs</DependentUpon>
     </EmbeddedResource>

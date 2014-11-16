@@ -33,6 +33,7 @@ namespace TwitterLibrary
         public void ReadHttpWebRequest()
         {
             //Oauth Keys (Replace with values that are obtained from registering the application
+
             var oauth_consumer_key = Provider.ApiKey;
             var oauth_consumer_secret = Provider.ApiSecret;
             //Token URL
@@ -73,7 +74,7 @@ namespace TwitterLibrary
         public void ReadHttpClient()
         {
             //Oauth Keys (Replace with values that are obtained from registering the application
-            var oauth_consumer_key = Provider.ApiKey;
+           var oauth_consumer_key = Provider.ApiKey;
             var oauth_consumer_secret = Provider.ApiSecret;
             //Token URL
             var oauth_url = "https://api.twitter.com/oauth2/token";
@@ -112,6 +113,7 @@ namespace TwitterLibrary
             // oauth application keys
             //oauth_token = "our API Key";
             //oauth_token_secret = "Your API Secret Key";
+
             var oauth_token = Provider.AccessToken;
             var oauth_token_secret = Provider.AccessTokenSecret;
 
@@ -201,6 +203,25 @@ namespace TwitterLibrary
             return responseData;
         }
 
+        public void GetHomeTimeline()
+        {
+            var oauth_token = Provider.AccessToken;
+            var oauth_token_secret = Provider.AccessTokenSecret;
+
+            var oauth_consumer_key = Provider.ApiKey;
+            var oauth_consumer_secret = Provider.ApiSecret;
+
+            TwitterCredentials.SetCredentials(oauth_token, oauth_token_secret, oauth_consumer_key, oauth_consumer_secret);
+
+            var loggedUser = User.GetLoggedUser();
+
+            var homeTimelineTweets = loggedUser.GetHomeTimeline();
+            foreach (var tweet in homeTimelineTweets)
+            {
+                Console.WriteLine(tweet.Text);
+            }
+        }
+
         private const string USER_SCREEN_NAME_TO_TEST = "GoDuke4382";
         public void Twitterinvi()
         {
@@ -231,7 +252,7 @@ namespace TwitterLibrary
             OtherFeaturesExamples();
 
             Console.WriteLine(@"END");
-            Console.ReadLine();
+            //Console.ReadLine();
         }
 
         #region Examples Store
@@ -322,7 +343,7 @@ namespace TwitterLibrary
         // tweets I sent out...
         private void TimelineExamples()
         {
-            // Timeline_GetHomeTimeline();
+            Timeline_GetHomeTimeline();
             // Timeline_GetUserTimeline(USER_SCREEN_NAME_TO_TEST);
             // Timeline_GetMentionsTimeline();
         }
@@ -337,12 +358,12 @@ namespace TwitterLibrary
 
         private void TweetListExamples()
         {
-            //TweetList_GetUserLists();
+            TweetList_GetUserLists();
             // TweetList_CreateList();
             // TweetList_GetExistingListById(105601767);
             // TweetList_UpdateList(105601767);
             // TweetList_DestroyList(105601767);
-            // TweetList_GetTweetsFromList(105601767);
+             TweetList_GetTweetsFromList(105601767);
             // TweetList_GetMembersOfList(105601767);
         }
 

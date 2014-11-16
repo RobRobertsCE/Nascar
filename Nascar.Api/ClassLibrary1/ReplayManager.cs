@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace Nascar.Api
 {
-    public class ReplayManager 
+    public class ReplayManager
     {
         #region events
         public event LiveFeedEventHandler LiveFeedEvent;
@@ -18,6 +18,15 @@ namespace Nascar.Api
             {
                 LiveFeedEventArgs e = new LiveFeedEventArgs(model);
                 LiveFeedEvent(this, e);
+            }
+        }
+
+        public event LiveFeedDataLoadedHandler LiveFeedDataLoaded;
+        protected virtual void OnLiveFeedDataLoaded()
+        {
+            if (null != LiveFeedDataLoaded)
+            {
+                LiveFeedDataLoaded(this, EventArgs.Empty);
             }
         }
 
@@ -46,15 +55,15 @@ namespace Nascar.Api
             {
                 LiveFeedStopped(this, EventArgs.Empty);
             }
-        } 
+        }
         #endregion
 
         #region consts
-        const double DefaultTimerInterval = 2000; 
+        const double DefaultTimerInterval = 2000;
         #endregion
 
         #region fields
-        Timer feedTimer = null; 
+        Timer feedTimer = null;
         IFeedClient feedClient = null;
         #endregion
 
@@ -72,7 +81,9 @@ namespace Nascar.Api
                 timerInterval = value;
                 if (TimerIsRunning)
                 {
-
+                    Stop();
+                    InitializeTimer();
+                    Start();
                 }
             }
         }
@@ -101,15 +112,17 @@ namespace Nascar.Api
         {
             this.Series = series;
             this.race_id = race_id;
-            feedClient = new ReplayClient(this.Series, race_id);
+
+            LoadFeedClient();
         }
         public ReplayManager(SeriesName series, int race_id, int run_id)
         {
             this.Series = series;
             this.race_id = race_id;
-        this.run_id=run_id;
-            feedClient = new ReplayClient(this.Series, race_id, run_id);
-        }  
+            this.run_id = run_id;
+
+            LoadFeedClient();
+        }
         #endregion
 
         #region protected internal methods
@@ -136,16 +149,26 @@ namespace Nascar.Api
             }
 
             Start();
-        } 
+        }
         #endregion
 
         #region public methods
+        void LoadFeedClient()
+        {
+            if (this.run_id < 1)
+                feedClient = new ReplayClient(this.Series, this.race_id);
+            else
+                feedClient = new ReplayClient(this.Series, this.race_id, this.run_id);
+
+            OnLiveFeedDataLoaded();
+        }
         public void Start()
         {
+            if (null == feedClient)
+                LoadFeedClient();
+
             if (null == feedTimer)
-            {
                 InitializeTimer();
-            }
             else if (TimerIsRunning)
                 return;
 

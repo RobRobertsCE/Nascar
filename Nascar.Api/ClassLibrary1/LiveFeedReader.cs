@@ -57,17 +57,14 @@ namespace Nascar.Api
         {
             feeds = new List<string>();
             using (NascarDbContext context = new NascarDbContext())
-            {
-                string raceFilter = String.Format("\"race_id\":{0}", race_id);
-                string runTypeFilter = "\"run_type\":3";
-                string runFilter = String.Format("\"run_id\":{0}", run_id);
+            {               
                 if (run_id == 0)
                 {
-                    feeds = context.RawFeeds.Where(f => f.RawFeedData.Contains(raceFilter) && f.RawFeedData.Contains(runTypeFilter)).Take(100).Select(f => f.RawFeedData).ToList();
+                    feeds = context.RawFeedRecords.Where(f => f.race_id == race_id).OrderBy(f => f.elapsed_time).Select(f => f.data).ToList();
                 }
                 else
                 {
-                    feeds = context.RawFeeds.Where(f => f.RawFeedData.Contains(raceFilter) && f.RawFeedData.Contains(runFilter)).Take(100).Select(f => f.RawFeedData).ToList();
+                    feeds = context.RawFeedRecords.Where(f => f.race_id == race_id && f.run_id == run_id).OrderBy(f=>f.elapsed_time).Select(f => f.data).ToList();
                 }
             }
         }

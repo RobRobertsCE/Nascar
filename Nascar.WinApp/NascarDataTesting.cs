@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Nascar.Api;
 using Nascar.Api.Models;
 using Nascar.Data;
+using Nascar.WinApp.Views;
 using Newtonsoft.Json;
 
 namespace Nascar.WinApp
@@ -34,12 +35,15 @@ namespace Nascar.WinApp
         #endregion
 
         #region fields
+        IList<StopwatchDialog> stopwatches = new List<StopwatchDialog>();
         ILiveFeedProcessor processor = null;
         IApiFeedProcessor harvester = null;
         FeedManager manager = null;
-        ReplayManager replayManager = null;
+        ReplayManager replayManager = null; 
+        int currentRaceId = 0;
         int feedCount = 0;
         DateTime startTime;
+        private int currentRunId;
         #endregion
 
         #region properties
@@ -49,7 +53,9 @@ namespace Nascar.WinApp
             {
                 if (rbCup.Checked) return SeriesName.Cup;
                 if (rbXfinity.Checked) return SeriesName.XFinity;
-                return SeriesName.Truck;
+                if (rbTruck.Checked) return SeriesName.Truck;
+
+                return SeriesName.Cup;
             }
         }
         #endregion
@@ -248,6 +254,8 @@ namespace Nascar.WinApp
                 this.Invoke((MethodInvoker)delegate
                 {
                     ProcessFeedData(e.LiveFeed);
+
+                    UpdateStopwatches(e);
                 });
 
                 this.Invoke((MethodInvoker)delegate
@@ -265,7 +273,6 @@ namespace Nascar.WinApp
                 Console.WriteLine(ex);
             }
         }
-
         void ProcessFeedData(LiveFeedModel model)
         {
             SetFeedIndicatorState(IndicatorState.Busy);
@@ -278,7 +285,6 @@ namespace Nascar.WinApp
 
             SetFeedIndicatorState(IndicatorState.Ready);
         }
-
         void RecordFeedData(LiveFeedModel model)
         {
             if (null == processor)
@@ -286,7 +292,6 @@ namespace Nascar.WinApp
 
             processor.ProcessLiveFeed(model);
         }
-
         void DisplayFeedData(LiveFeedModel model)
         {
             liveFeedDisplay1.Model = model;
@@ -316,7 +321,6 @@ namespace Nascar.WinApp
                 Console.WriteLine(ex);
             }
         }
-
         void HarvestRawData(string rawData)
         {
             try
@@ -326,7 +330,7 @@ namespace Nascar.WinApp
                 if (null == harvester)
                     harvester = new LiveFeedHarvester();
 
-                harvester.ProcessFeedData (rawData);
+                harvester.ProcessFeedData(rawData);
 
                 SetRawFeedIndicatorState(IndicatorState.Ready);
             }
@@ -373,11 +377,12 @@ namespace Nascar.WinApp
             public int race_id { get; set; }
             public string track_name { get; set; }
         }
+
+        #region Series / Race Selection
         private void rbSeries_CheckedChanged(object sender, EventArgs e)
         {
             this.LoadRaceSelectionList((int)SelectedSeries);
         }
-
         private void cmbRace_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbRace.SelectedItem == null)
@@ -389,24 +394,26 @@ namespace Nascar.WinApp
                 btnStartLiveFeed.Enabled = true;
                 var race = (RaceEvent)cmbRace.SelectedItem;
                 currentRaceId = race.race_id;
-                textBox1.Text = currentRaceId.ToString();
+                txtRaceId.Text = currentRaceId.ToString();
             }
 
-        }
-        int currentRaceId = 0;
+        } 
+        #endregion
 
+        #region manually increment/decrement race id
         private void button1_Click(object sender, EventArgs e)
         {
             currentRaceId--;
-            textBox1.Text = currentRaceId.ToString();
+            txtRaceId.Text = currentRaceId.ToString();
         }
-
         private void button2_Click(object sender, EventArgs e)
         {
             currentRaceId++;
-            textBox1.Text = currentRaceId.ToString();
-        }
+            txtRaceId.Text = currentRaceId.ToString();
+        } 
+        #endregion
 
+        #region Start Replay
         private void startReplay_Click(object sender, EventArgs e)
         {
             StartReplay();
@@ -423,6 +430,7 @@ namespace Nascar.WinApp
 
                     InitializeReplayManager();
                 }
+
                 replayManager.Start();
             }
             catch (Exception ex)
@@ -437,31 +445,31 @@ namespace Nascar.WinApp
             {
                 replayManager.Stop();
                 replayManager.LiveFeedStarted -= manager_LiveFeedStarted;
-                replayManager.LiveFeedRawData -= manager_RawFeedEvent;
                 replayManager.LiveFeedStopped -= manager_LiveFeedStopped;
                 replayManager.LiveFeedEvent -= manager_ReplayEvent;
+                replayManager.LiveFeedDataLoaded -= replayManager_LiveFeedDataLoaded;
                 replayManager.Dispose();
                 if (null != replayManager) replayManager = null;
             }
             lblRaceId.Text = String.Format("RaceId: {0}", currentRaceId);
-            replayManager = new ReplayManager(SelectedSeries, currentRaceId);
+            replayManager = new ReplayManager(SelectedSeries, currentRaceId, currentRunId);
             replayManager.LiveFeedStarted += manager_LiveFeedStarted;
             replayManager.LiveFeedStopped += manager_LiveFeedStopped;
-            if (chkHarvest.Checked)
-            {
-                //replayManager.LiveFeedRawData += manager_RawFeedEvent;
-                SetRawFeedIndicatorState(IndicatorState.Ready);
-            }
+            replayManager.LiveFeedEvent += manager_ReplayEvent;
+            replayManager.LiveFeedDataLoaded += replayManager_LiveFeedDataLoaded;
             if (chkProcess.Checked)
             {
-                replayManager.LiveFeedEvent += manager_ReplayEvent;
                 SetFeedIndicatorState(IndicatorState.Ready);
             }
         }
-        void manager_ReplayStarted(object sender, EventArgs e)
+
+        void replayManager_LiveFeedDataLoaded(object sender, EventArgs e)
         {
-            Console.WriteLine("ReplayManager Started");
-        }
+            Console.WriteLine("replayManager_LiveFeedDataLoaded");
+        } 
+        #endregion
+
+        #region Stop Replay
         private void stopReplay_Click(object sender, EventArgs e)
         {
             StopReplay();
@@ -482,6 +490,12 @@ namespace Nascar.WinApp
                 MessageBox.Show(ex.Message);
                 Console.WriteLine(ex);
             }
+        } 
+        #endregion
+
+        void manager_ReplayStarted(object sender, EventArgs e)
+        {
+            Console.WriteLine("ReplayManager Started");
         }
         void manager_ReplayStopped(object sender, EventArgs e)
         {
@@ -491,11 +505,16 @@ namespace Nascar.WinApp
         {
             try
             {
-                //txtRunName.SetPropertyThreadSafe(() => txtRunName.Text, e.LiveFeed.run_name);
+                this.SuspendLayout();
 
                 this.Invoke((MethodInvoker)delegate
                 {
-                    ProcessReplayData(e.LiveFeed);
+                    if (chkProcess.Checked)  ProcessReplayData(e.LiveFeed);
+
+                    if (chkDisplay.Checked) DisplayReplayData(e.LiveFeed);
+
+                    UpdateStopwatches(e);
+
                 });
 
                 this.Invoke((MethodInvoker)delegate
@@ -512,8 +531,21 @@ namespace Nascar.WinApp
                 MessageBox.Show(ex.Message);
                 Console.WriteLine(ex);
             }
+            finally
+            {
+                this.ResumeLayout();
+            }
         }
+
         void ProcessReplayData(LiveFeedModel model)
+        {
+            SetFeedIndicatorState(IndicatorState.Busy);
+
+            DisplayFeedData(model);
+
+            SetFeedIndicatorState(IndicatorState.Ready);
+        }
+        void DisplayReplayData(LiveFeedModel model)
         {
             SetFeedIndicatorState(IndicatorState.Busy);
 
@@ -532,6 +564,83 @@ namespace Nascar.WinApp
         {
             if (null == replayManager) return;
             replayManager.GetSingleFeed();
+        }
+
+        void UpdateStopwatches(LiveFeedEventArgs e)
+        {
+            if (stopwatches.Count() > 0)
+            {
+                foreach (StopwatchDialog dialog in stopwatches)
+                {
+                    dialog.stopwatch_LiveFeedEvent(this, e);
+                }
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                StopwatchDialog dialog = new StopwatchDialog(this.txtStopwatchCarNumber.Text);
+
+                dialog.Show();
+
+                stopwatches.Add(dialog);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        private void btnSelectReplay_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                chkProcess.Checked = false;
+
+                ReplaySelectionDialog dialog = new ReplaySelectionDialog();
+
+                if (DialogResult.OK == dialog.ShowDialog(this)) ;
+                {
+                    LoadReplay(dialog.SelectedReplay);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        void LoadReplay(RawFeedRecordView replay)
+        {
+            if (replay.series_id == 1)
+                rbCup.Checked = true;
+            else if (replay.series_id == 2)
+                rbXfinity.Checked = true;
+            else if (replay.series_id == 3)
+                rbTruck.Checked = true;
+
+            currentRunId = replay.run_id;
+            currentRaceId = replay.race_id;
+            txtRaceId.Text = currentRaceId.ToString();
+
+            StartReplay();
+        }
+
+        private void btnTrackViewMapper_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                TrackViewDialog dialog = new TrackViewDialog();
+
+                dialog.ShowDialog(this);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
     }
 }

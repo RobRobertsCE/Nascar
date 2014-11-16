@@ -19,6 +19,8 @@ namespace Nascar.Api
 
     public delegate void LiveFeedRawDataHandler(object sender, string rawData);
 
+    public delegate void LiveFeedDataLoadedHandler(object sender, EventArgs e);
+
     public delegate void LiveFeedStartedHandler(object sender, EventArgs e);
 
     public delegate void LiveFeedStoppedHandler(object sender, EventArgs e);

@@ -50,7 +50,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.eventDisplay = new Nascar.WinApp.EventDisplay();
             this.eventDisplay1 = new Nascar.WinApp.EventDisplay();
-            this.vehicleViewModelList1 = new Nascar.WinApp.Views.VehicleViewModelList();
             this.vehiclePanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -61,10 +60,10 @@
             this.vehiclePanel.AutoScroll = true;
             this.vehiclePanel.BackColor = System.Drawing.Color.Black;
             this.vehiclePanel.Controls.Add(this.vehicleView1);
-            this.vehiclePanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.vehiclePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.vehiclePanel.Location = new System.Drawing.Point(0, 200);
             this.vehiclePanel.Name = "vehiclePanel";
-            this.vehiclePanel.Size = new System.Drawing.Size(1481, 72);
+            this.vehiclePanel.Size = new System.Drawing.Size(1481, 259);
             this.vehiclePanel.TabIndex = 1;
             // 
             // vehicleView1
@@ -288,22 +287,10 @@
             this.eventDisplay1.Size = new System.Drawing.Size(447, 55);
             this.eventDisplay1.TabIndex = 0;
             // 
-            // vehicleViewModelList1
-            // 
-            this.vehicleViewModelList1.BackColor = System.Drawing.Color.MediumBlue;
-            this.vehicleViewModelList1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vehicleViewModelList1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vehicleViewModelList1.Location = new System.Drawing.Point(0, 272);
-            this.vehicleViewModelList1.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.vehicleViewModelList1.Name = "vehicleViewModelList1";
-            this.vehicleViewModelList1.Size = new System.Drawing.Size(1481, 187);
-            this.vehicleViewModelList1.TabIndex = 3;
-            // 
             // LiveFeedDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.vehicleViewModelList1);
             this.Controls.Add(this.vehiclePanel);
             this.Controls.Add(this.panel1);
             this.Name = "LiveFeedDisplay";
@@ -339,7 +326,6 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
-        private Views.VehicleViewModelList vehicleViewModelList1;
 
     }
 }

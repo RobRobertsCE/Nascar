@@ -53,6 +53,7 @@
             this.chkNationwide = new System.Windows.Forms.CheckBox();
             this.chkCup = new System.Windows.Forms.CheckBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.chkTodayOnly = new System.Windows.Forms.CheckBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.filterPanel.SuspendLayout();
@@ -225,6 +226,7 @@
             // filterPanel
             // 
             this.filterPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.filterPanel.Controls.Add(this.chkTodayOnly);
             this.filterPanel.Controls.Add(this.chkTruck);
             this.filterPanel.Controls.Add(this.chkNationwide);
             this.filterPanel.Controls.Add(this.chkCup);
@@ -279,6 +281,18 @@
             this.timer1.Interval = 10000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // chkTodayOnly
+            // 
+            this.chkTodayOnly.AutoSize = true;
+            this.chkTodayOnly.Checked = true;
+            this.chkTodayOnly.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkTodayOnly.Location = new System.Drawing.Point(864, 8);
+            this.chkTodayOnly.Name = "chkTodayOnly";
+            this.chkTodayOnly.Size = new System.Drawing.Size(80, 17);
+            this.chkTodayOnly.TabIndex = 3;
+            this.chkTodayOnly.Text = "Today Only";
+            this.chkTodayOnly.UseVisualStyleBackColor = true;
+            // 
             // ScheduleDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -325,5 +339,6 @@
         private System.Windows.Forms.CheckBox chkNationwide;
         private System.Windows.Forms.CheckBox chkCup;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.CheckBox chkTodayOnly;
     }
 }

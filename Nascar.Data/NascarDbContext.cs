@@ -19,6 +19,8 @@ namespace Nascar.Data
         public virtual DbSet<LiveFeed> LiveFeeds { get; set; }
         public virtual DbSet<LapsLed> LapsLedList { get; set; }
         public virtual DbSet<RawFeed> RawFeeds { get; set; }
+        public virtual DbSet<RawFeedRecord> RawFeedRecords { get; set; }
+        public virtual DbSet<RawFeedRecordView> RawFeedRecordViews { get; set; }
 
         public NascarDbContext()
             : base()

@@ -202,17 +202,19 @@ namespace Nascar.Api
         #region update managers
         void UpdateManagers()
         {
-            DateTime currentDateTime = DateTime.Now;
+            DateTime currentDateTime = DateTime.Now.AddMinutes(-10);
 
             foreach (RaceEvent evt in eventSchedule)
             {
-                if (evt.scheduled_event_start <= DateTime.Now && evt.scheduled_event_end >= DateTime.Now && (evt.status == "Saved" || evt.status == "Stopped"))
+                DateTime currentTimestamp = DateTime.Now.AddMinutes(5);
+
+                if (evt.scheduled_event_start <= currentTimestamp && evt.scheduled_event_end > currentTimestamp && (evt.status == "Saved" || evt.status == "Stopped"))
                 {
                     StartEvent(evt);
                     continue;
 
                 }
-                if (evt.scheduled_event_start <= DateTime.Now && evt.scheduled_event_end >= DateTime.Now && (evt.status == "Running" || evt.status == "Stopped"))
+                if (evt.scheduled_event_start <= currentTimestamp && (evt.status == "Running" || evt.status == "Stopped"))
                 {
                     if (!managers.Any(m => m.scheduled_event_id == evt.scheduled_event_id))
                     {
@@ -220,7 +222,7 @@ namespace Nascar.Api
                         continue;
                     }
                 }
-                if (evt.scheduled_event_start <= DateTime.Now && evt.scheduled_event_end <= DateTime.Now && evt.status == "Running")
+                if (evt.scheduled_event_start <= currentTimestamp && evt.scheduled_event_end <= currentTimestamp && evt.status == "Running")
                 {
                     StopEvent(evt.scheduled_event_id);
                     continue;

@@ -90,12 +90,22 @@
     <Compile Include="Migrations\201411032134244_addVehicleRunStat.Designer.cs">
       <DependentUpon>201411032134244_addVehicleRunStat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201411161700583_rawfeedrecordview.cs" />
+    <Compile Include="Migrations\201411161700583_rawfeedrecordview.Designer.cs">
+      <DependentUpon>201411161700583_rawfeedrecordview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411161706369_fixreplayview.cs" />
+    <Compile Include="Migrations\201411161706369_fixreplayview.Designer.cs">
+      <DependentUpon>201411161706369_fixreplayview.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NascarDbContext.cs" />
     <Compile Include="PitStop.cs" />
     <Compile Include="Points.cs" />
     <Compile Include="Race.cs" />
     <Compile Include="RawFeed.cs" />
+    <Compile Include="RawFeedRecord.cs" />
+    <Compile Include="RawFeedRecordView.cs" />
     <Compile Include="Run.cs" />
     <Compile Include="Series.cs" />
     <Compile Include="Session.cs" />
@@ -138,6 +148,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201411032134244_addVehicleRunStat.resx">
       <DependentUpon>201411032134244_addVehicleRunStat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411161700583_rawfeedrecordview.resx">
+      <DependentUpon>201411161700583_rawfeedrecordview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411161706369_fixreplayview.resx">
+      <DependentUpon>201411161706369_fixreplayview.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

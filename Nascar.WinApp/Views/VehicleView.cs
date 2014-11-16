@@ -15,7 +15,7 @@ namespace Nascar.WinApp.Views
     public partial class VehicleView : UserControl
     {
         public GreenFlagRun currentRun;
-        public IList<GreenFlagRun> GreenFlagRuns = new List<GreenFlagRun>();        
+        public IList<GreenFlagRun> GreenFlagRuns = new List<GreenFlagRun>();
         public IList<LapTimeData> Laps = new List<LapTimeData>();
 
         VehicleModel last_model;
@@ -48,7 +48,7 @@ namespace Nascar.WinApp.Views
         {
             get
             {
-                return position_at_last_green - Vehicle.running_position;
+                return position_at_last_green == 0 ? 0 : position_at_last_green - Vehicle.running_position;
             }
         }
         public int RacePlusMinus
@@ -277,7 +277,7 @@ namespace Nascar.WinApp.Views
         {
             double deltaPosChange = lastDistanceBehind - DistanceBehind;
 
-            if (deltaPosChange>0)
+            if (deltaPosChange > 0)
             {
                 // gained on car in front.
                 DeltaPositionTextBox.ForeColor = Color.Green;
@@ -391,7 +391,7 @@ namespace Nascar.WinApp.Views
                 this.currentRun = new GreenFlagRun(model.laps_completed, model.running_position, GreenFlagRuns.Count);
                 GreenFlagRuns.Add(this.currentRun);
             }
-            if (this.currentRun.is_active )
+            if (this.currentRun.is_active)
                 this.currentRun.AddLapData(lapData);
         }
 
@@ -401,7 +401,12 @@ namespace Nascar.WinApp.Views
 
             if ((Laps.Count > 0) && (!requireNLaps || (requireNLaps && (count >= n))))
             {
-                return Laps.OrderByDescending(l => l.LapNumber).Where(l=>l.FlagState==FlagState.Green).Take(count).Average(l => l.LapTime);
+                double result = 0;
+                if (Laps.Any(l => l.FlagState == FlagState.Green))
+                {
+                    result = Laps.OrderByDescending(l => l.LapNumber).Where(l => l.FlagState == FlagState.Green).Take(count).Average(l => l.LapTime);
+                }
+                return result;
             }
             else
             {
@@ -415,7 +420,12 @@ namespace Nascar.WinApp.Views
 
             if ((Laps.Count > 0) && (!requireNLaps || (requireNLaps && (count >= n))))
             {
-                return Laps.OrderByDescending(l => l.LapNumber).Where(l => l.FlagState == FlagState.Green).Take(count).Average(l => l.PositionDelta);
+                double result = 0;
+                if (Laps.Any(l => l.FlagState == FlagState.Green))
+                {
+                    result = Laps.OrderByDescending(l => l.LapNumber).Where(l => l.FlagState == FlagState.Green).Take(count).Average(l => l.PositionDelta);
+                }
+                return result;
             }
             else
             {
@@ -429,15 +439,18 @@ namespace Nascar.WinApp.Views
 
             if ((Laps.Count > 0) && (!requireNLaps || (requireNLaps && (count >= n))))
             {
-                return Laps.OrderByDescending(l => l.LapNumber).Where(l => l.FlagState == FlagState.Green).Take(count).Average(l => l.LeaderDelta);
+                double result = 0;
+                if (Laps.Any(l => l.FlagState == FlagState.Green))
+                {
+                    result = Laps.OrderByDescending(l => l.LapNumber).Where(l => l.FlagState == FlagState.Green).Take(count).Average(l => l.LeaderDelta);
+                }
+                return result;
             }
             else
             {
                 return 0;
             }
         }
-
-      
 
         public void FlagStateChangedHandler(FlagState old_state, FlagState new_state, int lap_number)
         {

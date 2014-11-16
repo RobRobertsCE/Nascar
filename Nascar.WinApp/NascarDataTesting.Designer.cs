@@ -31,11 +31,14 @@
             this.btnStartLiveFeed = new System.Windows.Forms.Button();
             this.btnStopLiveFeed = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnTrackViewMapper = new System.Windows.Forms.Button();
+            this.btnSelectReplay = new System.Windows.Forms.Button();
+            this.txtStopwatchCarNumber = new System.Windows.Forms.TextBox();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.pauseReplay = new System.Windows.Forms.Button();
             this.stopReplay = new System.Windows.Forms.Button();
             this.startReplay = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.picRawFeedState = new System.Windows.Forms.PictureBox();
             this.picFeedState = new System.Windows.Forms.PictureBox();
             this.grpSeries = new System.Windows.Forms.GroupBox();
@@ -46,13 +49,14 @@
             this.chkHarvest = new System.Windows.Forms.CheckBox();
             this.rbXfinity = new System.Windows.Forms.RadioButton();
             this.rbCup = new System.Windows.Forms.RadioButton();
+            this.button2 = new System.Windows.Forms.Button();
+            this.txtRaceId = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblFeedStart = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblFeedCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblRaceId = new System.Windows.Forms.ToolStripStatusLabel();
             this.liveFeedDisplay1 = new Nascar.WinApp.LiveFeedDisplay();
-            this.pauseReplay = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picRawFeedState)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFeedState)).BeginInit();
@@ -84,13 +88,14 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnTrackViewMapper);
+            this.panel1.Controls.Add(this.btnSelectReplay);
+            this.panel1.Controls.Add(this.txtStopwatchCarNumber);
+            this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.pauseReplay);
             this.panel1.Controls.Add(this.stopReplay);
             this.panel1.Controls.Add(this.startReplay);
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.picRawFeedState);
             this.panel1.Controls.Add(this.picFeedState);
             this.panel1.Controls.Add(this.grpSeries);
@@ -103,9 +108,66 @@
             this.panel1.Size = new System.Drawing.Size(1255, 96);
             this.panel1.TabIndex = 7;
             // 
+            // btnTrackViewMapper
+            // 
+            this.btnTrackViewMapper.Location = new System.Drawing.Point(744, 8);
+            this.btnTrackViewMapper.Name = "btnTrackViewMapper";
+            this.btnTrackViewMapper.Size = new System.Drawing.Size(112, 23);
+            this.btnTrackViewMapper.TabIndex = 21;
+            this.btnTrackViewMapper.Text = "Track View Mapper";
+            this.btnTrackViewMapper.UseVisualStyleBackColor = true;
+            this.btnTrackViewMapper.Click += new System.EventHandler(this.btnTrackViewMapper_Click);
+            // 
+            // btnSelectReplay
+            // 
+            this.btnSelectReplay.Location = new System.Drawing.Point(280, 8);
+            this.btnSelectReplay.Name = "btnSelectReplay";
+            this.btnSelectReplay.Size = new System.Drawing.Size(99, 23);
+            this.btnSelectReplay.TabIndex = 20;
+            this.btnSelectReplay.Text = "Select Replay";
+            this.btnSelectReplay.UseVisualStyleBackColor = true;
+            this.btnSelectReplay.Click += new System.EventHandler(this.btnSelectReplay_Click);
+            // 
+            // txtStopwatchCarNumber
+            // 
+            this.txtStopwatchCarNumber.Location = new System.Drawing.Point(1104, 64);
+            this.txtStopwatchCarNumber.Name = "txtStopwatchCarNumber";
+            this.txtStopwatchCarNumber.Size = new System.Drawing.Size(48, 20);
+            this.txtStopwatchCarNumber.TabIndex = 19;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(992, 64);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(104, 23);
+            this.button4.TabIndex = 18;
+            this.button4.Text = "Add Stopwatch";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(624, 8);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 17;
+            this.button3.Text = "next feed";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // pauseReplay
+            // 
+            this.pauseReplay.Location = new System.Drawing.Point(544, 8);
+            this.pauseReplay.Name = "pauseReplay";
+            this.pauseReplay.Size = new System.Drawing.Size(75, 23);
+            this.pauseReplay.TabIndex = 16;
+            this.pauseReplay.Text = "pause replay";
+            this.pauseReplay.UseVisualStyleBackColor = true;
+            this.pauseReplay.Click += new System.EventHandler(this.pauseReplay_Click);
+            // 
             // stopReplay
             // 
-            this.stopReplay.Location = new System.Drawing.Point(320, 8);
+            this.stopReplay.Location = new System.Drawing.Point(464, 8);
             this.stopReplay.Name = "stopReplay";
             this.stopReplay.Size = new System.Drawing.Size(75, 23);
             this.stopReplay.TabIndex = 15;
@@ -115,40 +177,13 @@
             // 
             // startReplay
             // 
-            this.startReplay.Location = new System.Drawing.Point(240, 8);
+            this.startReplay.Location = new System.Drawing.Point(384, 8);
             this.startReplay.Name = "startReplay";
             this.startReplay.Size = new System.Drawing.Size(75, 23);
             this.startReplay.TabIndex = 14;
             this.startReplay.Text = "start replay";
             this.startReplay.UseVisualStyleBackColor = true;
             this.startReplay.Click += new System.EventHandler(this.startReplay_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(1032, 8);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(928, 8);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 12;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(848, 8);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // picRawFeedState
             // 
@@ -179,9 +214,12 @@
             this.grpSeries.Controls.Add(this.chkHarvest);
             this.grpSeries.Controls.Add(this.rbXfinity);
             this.grpSeries.Controls.Add(this.rbCup);
+            this.grpSeries.Controls.Add(this.button2);
+            this.grpSeries.Controls.Add(this.txtRaceId);
+            this.grpSeries.Controls.Add(this.button1);
             this.grpSeries.Location = new System.Drawing.Point(8, 40);
             this.grpSeries.Name = "grpSeries";
-            this.grpSeries.Size = new System.Drawing.Size(824, 56);
+            this.grpSeries.Size = new System.Drawing.Size(976, 56);
             this.grpSeries.TabIndex = 8;
             this.grpSeries.TabStop = false;
             this.grpSeries.Text = "Settings";
@@ -266,6 +304,33 @@
             this.rbCup.UseVisualStyleBackColor = true;
             this.rbCup.CheckedChanged += new System.EventHandler(this.rbSeries_CheckedChanged);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(944, 24);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(24, 23);
+            this.button2.TabIndex = 13;
+            this.button2.Text = "+";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // txtRaceId
+            // 
+            this.txtRaceId.Location = new System.Drawing.Point(840, 24);
+            this.txtRaceId.Name = "txtRaceId";
+            this.txtRaceId.Size = new System.Drawing.Size(100, 20);
+            this.txtRaceId.TabIndex = 12;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(808, 24);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(27, 23);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "-";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -313,26 +378,6 @@
             this.liveFeedDisplay1.Size = new System.Drawing.Size(1255, 419);
             this.liveFeedDisplay1.TabIndex = 6;
             // 
-            // pauseReplay
-            // 
-            this.pauseReplay.Location = new System.Drawing.Point(400, 8);
-            this.pauseReplay.Name = "pauseReplay";
-            this.pauseReplay.Size = new System.Drawing.Size(75, 23);
-            this.pauseReplay.TabIndex = 16;
-            this.pauseReplay.Text = "pause replay";
-            this.pauseReplay.UseVisualStyleBackColor = true;
-            this.pauseReplay.Click += new System.EventHandler(this.pauseReplay_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(480, 8);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 17;
-            this.button3.Text = "next feed";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // NascarDataTesting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -377,13 +422,17 @@
         private System.Windows.Forms.ToolStripStatusLabel lblFeedCount;
         private System.Windows.Forms.ComboBox cmbRace;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtRaceId;
         private System.Windows.Forms.ToolStripStatusLabel lblRaceId;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button startReplay;
         private System.Windows.Forms.Button stopReplay;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button pauseReplay;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.TextBox txtStopwatchCarNumber;
+        private System.Windows.Forms.Button btnSelectReplay;
+        private System.Windows.Forms.Button btnTrackViewMapper;
     }
 }
 
