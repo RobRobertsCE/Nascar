@@ -31,8 +31,8 @@
             Nascar.Api.Models.VehicleModel vehicleModel1 = new Nascar.Api.Models.VehicleModel();
             this.vehiclePanel = new System.Windows.Forms.FlowLayoutPanel();
             this.vehicleView1 = new Nascar.WinApp.Views.VehicleView();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.eventViewPanel = new System.Windows.Forms.Panel();
+            this.pnlVehicleViewHeader = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -51,8 +51,8 @@
             this.eventDisplay = new Nascar.WinApp.EventDisplay();
             this.eventDisplay1 = new Nascar.WinApp.EventDisplay();
             this.vehiclePanel.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.eventViewPanel.SuspendLayout();
+            this.pnlVehicleViewHeader.SuspendLayout();
             this.SuspendLayout();
             // 
             // vehiclePanel
@@ -61,9 +61,9 @@
             this.vehiclePanel.BackColor = System.Drawing.Color.Black;
             this.vehiclePanel.Controls.Add(this.vehicleView1);
             this.vehiclePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vehiclePanel.Location = new System.Drawing.Point(0, 200);
+            this.vehiclePanel.Location = new System.Drawing.Point(0, 256);
             this.vehiclePanel.Name = "vehiclePanel";
-            this.vehiclePanel.Size = new System.Drawing.Size(1481, 259);
+            this.vehiclePanel.Size = new System.Drawing.Size(1481, 203);
             this.vehiclePanel.TabIndex = 1;
             // 
             // vehicleView1
@@ -104,40 +104,40 @@
             vehicleModel1.vehicle_number = null;
             this.vehicleView1.Vehicle = vehicleModel1;
             // 
-            // panel1
+            // eventViewPanel
             // 
-            this.panel1.Controls.Add(this.panel2);
-            this.panel1.Controls.Add(this.eventDisplay);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1481, 200);
-            this.panel1.TabIndex = 2;
+            this.eventViewPanel.Controls.Add(this.eventDisplay);
+            this.eventViewPanel.Controls.Add(this.pnlVehicleViewHeader);
+            this.eventViewPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.eventViewPanel.Location = new System.Drawing.Point(0, 0);
+            this.eventViewPanel.Name = "eventViewPanel";
+            this.eventViewPanel.Size = new System.Drawing.Size(1481, 256);
+            this.eventViewPanel.TabIndex = 2;
             // 
-            // panel2
+            // pnlVehicleViewHeader
             // 
-            this.panel2.BackColor = System.Drawing.Color.Gainsboro;
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.label12);
-            this.panel2.Controls.Add(this.label11);
-            this.panel2.Controls.Add(this.label18);
-            this.panel2.Controls.Add(this.label17);
-            this.panel2.Controls.Add(this.label6);
-            this.panel2.Controls.Add(this.label2);
-            this.panel2.Controls.Add(this.label3);
-            this.panel2.Controls.Add(this.label4);
-            this.panel2.Controls.Add(this.label13);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.label5);
-            this.panel2.Controls.Add(this.label7);
-            this.panel2.Controls.Add(this.label10);
-            this.panel2.Controls.Add(this.label8);
-            this.panel2.Controls.Add(this.label9);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 184);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1481, 16);
-            this.panel2.TabIndex = 19;
+            this.pnlVehicleViewHeader.BackColor = System.Drawing.Color.Gainsboro;
+            this.pnlVehicleViewHeader.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlVehicleViewHeader.Controls.Add(this.label12);
+            this.pnlVehicleViewHeader.Controls.Add(this.label11);
+            this.pnlVehicleViewHeader.Controls.Add(this.label18);
+            this.pnlVehicleViewHeader.Controls.Add(this.label17);
+            this.pnlVehicleViewHeader.Controls.Add(this.label6);
+            this.pnlVehicleViewHeader.Controls.Add(this.label2);
+            this.pnlVehicleViewHeader.Controls.Add(this.label3);
+            this.pnlVehicleViewHeader.Controls.Add(this.label4);
+            this.pnlVehicleViewHeader.Controls.Add(this.label13);
+            this.pnlVehicleViewHeader.Controls.Add(this.label1);
+            this.pnlVehicleViewHeader.Controls.Add(this.label5);
+            this.pnlVehicleViewHeader.Controls.Add(this.label7);
+            this.pnlVehicleViewHeader.Controls.Add(this.label10);
+            this.pnlVehicleViewHeader.Controls.Add(this.label8);
+            this.pnlVehicleViewHeader.Controls.Add(this.label9);
+            this.pnlVehicleViewHeader.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlVehicleViewHeader.Location = new System.Drawing.Point(0, 240);
+            this.pnlVehicleViewHeader.Name = "pnlVehicleViewHeader";
+            this.pnlVehicleViewHeader.Size = new System.Drawing.Size(1481, 16);
+            this.pnlVehicleViewHeader.TabIndex = 19;
             // 
             // label12
             // 
@@ -267,13 +267,17 @@
             // eventDisplay
             // 
             this.eventDisplay.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.eventDisplay.Dock = System.Windows.Forms.DockStyle.Top;
+            this.eventDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
             this.eventDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.eventDisplay.Location = new System.Drawing.Point(0, 0);
             this.eventDisplay.Model = null;
             this.eventDisplay.Name = "eventDisplay";
             this.eventDisplay.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.eventDisplay.Size = new System.Drawing.Size(1481, 184);
+            this.eventDisplay.ShowAverages = false;
+            this.eventDisplay.ShowLastLap = false;
+            this.eventDisplay.ShowRaceStats = false;
+            this.eventDisplay.ShowRunStats = true;
+            this.eventDisplay.Size = new System.Drawing.Size(1481, 240);
             this.eventDisplay.TabIndex = 0;
             // 
             // eventDisplay1
@@ -284,6 +288,10 @@
             this.eventDisplay1.Model = null;
             this.eventDisplay1.Name = "eventDisplay1";
             this.eventDisplay1.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.eventDisplay1.ShowAverages = false;
+            this.eventDisplay1.ShowLastLap = false;
+            this.eventDisplay1.ShowRaceStats = false;
+            this.eventDisplay1.ShowRunStats = true;
             this.eventDisplay1.Size = new System.Drawing.Size(447, 55);
             this.eventDisplay1.TabIndex = 0;
             // 
@@ -292,13 +300,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.vehiclePanel);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.eventViewPanel);
             this.Name = "LiveFeedDisplay";
             this.Size = new System.Drawing.Size(1481, 459);
             this.vehiclePanel.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.eventViewPanel.ResumeLayout(false);
+            this.pnlVehicleViewHeader.ResumeLayout(false);
+            this.pnlVehicleViewHeader.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -308,7 +316,7 @@
         private EventDisplay eventDisplay;
         private EventDisplay eventDisplay1;
         private System.Windows.Forms.FlowLayoutPanel vehiclePanel;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel eventViewPanel;
         private Views.VehicleView vehicleView1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
@@ -321,7 +329,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel pnlVehicleViewHeader;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label12;

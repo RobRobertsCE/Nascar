@@ -61,6 +61,66 @@ namespace Nascar.WinApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CautionLightsGreen {
+            get {
+                object obj = ResourceManager.GetObject("CautionLightsGreen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CautionLightsOff {
+            get {
+                object obj = ResourceManager.GetObject("CautionLightsOff", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CautionLightsRed {
+            get {
+                object obj = ResourceManager.GetObject("CautionLightsRed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CautionLightsYellow {
+            get {
+                object obj = ResourceManager.GetObject("CautionLightsYellow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CautionLightsYellowLeft {
+            get {
+                object obj = ResourceManager.GetObject("CautionLightsYellowLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CautionLightsYellowRight {
+            get {
+                object obj = ResourceManager.GetObject("CautionLightsYellowRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {&quot;lap_number&quot;:8,&quot;elapsed_time&quot;:3076.0,&quot;flag_state&quot;:9,&quot;race_id&quot;:4315,&quot;laps_in_race&quot;:999,&quot;laps_to_go&quot;:991,&quot;vehicles&quot;:[{&quot;average_restart_speed&quot;:0.0,&quot;average_running_position&quot;:0.0,&quot;average_speed&quot;:176.431,&quot;best_lap&quot;:3,&quot;best_lap_speed&quot;:187.964,&quot;best_lap_time&quot;:50.946,&quot;vehicle_manufacturer&quot;:&quot;Frd&quot;,&quot;vehicle_number&quot;:&quot;16&quot;,&quot;driver&quot;:{&quot;driver_id&quot;:243,&quot;full_name&quot;:&quot;Greg Biffle&quot;,&quot;first_name&quot;:&quot;Greg&quot;,&quot;last_name&quot;:&quot;Biffle&quot;,&quot;is_in_chase&quot;:false},&quot;vehicle_elapsed_time&quot;:326.7078,&quot;fastest_laps_run&quot;:0,&quot;laps_completed&quot;:5,&quot;laps_led&quot;:[], [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string cup_live_feed {

@@ -547,6 +547,8 @@ namespace Nascar.WinApp
         }
         void DisplayReplayData(LiveFeedModel model)
         {
+            cautionLightView1.SetFlagState((FlagState)model.flag_state);
+
             SetFeedIndicatorState(IndicatorState.Busy);
 
             DisplayFeedData(model);
@@ -634,6 +636,20 @@ namespace Nascar.WinApp
             try
             {
                 TrackViewDialog dialog = new TrackViewDialog();
+
+                dialog.ShowDialog(this);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        private void btnLights_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CautionLightDialog dialog = new CautionLightDialog();
 
                 dialog.ShowDialog(this);
             }

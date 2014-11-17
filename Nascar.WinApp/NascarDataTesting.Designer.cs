@@ -30,7 +30,7 @@
         {
             this.btnStartLiveFeed = new System.Windows.Forms.Button();
             this.btnStopLiveFeed = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlConfig = new System.Windows.Forms.Panel();
             this.btnTrackViewMapper = new System.Windows.Forms.Button();
             this.btnSelectReplay = new System.Windows.Forms.Button();
             this.txtStopwatchCarNumber = new System.Windows.Forms.TextBox();
@@ -56,8 +56,10 @@
             this.lblFeedStart = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblFeedCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblRaceId = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnLights = new System.Windows.Forms.Button();
             this.liveFeedDisplay1 = new Nascar.WinApp.LiveFeedDisplay();
-            this.panel1.SuspendLayout();
+            this.cautionLightView1 = new Nascar.WinApp.Views.CautionLightView();
+            this.pnlConfig.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picRawFeedState)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFeedState)).BeginInit();
             this.grpSeries.SuspendLayout();
@@ -86,27 +88,29 @@
             this.btnStopLiveFeed.UseVisualStyleBackColor = true;
             this.btnStopLiveFeed.Click += new System.EventHandler(this.btnStopLiveFeed_Click);
             // 
-            // panel1
+            // pnlConfig
             // 
-            this.panel1.Controls.Add(this.btnTrackViewMapper);
-            this.panel1.Controls.Add(this.btnSelectReplay);
-            this.panel1.Controls.Add(this.txtStopwatchCarNumber);
-            this.panel1.Controls.Add(this.button4);
-            this.panel1.Controls.Add(this.button3);
-            this.panel1.Controls.Add(this.pauseReplay);
-            this.panel1.Controls.Add(this.stopReplay);
-            this.panel1.Controls.Add(this.startReplay);
-            this.panel1.Controls.Add(this.picRawFeedState);
-            this.panel1.Controls.Add(this.picFeedState);
-            this.panel1.Controls.Add(this.grpSeries);
-            this.panel1.Controls.Add(this.btnStopLiveFeed);
-            this.panel1.Controls.Add(this.btnStartLiveFeed);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(5);
-            this.panel1.Size = new System.Drawing.Size(1255, 96);
-            this.panel1.TabIndex = 7;
+            this.pnlConfig.Controls.Add(this.cautionLightView1);
+            this.pnlConfig.Controls.Add(this.btnLights);
+            this.pnlConfig.Controls.Add(this.btnTrackViewMapper);
+            this.pnlConfig.Controls.Add(this.btnSelectReplay);
+            this.pnlConfig.Controls.Add(this.txtStopwatchCarNumber);
+            this.pnlConfig.Controls.Add(this.button4);
+            this.pnlConfig.Controls.Add(this.button3);
+            this.pnlConfig.Controls.Add(this.pauseReplay);
+            this.pnlConfig.Controls.Add(this.stopReplay);
+            this.pnlConfig.Controls.Add(this.startReplay);
+            this.pnlConfig.Controls.Add(this.picRawFeedState);
+            this.pnlConfig.Controls.Add(this.picFeedState);
+            this.pnlConfig.Controls.Add(this.grpSeries);
+            this.pnlConfig.Controls.Add(this.btnStopLiveFeed);
+            this.pnlConfig.Controls.Add(this.btnStartLiveFeed);
+            this.pnlConfig.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlConfig.Location = new System.Drawing.Point(0, 0);
+            this.pnlConfig.Name = "pnlConfig";
+            this.pnlConfig.Padding = new System.Windows.Forms.Padding(5);
+            this.pnlConfig.Size = new System.Drawing.Size(1255, 96);
+            this.pnlConfig.TabIndex = 7;
             // 
             // btnTrackViewMapper
             // 
@@ -367,6 +371,16 @@
             this.lblRaceId.Size = new System.Drawing.Size(118, 17);
             this.lblRaceId.Text = "toolStripStatusLabel1";
             // 
+            // btnLights
+            // 
+            this.btnLights.Location = new System.Drawing.Point(864, 8);
+            this.btnLights.Name = "btnLights";
+            this.btnLights.Size = new System.Drawing.Size(112, 23);
+            this.btnLights.TabIndex = 22;
+            this.btnLights.Text = "CautionLights";
+            this.btnLights.UseVisualStyleBackColor = true;
+            this.btnLights.Click += new System.EventHandler(this.btnLights_Click);
+            // 
             // liveFeedDisplay1
             // 
             this.liveFeedDisplay1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -378,19 +392,29 @@
             this.liveFeedDisplay1.Size = new System.Drawing.Size(1255, 419);
             this.liveFeedDisplay1.TabIndex = 6;
             // 
+            // cautionLightView1
+            // 
+            this.cautionLightView1.BackColor = System.Drawing.Color.Black;
+            this.cautionLightView1.LightState = Nascar.WinApp.Views.CautionLightState.Off;
+            this.cautionLightView1.Location = new System.Drawing.Point(1064, 8);
+            this.cautionLightView1.Name = "cautionLightView1";
+            this.cautionLightView1.Padding = new System.Windows.Forms.Padding(2);
+            this.cautionLightView1.Size = new System.Drawing.Size(185, 48);
+            this.cautionLightView1.TabIndex = 23;
+            // 
             // NascarDataTesting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1255, 537);
             this.Controls.Add(this.liveFeedDisplay1);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnlConfig);
             this.Controls.Add(this.statusStrip1);
             this.Name = "NascarDataTesting";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Nascar Data Testing";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnlConfig.ResumeLayout(false);
+            this.pnlConfig.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picRawFeedState)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFeedState)).EndInit();
             this.grpSeries.ResumeLayout(false);
@@ -407,7 +431,7 @@
         private System.Windows.Forms.Button btnStartLiveFeed;
         private System.Windows.Forms.Button btnStopLiveFeed;
         private LiveFeedDisplay liveFeedDisplay1;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnlConfig;
         private System.Windows.Forms.GroupBox grpSeries;
         private System.Windows.Forms.RadioButton rbTruck;
         private System.Windows.Forms.RadioButton rbXfinity;
@@ -433,6 +457,8 @@
         private System.Windows.Forms.TextBox txtStopwatchCarNumber;
         private System.Windows.Forms.Button btnSelectReplay;
         private System.Windows.Forms.Button btnTrackViewMapper;
+        private System.Windows.Forms.Button btnLights;
+        private Views.CautionLightView cautionLightView1;
     }
 }
 

@@ -30,10 +30,28 @@ namespace Nascar.WinApp
                 last_model = current_model;
             }
         }
-             
+
+        public bool ShowRunStats { get; set; }
+        public bool ShowRaceStats { get; set; }
+        public bool ShowAverages { get; set; }
+        public bool ShowLastLap { get; set; }
+
         public EventDisplay()
         {
             InitializeComponent();
+            ShowRunStats = true;
+
+            InitializaEventDisplay();
+        }
+
+        void InitializaEventDisplay()
+        {
+            SetFlagStatus(FlagState.Yellow);
+
+            this.pnlRunStats.DataBindings.Add(new Binding("Visible", this, "ShowRunStats"));
+            this.pnlRaceStats.DataBindings.Add(new Binding("Visible", this, "ShowRaceStats"));
+            this.pnlAverages.DataBindings.Add(new Binding("Visible", this, "ShowAverages"));
+            this.pnlLastLap.DataBindings.Add(new Binding("Visible", this, "ShowLastLap"));
         }
 
         void DisplayModel(LiveFeedModel model)
@@ -44,9 +62,10 @@ namespace Nascar.WinApp
             this.lblLap.Text  = model.run_name;
             this.SeriesLabel.Text = ((SeriesName)model.series_id).ToString();
             this.SetFlagStatus((FlagState)model.flag_state);
-            this.CautionsLabel.Text = String.Format("{0} for {1} laps", model.number_of_caution_segments.ToString(), model.number_of_caution_laps.ToString());
-            this.lblLeaders .Text = String.Format("{0} with {1} lead changes", model.number_of_leaders.ToString(), model.number_of_lead_changes.ToString());
-            this.lblLap.Text = String.Format("{0} of {1}, {2} to go", model.lap_number.ToString(), model.laps_in_race.ToString(), model.laps_to_go.ToString());
+
+            this.CautionsLabel.Text = String.Format("{0} Cautions for {1} laps", model.number_of_caution_segments.ToString(), model.number_of_caution_laps.ToString());
+            this.lblLeaders .Text = String.Format("{0} Leaders with {1} lead changes", model.number_of_leaders.ToString(), model.number_of_lead_changes.ToString());
+            this.lblLap.Text = String.Format("Lap {0} of {1}, {2} to go", model.lap_number.ToString(), model.laps_in_race.ToString(), model.laps_to_go.ToString());
         }
 
         void SetFlagStatus(FlagState flag_status)
@@ -101,16 +120,26 @@ namespace Nascar.WinApp
                     }
             }
 
+            cautionLightView1.SetFlagState(flag_status);
+
             picRaceStatus.BackColor = flagColor;
 
+            if (null == Model) return;
+
             if (flag_status != FlagState.Green)
-            {
+            {               
                 this.last_green_start = Model.lap_number;
             }
             else if ((null != last_model) && last_model.flag_state != 1 && flag_status == FlagState.Green)
                 this.last_green_start = Model.lap_number;
 
-            lblGreenLaps.Text = (Model.lap_number - this.last_green_start).ToString();            
+            //lblGreenLaps.Text = (Model.lap_number - this.last_green_start).ToString();
+            SetGreenLaps(Model.lap_number - this.last_green_start);
+        }
+
+        public void SetGreenLaps(int numberOfLaps)
+        {
+            lblGreenLaps.Text = String.Format("Current Green Flag Run: {0} Laps", numberOfLaps);
         }
 
         public void SetRaceFallers(IList<VehicleView> movers)
@@ -201,8 +230,6 @@ namespace Nascar.WinApp
                 lvi.SubItems.Add(view.Vehicle.last_lap_time.ToString());
                 lvBestLastLap.Items.Add(lvi);
             }
-        }
-
-
+        }        
     }
 }

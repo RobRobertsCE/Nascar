@@ -58,6 +58,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CautionLightDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CautionLightDialog.Designer.cs">
+      <DependentUpon>CautionLightDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="StopwatchDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +79,12 @@
     <Compile Include="ViewModels\GreenFlagRun.cs" />
     <Compile Include="ViewModels\IVehicleViewModel.cs" />
     <Compile Include="ViewModels\LapTimeData.cs" />
+    <Compile Include="Views\CautionLightView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\CautionLightView.Designer.cs">
+      <DependentUpon>CautionLightView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\ReplaySelectionDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,11 +156,17 @@
     <Compile Include="Views\VehicleViewModelList.Designer.cs">
       <DependentUpon>VehicleViewModelList.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CautionLightDialog.resx">
+      <DependentUpon>CautionLightDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StopwatchDialog.resx">
       <DependentUpon>StopwatchDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TrackViewDialog.resx">
       <DependentUpon>TrackViewDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\CautionLightView.resx">
+      <DependentUpon>CautionLightView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ReplaySelectionDialog.resx">
       <DependentUpon>ReplaySelectionDialog.cs</DependentUpon>
@@ -245,6 +263,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\toyota_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CautionLightsGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CautionLightsOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CautionLightsRed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CautionLightsYellow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CautionLightsYellowLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CautionLightsYellowRight.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

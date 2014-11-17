@@ -33,19 +33,13 @@
             "Driver One",
             "-3"}, -1);
             this.SeriesLabel = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.TrackLabel = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.RunLabel = new System.Windows.Forms.Label();
             this.CautionsLabel = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.picRaceStatus = new System.Windows.Forms.PictureBox();
             this.lblLeaders = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.lblLap = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.lblGreenLaps = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lvBestRun = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -86,154 +80,114 @@
             this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.pnlRunStats = new System.Windows.Forms.Panel();
+            this.pnlRaceStats = new System.Windows.Forms.Panel();
+            this.pnlLastLap = new System.Windows.Forms.Panel();
+            this.pnlAverages = new System.Windows.Forms.Panel();
+            this.cautionLightView1 = new Nascar.WinApp.Views.CautionLightView();
             ((System.ComponentModel.ISupportInitialize)(this.picRaceStatus)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
+            this.pnlRunStats.SuspendLayout();
+            this.pnlRaceStats.SuspendLayout();
+            this.pnlLastLap.SuspendLayout();
+            this.pnlAverages.SuspendLayout();
             this.SuspendLayout();
             // 
             // SeriesLabel
             // 
-            this.SeriesLabel.Location = new System.Drawing.Point(104, 24);
+            this.SeriesLabel.Font = new System.Drawing.Font("Tahoma", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SeriesLabel.ForeColor = System.Drawing.Color.DimGray;
+            this.SeriesLabel.Location = new System.Drawing.Point(533, 8);
             this.SeriesLabel.Name = "SeriesLabel";
-            this.SeriesLabel.Size = new System.Drawing.Size(144, 13);
+            this.SeriesLabel.Size = new System.Drawing.Size(144, 16);
             this.SeriesLabel.TabIndex = 3;
-            this.SeriesLabel.Text = "Cup";
+            this.SeriesLabel.Text = "<series>";
             this.SeriesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(59, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Series";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TrackLabel
             // 
-            this.TrackLabel.Location = new System.Drawing.Point(104, 48);
+            this.TrackLabel.AutoSize = true;
+            this.TrackLabel.Font = new System.Drawing.Font("Tahoma", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TrackLabel.ForeColor = System.Drawing.Color.DimGray;
+            this.TrackLabel.Location = new System.Drawing.Point(816, 8);
             this.TrackLabel.Name = "TrackLabel";
-            this.TrackLabel.Size = new System.Drawing.Size(144, 13);
+            this.TrackLabel.Size = new System.Drawing.Size(64, 16);
             this.TrackLabel.TabIndex = 5;
             this.TrackLabel.Text = "<track>";
             this.TrackLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(61, 48);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(40, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Track";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // RunLabel
             // 
             this.RunLabel.AutoSize = true;
-            this.RunLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RunLabel.Font = new System.Drawing.Font("Tahoma", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RunLabel.ForeColor = System.Drawing.Color.DimGray;
-            this.RunLabel.Location = new System.Drawing.Point(5, 0);
+            this.RunLabel.Location = new System.Drawing.Point(8, 8);
             this.RunLabel.Name = "RunLabel";
-            this.RunLabel.Size = new System.Drawing.Size(45, 16);
+            this.RunLabel.Size = new System.Drawing.Size(52, 16);
             this.RunLabel.TabIndex = 7;
             this.RunLabel.Text = "<run>";
             // 
             // CautionsLabel
             // 
-            this.CautionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CautionsLabel.Location = new System.Drawing.Point(104, 96);
+            this.CautionsLabel.AutoSize = true;
+            this.CautionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CautionsLabel.Location = new System.Drawing.Point(200, 32);
             this.CautionsLabel.Name = "CautionsLabel";
-            this.CautionsLabel.Size = new System.Drawing.Size(144, 16);
+            this.CautionsLabel.Size = new System.Drawing.Size(72, 16);
             this.CautionsLabel.TabIndex = 9;
+            this.CautionsLabel.Text = "<cautions>";
             this.CautionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(45, 96);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(56, 13);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "Cautions";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // picRaceStatus
             // 
             this.picRaceStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picRaceStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.picRaceStatus.Location = new System.Drawing.Point(5, 168);
+            this.picRaceStatus.Dock = System.Windows.Forms.DockStyle.Top;
+            this.picRaceStatus.Location = new System.Drawing.Point(5, 0);
             this.picRaceStatus.Name = "picRaceStatus";
-            this.picRaceStatus.Size = new System.Drawing.Size(1815, 16);
+            this.picRaceStatus.Size = new System.Drawing.Size(1815, 34);
             this.picRaceStatus.TabIndex = 10;
             this.picRaceStatus.TabStop = false;
             // 
             // lblLeaders
             // 
-            this.lblLeaders.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLeaders.Location = new System.Drawing.Point(104, 120);
+            this.lblLeaders.AutoSize = true;
+            this.lblLeaders.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLeaders.Location = new System.Drawing.Point(392, 32);
             this.lblLeaders.Name = "lblLeaders";
-            this.lblLeaders.Size = new System.Drawing.Size(144, 16);
+            this.lblLeaders.Size = new System.Drawing.Size(90, 16);
             this.lblLeaders.TabIndex = 13;
+            this.lblLeaders.Text = "<lap leaders>";
             this.lblLeaders.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(24, 120);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(77, 13);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Lap Leaders";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblLap
             // 
-            this.lblLap.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLap.Location = new System.Drawing.Point(104, 72);
+            this.lblLap.AutoSize = true;
+            this.lblLap.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLap.Location = new System.Drawing.Point(16, 32);
             this.lblLap.Name = "lblLap";
-            this.lblLap.Size = new System.Drawing.Size(144, 16);
+            this.lblLap.Size = new System.Drawing.Size(41, 16);
             this.lblLap.TabIndex = 15;
+            this.lblLap.Text = "<lap>";
             this.lblLap.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(73, 72);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(28, 13);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "Lap";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblGreenLaps
             // 
-            this.lblGreenLaps.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGreenLaps.Location = new System.Drawing.Point(104, 144);
+            this.lblGreenLaps.AutoSize = true;
+            this.lblGreenLaps.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGreenLaps.Location = new System.Drawing.Point(560, 32);
             this.lblGreenLaps.Name = "lblGreenLaps";
-            this.lblGreenLaps.Size = new System.Drawing.Size(144, 16);
+            this.lblGreenLaps.Size = new System.Drawing.Size(103, 16);
             this.lblGreenLaps.TabIndex = 17;
+            this.lblGreenLaps.Text = "<green flag run>";
             this.lblGreenLaps.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(5, 144);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(96, 13);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "Green Flag Run";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(261, 24);
+            this.label2.Location = new System.Drawing.Point(5, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(109, 13);
             this.label2.TabIndex = 0;
@@ -249,7 +203,7 @@
             this.lvBestRun.FullRowSelect = true;
             this.lvBestRun.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1});
-            this.lvBestRun.Location = new System.Drawing.Point(256, 40);
+            this.lvBestRun.Location = new System.Drawing.Point(0, 16);
             this.lvBestRun.MultiSelect = false;
             this.lvBestRun.Name = "lvBestRun";
             this.lvBestRun.Scrollable = false;
@@ -276,7 +230,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(445, 24);
+            this.label8.Location = new System.Drawing.Point(189, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(105, 13);
             this.label8.TabIndex = 20;
@@ -289,7 +243,7 @@
             this.columnHeader5,
             this.columnHeader6});
             this.lvWorstRun.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lvWorstRun.Location = new System.Drawing.Point(440, 40);
+            this.lvWorstRun.Location = new System.Drawing.Point(184, 16);
             this.lvWorstRun.Name = "lvWorstRun";
             this.lvWorstRun.Scrollable = false;
             this.lvWorstRun.Size = new System.Drawing.Size(176, 120);
@@ -315,7 +269,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(821, 24);
+            this.label9.Location = new System.Drawing.Point(189, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(110, 13);
             this.label9.TabIndex = 24;
@@ -328,7 +282,7 @@
             this.columnHeader8,
             this.columnHeader9});
             this.lvWorstRace.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lvWorstRace.Location = new System.Drawing.Point(816, 40);
+            this.lvWorstRace.Location = new System.Drawing.Point(184, 16);
             this.lvWorstRace.Name = "lvWorstRace";
             this.lvWorstRace.Scrollable = false;
             this.lvWorstRace.Size = new System.Drawing.Size(168, 120);
@@ -354,7 +308,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(637, 24);
+            this.label10.Location = new System.Drawing.Point(5, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(114, 13);
             this.label10.TabIndex = 22;
@@ -367,7 +321,7 @@
             this.columnHeader11,
             this.columnHeader12});
             this.lvBestRace.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lvBestRace.Location = new System.Drawing.Point(632, 40);
+            this.lvBestRace.Location = new System.Drawing.Point(0, 16);
             this.lvBestRace.Name = "lvBestRace";
             this.lvBestRace.Scrollable = false;
             this.lvBestRace.Size = new System.Drawing.Size(176, 120);
@@ -393,7 +347,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(1216, 24);
+            this.label11.Location = new System.Drawing.Point(224, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(107, 13);
             this.label11.TabIndex = 26;
@@ -406,7 +360,7 @@
             this.columnHeader14,
             this.columnHeader15});
             this.lvBest10LapAvg.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lvBest10LapAvg.Location = new System.Drawing.Point(1211, 40);
+            this.lvBest10LapAvg.Location = new System.Drawing.Point(219, 16);
             this.lvBest10LapAvg.Name = "lvBest10LapAvg";
             this.lvBest10LapAvg.Scrollable = false;
             this.lvBest10LapAvg.Size = new System.Drawing.Size(216, 120);
@@ -432,7 +386,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(1664, 24);
+            this.label12.Location = new System.Drawing.Point(5, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(86, 13);
             this.label12.TabIndex = 28;
@@ -445,7 +399,7 @@
             this.columnHeader17,
             this.columnHeader18});
             this.lvBestLastLap.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lvBestLastLap.Location = new System.Drawing.Point(1659, 40);
+            this.lvBestLastLap.Location = new System.Drawing.Point(0, 16);
             this.lvBestLastLap.Name = "lvBestLastLap";
             this.lvBestLastLap.Scrollable = false;
             this.lvBestLastLap.Size = new System.Drawing.Size(216, 120);
@@ -471,7 +425,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(997, 24);
+            this.label13.Location = new System.Drawing.Point(5, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(101, 13);
             this.label13.TabIndex = 30;
@@ -484,7 +438,7 @@
             this.columnHeader20,
             this.columnHeader21});
             this.lvBest5LapAvg.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lvBest5LapAvg.Location = new System.Drawing.Point(992, 40);
+            this.lvBest5LapAvg.Location = new System.Drawing.Point(0, 16);
             this.lvBest5LapAvg.Name = "lvBest5LapAvg";
             this.lvBest5LapAvg.Scrollable = false;
             this.lvBest5LapAvg.Size = new System.Drawing.Size(216, 120);
@@ -510,7 +464,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(1437, 24);
+            this.label14.Location = new System.Drawing.Point(445, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(107, 13);
             this.label14.TabIndex = 32;
@@ -523,7 +477,7 @@
             this.columnHeader23,
             this.columnHeader24});
             this.lvBest20LapAvg.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lvBest20LapAvg.Location = new System.Drawing.Point(1432, 40);
+            this.lvBest20LapAvg.Location = new System.Drawing.Point(440, 16);
             this.lvBest20LapAvg.Name = "lvBest20LapAvg";
             this.lvBest20LapAvg.Scrollable = false;
             this.lvBest20LapAvg.Size = new System.Drawing.Size(216, 120);
@@ -546,66 +500,126 @@
             this.columnHeader24.Text = "Time";
             this.columnHeader24.Width = 70;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.cautionLightView1);
+            this.panel1.Controls.Add(this.RunLabel);
+            this.panel1.Controls.Add(this.SeriesLabel);
+            this.panel1.Controls.Add(this.TrackLabel);
+            this.panel1.Controls.Add(this.lblLap);
+            this.panel1.Controls.Add(this.CautionsLabel);
+            this.panel1.Controls.Add(this.lblLeaders);
+            this.panel1.Controls.Add(this.lblGreenLaps);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(5, 34);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1815, 56);
+            this.panel1.TabIndex = 34;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.pnlRunStats);
+            this.flowLayoutPanel1.Controls.Add(this.pnlRaceStats);
+            this.flowLayoutPanel1.Controls.Add(this.pnlLastLap);
+            this.flowLayoutPanel1.Controls.Add(this.pnlAverages);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(5, 90);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1815, 144);
+            this.flowLayoutPanel1.TabIndex = 35;
+            // 
+            // pnlRunStats
+            // 
+            this.pnlRunStats.Controls.Add(this.lvBestRun);
+            this.pnlRunStats.Controls.Add(this.label2);
+            this.pnlRunStats.Controls.Add(this.lvWorstRun);
+            this.pnlRunStats.Controls.Add(this.label8);
+            this.pnlRunStats.Location = new System.Drawing.Point(3, 3);
+            this.pnlRunStats.Name = "pnlRunStats";
+            this.pnlRunStats.Size = new System.Drawing.Size(360, 136);
+            this.pnlRunStats.TabIndex = 36;
+            // 
+            // pnlRaceStats
+            // 
+            this.pnlRaceStats.Controls.Add(this.lvBestRace);
+            this.pnlRaceStats.Controls.Add(this.label10);
+            this.pnlRaceStats.Controls.Add(this.lvWorstRace);
+            this.pnlRaceStats.Controls.Add(this.label9);
+            this.pnlRaceStats.Location = new System.Drawing.Point(369, 3);
+            this.pnlRaceStats.Name = "pnlRaceStats";
+            this.pnlRaceStats.Size = new System.Drawing.Size(352, 136);
+            this.pnlRaceStats.TabIndex = 36;
+            // 
+            // pnlLastLap
+            // 
+            this.pnlLastLap.Controls.Add(this.lvBestLastLap);
+            this.pnlLastLap.Controls.Add(this.label12);
+            this.pnlLastLap.Location = new System.Drawing.Point(727, 3);
+            this.pnlLastLap.Name = "pnlLastLap";
+            this.pnlLastLap.Size = new System.Drawing.Size(216, 136);
+            this.pnlLastLap.TabIndex = 36;
+            // 
+            // pnlAverages
+            // 
+            this.pnlAverages.Controls.Add(this.lvBest5LapAvg);
+            this.pnlAverages.Controls.Add(this.lvBest10LapAvg);
+            this.pnlAverages.Controls.Add(this.label11);
+            this.pnlAverages.Controls.Add(this.label14);
+            this.pnlAverages.Controls.Add(this.label13);
+            this.pnlAverages.Controls.Add(this.lvBest20LapAvg);
+            this.pnlAverages.Location = new System.Drawing.Point(949, 3);
+            this.pnlAverages.Name = "pnlAverages";
+            this.pnlAverages.Size = new System.Drawing.Size(656, 136);
+            this.pnlAverages.TabIndex = 36;
+            // 
+            // cautionLightView1
+            // 
+            this.cautionLightView1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cautionLightView1.BackColor = System.Drawing.Color.Black;
+            this.cautionLightView1.LightState = Nascar.WinApp.Views.CautionLightState.Off;
+            this.cautionLightView1.Location = new System.Drawing.Point(1720, 8);
+            this.cautionLightView1.Name = "cautionLightView1";
+            this.cautionLightView1.Padding = new System.Windows.Forms.Padding(2);
+            this.cautionLightView1.Size = new System.Drawing.Size(88, 32);
+            this.cautionLightView1.TabIndex = 18;
+            // 
             // EventDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.label14);
-            this.Controls.Add(this.lvBest20LapAvg);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.lvBest5LapAvg);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.lvBestLastLap);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.lvBest10LapAvg);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.lvWorstRace);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.lvBestRace);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.lvWorstRun);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.lvBestRun);
-            this.Controls.Add(this.lblGreenLaps);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.lblLap);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.lblLeaders);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.flowLayoutPanel1);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.picRaceStatus);
-            this.Controls.Add(this.CautionsLabel);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.RunLabel);
-            this.Controls.Add(this.TrackLabel);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.SeriesLabel);
-            this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "EventDisplay";
             this.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.Size = new System.Drawing.Size(1825, 184);
+            this.Size = new System.Drawing.Size(1825, 235);
             ((System.ComponentModel.ISupportInitialize)(this.picRaceStatus)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.pnlRunStats.ResumeLayout(false);
+            this.pnlRunStats.PerformLayout();
+            this.pnlRaceStats.ResumeLayout(false);
+            this.pnlRaceStats.PerformLayout();
+            this.pnlLastLap.ResumeLayout(false);
+            this.pnlLastLap.PerformLayout();
+            this.pnlAverages.ResumeLayout(false);
+            this.pnlAverages.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Label SeriesLabel;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label TrackLabel;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label RunLabel;
         private System.Windows.Forms.Label CautionsLabel;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PictureBox picRaceStatus;
         private System.Windows.Forms.Label lblLeaders;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblLap;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label lblGreenLaps;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label2;
         internal System.Windows.Forms.ListView lvBestRun;
         private System.Windows.Forms.ColumnHeader columnHeader1;
@@ -646,5 +660,12 @@
         private System.Windows.Forms.ColumnHeader columnHeader22;
         private System.Windows.Forms.ColumnHeader columnHeader23;
         private System.Windows.Forms.ColumnHeader columnHeader24;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.Panel pnlRunStats;
+        private System.Windows.Forms.Panel pnlRaceStats;
+        private System.Windows.Forms.Panel pnlLastLap;
+        private System.Windows.Forms.Panel pnlAverages;
+        private Views.CautionLightView cautionLightView1;
     }
 }
