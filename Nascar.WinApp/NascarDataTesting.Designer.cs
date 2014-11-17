@@ -31,6 +31,7 @@
             this.btnStartLiveFeed = new System.Windows.Forms.Button();
             this.btnStopLiveFeed = new System.Windows.Forms.Button();
             this.pnlConfig = new System.Windows.Forms.Panel();
+            this.btnLights = new System.Windows.Forms.Button();
             this.btnTrackViewMapper = new System.Windows.Forms.Button();
             this.btnSelectReplay = new System.Windows.Forms.Button();
             this.txtStopwatchCarNumber = new System.Windows.Forms.TextBox();
@@ -56,7 +57,18 @@
             this.lblFeedStart = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblFeedCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblRaceId = new System.Windows.Forms.ToolStripStatusLabel();
-            this.btnLights = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cautionLapsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lapLeadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.runMoversToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.raceMoversToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lastLapSpeedsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lapAveragesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.liveFeedDisplay1 = new Nascar.WinApp.LiveFeedDisplay();
             this.cautionLightView1 = new Nascar.WinApp.Views.CautionLightView();
             this.pnlConfig.SuspendLayout();
@@ -64,6 +76,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picFeedState)).BeginInit();
             this.grpSeries.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnStartLiveFeed
@@ -106,11 +119,20 @@
             this.pnlConfig.Controls.Add(this.btnStopLiveFeed);
             this.pnlConfig.Controls.Add(this.btnStartLiveFeed);
             this.pnlConfig.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlConfig.Location = new System.Drawing.Point(0, 0);
+            this.pnlConfig.Location = new System.Drawing.Point(0, 24);
             this.pnlConfig.Name = "pnlConfig";
-            this.pnlConfig.Padding = new System.Windows.Forms.Padding(5);
             this.pnlConfig.Size = new System.Drawing.Size(1255, 96);
             this.pnlConfig.TabIndex = 7;
+            // 
+            // btnLights
+            // 
+            this.btnLights.Location = new System.Drawing.Point(864, 8);
+            this.btnLights.Name = "btnLights";
+            this.btnLights.Size = new System.Drawing.Size(112, 23);
+            this.btnLights.TabIndex = 22;
+            this.btnLights.Text = "CautionLights";
+            this.btnLights.UseVisualStyleBackColor = true;
+            this.btnLights.Click += new System.EventHandler(this.btnLights_Click);
             // 
             // btnTrackViewMapper
             // 
@@ -371,25 +393,136 @@
             this.lblRaceId.Size = new System.Drawing.Size(118, 17);
             this.lblRaceId.Text = "toolStripStatusLabel1";
             // 
-            // btnLights
+            // menuStrip1
             // 
-            this.btnLights.Location = new System.Drawing.Point(864, 8);
-            this.btnLights.Name = "btnLights";
-            this.btnLights.Size = new System.Drawing.Size(112, 23);
-            this.btnLights.TabIndex = 22;
-            this.btnLights.Text = "CautionLights";
-            this.btnLights.UseVisualStyleBackColor = true;
-            this.btnLights.Click += new System.EventHandler(this.btnLights_Click);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.viewToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1255, 24);
+            this.menuStrip1.TabIndex = 9;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem.Text = "E&xit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cautionLapsToolStripMenuItem,
+            this.lapLeadersToolStripMenuItem,
+            this.runMoversToolStripMenuItem,
+            this.raceMoversToolStripMenuItem,
+            this.lastLapSpeedsToolStripMenuItem,
+            this.lapAveragesToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.optionsToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // cautionLapsToolStripMenuItem
+            // 
+            this.cautionLapsToolStripMenuItem.Checked = true;
+            this.cautionLapsToolStripMenuItem.CheckOnClick = true;
+            this.cautionLapsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cautionLapsToolStripMenuItem.Name = "cautionLapsToolStripMenuItem";
+            this.cautionLapsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.cautionLapsToolStripMenuItem.Text = "Caution Laps";
+            this.cautionLapsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.cautionLapsToolStripMenuItem_CheckedChanged);
+            // 
+            // lapLeadersToolStripMenuItem
+            // 
+            this.lapLeadersToolStripMenuItem.Checked = true;
+            this.lapLeadersToolStripMenuItem.CheckOnClick = true;
+            this.lapLeadersToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.lapLeadersToolStripMenuItem.Name = "lapLeadersToolStripMenuItem";
+            this.lapLeadersToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.lapLeadersToolStripMenuItem.Text = "Lap Leaders";
+            this.lapLeadersToolStripMenuItem.CheckedChanged += new System.EventHandler(this.lapLeadersToolStripMenuItem_CheckedChanged);
+            // 
+            // runMoversToolStripMenuItem
+            // 
+            this.runMoversToolStripMenuItem.Checked = true;
+            this.runMoversToolStripMenuItem.CheckOnClick = true;
+            this.runMoversToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.runMoversToolStripMenuItem.Name = "runMoversToolStripMenuItem";
+            this.runMoversToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.runMoversToolStripMenuItem.Text = "Run Movers";
+            this.runMoversToolStripMenuItem.CheckedChanged += new System.EventHandler(this.runMoversToolStripMenuItem_CheckedChanged);
+            // 
+            // raceMoversToolStripMenuItem
+            // 
+            this.raceMoversToolStripMenuItem.Checked = true;
+            this.raceMoversToolStripMenuItem.CheckOnClick = true;
+            this.raceMoversToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.raceMoversToolStripMenuItem.Name = "raceMoversToolStripMenuItem";
+            this.raceMoversToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.raceMoversToolStripMenuItem.Text = "Race Movers";
+            this.raceMoversToolStripMenuItem.CheckedChanged += new System.EventHandler(this.raceMoversToolStripMenuItem_CheckedChanged);
+            // 
+            // lastLapSpeedsToolStripMenuItem
+            // 
+            this.lastLapSpeedsToolStripMenuItem.Checked = true;
+            this.lastLapSpeedsToolStripMenuItem.CheckOnClick = true;
+            this.lastLapSpeedsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.lastLapSpeedsToolStripMenuItem.Name = "lastLapSpeedsToolStripMenuItem";
+            this.lastLapSpeedsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.lastLapSpeedsToolStripMenuItem.Text = "Last Lap Speeds";
+            this.lastLapSpeedsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.lastLapSpeedsToolStripMenuItem_CheckedChanged);
+            // 
+            // lapAveragesToolStripMenuItem
+            // 
+            this.lapAveragesToolStripMenuItem.Checked = true;
+            this.lapAveragesToolStripMenuItem.CheckOnClick = true;
+            this.lapAveragesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.lapAveragesToolStripMenuItem.Name = "lapAveragesToolStripMenuItem";
+            this.lapAveragesToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.lapAveragesToolStripMenuItem.Text = "Lap Averages";
+            this.lapAveragesToolStripMenuItem.Click += new System.EventHandler(this.lapAveragesToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(154, 6);
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Checked = true;
+            this.optionsToolStripMenuItem.CheckOnClick = true;
+            this.optionsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.optionsToolStripMenuItem.Text = "Options...";
+            this.optionsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.optionsToolStripMenuItem_CheckedChanged);
             // 
             // liveFeedDisplay1
             // 
             this.liveFeedDisplay1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.liveFeedDisplay1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.liveFeedDisplay1.Location = new System.Drawing.Point(0, 96);
+            this.liveFeedDisplay1.Location = new System.Drawing.Point(0, 120);
             this.liveFeedDisplay1.Model = null;
             this.liveFeedDisplay1.Name = "liveFeedDisplay1";
-            this.liveFeedDisplay1.Padding = new System.Windows.Forms.Padding(2);
-            this.liveFeedDisplay1.Size = new System.Drawing.Size(1255, 419);
+            this.liveFeedDisplay1.ShowAverages = false;
+            this.liveFeedDisplay1.ShowCautions = false;
+            this.liveFeedDisplay1.ShowLapLeaders = false;
+            this.liveFeedDisplay1.ShowLastLap = false;
+            this.liveFeedDisplay1.ShowRaceStats = false;
+            this.liveFeedDisplay1.ShowRunStats = false;
+            this.liveFeedDisplay1.Size = new System.Drawing.Size(1255, 395);
             this.liveFeedDisplay1.TabIndex = 6;
             // 
             // cautionLightView1
@@ -410,6 +543,8 @@
             this.Controls.Add(this.liveFeedDisplay1);
             this.Controls.Add(this.pnlConfig);
             this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "NascarDataTesting";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Nascar Data Testing";
@@ -421,6 +556,8 @@
             this.grpSeries.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -459,6 +596,18 @@
         private System.Windows.Forms.Button btnTrackViewMapper;
         private System.Windows.Forms.Button btnLights;
         private Views.CautionLightView cautionLightView1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cautionLapsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lapLeadersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem runMoversToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem raceMoversToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lastLapSpeedsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lapAveragesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
     }
 }
 

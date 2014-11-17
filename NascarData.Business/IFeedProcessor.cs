@@ -11,6 +11,6 @@ namespace NascarData.Business
         int series_id { get;}
 
         void processFeedData(string feedData);
-        void processFeedModel(NascarData.Models.LiveFeedModel model);
+        void processFeedModel(NascarData.Models.LiveFeed.LiveFeedModel model);
     }
 }

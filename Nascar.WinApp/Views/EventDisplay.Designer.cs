@@ -35,7 +35,7 @@
             this.SeriesLabel = new System.Windows.Forms.Label();
             this.TrackLabel = new System.Windows.Forms.Label();
             this.RunLabel = new System.Windows.Forms.Label();
-            this.CautionsLabel = new System.Windows.Forms.Label();
+            this.lblCautions = new System.Windows.Forms.Label();
             this.picRaceStatus = new System.Windows.Forms.PictureBox();
             this.lblLeaders = new System.Windows.Forms.Label();
             this.lblLap = new System.Windows.Forms.Label();
@@ -80,20 +80,27 @@
             this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlEventStats = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlRunStats = new System.Windows.Forms.Panel();
             this.pnlRaceStats = new System.Windows.Forms.Panel();
             this.pnlLastLap = new System.Windows.Forms.Panel();
             this.pnlAverages = new System.Windows.Forms.Panel();
+            this.pnlCautions = new System.Windows.Forms.Panel();
+            this.cautionsView1 = new Nascar.WinApp.Views.CautionsView();
+            this.pnlLapLeaders = new System.Windows.Forms.Panel();
+            this.lapLeadersView1 = new Nascar.WinApp.Views.LapLeadersView();
+            this.cautionLightView2 = new Nascar.WinApp.Views.CautionLightView();
             this.cautionLightView1 = new Nascar.WinApp.Views.CautionLightView();
             ((System.ComponentModel.ISupportInitialize)(this.picRaceStatus)).BeginInit();
-            this.panel1.SuspendLayout();
+            this.pnlEventStats.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.pnlRunStats.SuspendLayout();
             this.pnlRaceStats.SuspendLayout();
             this.pnlLastLap.SuspendLayout();
             this.pnlAverages.SuspendLayout();
+            this.pnlCautions.SuspendLayout();
+            this.pnlLapLeaders.SuspendLayout();
             this.SuspendLayout();
             // 
             // SeriesLabel
@@ -130,34 +137,34 @@
             this.RunLabel.TabIndex = 7;
             this.RunLabel.Text = "<run>";
             // 
-            // CautionsLabel
+            // lblCautions
             // 
-            this.CautionsLabel.AutoSize = true;
-            this.CautionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CautionsLabel.Location = new System.Drawing.Point(200, 32);
-            this.CautionsLabel.Name = "CautionsLabel";
-            this.CautionsLabel.Size = new System.Drawing.Size(72, 16);
-            this.CautionsLabel.TabIndex = 9;
-            this.CautionsLabel.Text = "<cautions>";
-            this.CautionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblCautions.AutoSize = true;
+            this.lblCautions.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCautions.Location = new System.Drawing.Point(200, 32);
+            this.lblCautions.Name = "lblCautions";
+            this.lblCautions.Size = new System.Drawing.Size(82, 16);
+            this.lblCautions.TabIndex = 9;
+            this.lblCautions.Text = "<cautions>";
+            this.lblCautions.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // picRaceStatus
             // 
-            this.picRaceStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picRaceStatus.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.picRaceStatus.Dock = System.Windows.Forms.DockStyle.Top;
-            this.picRaceStatus.Location = new System.Drawing.Point(5, 0);
+            this.picRaceStatus.Location = new System.Drawing.Point(0, 0);
             this.picRaceStatus.Name = "picRaceStatus";
-            this.picRaceStatus.Size = new System.Drawing.Size(1815, 34);
+            this.picRaceStatus.Size = new System.Drawing.Size(929, 38);
             this.picRaceStatus.TabIndex = 10;
             this.picRaceStatus.TabStop = false;
             // 
             // lblLeaders
             // 
             this.lblLeaders.AutoSize = true;
-            this.lblLeaders.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLeaders.Location = new System.Drawing.Point(392, 32);
+            this.lblLeaders.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLeaders.Location = new System.Drawing.Point(448, 32);
             this.lblLeaders.Name = "lblLeaders";
-            this.lblLeaders.Size = new System.Drawing.Size(90, 16);
+            this.lblLeaders.Size = new System.Drawing.Size(103, 16);
             this.lblLeaders.TabIndex = 13;
             this.lblLeaders.Text = "<lap leaders>";
             this.lblLeaders.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -165,10 +172,10 @@
             // lblLap
             // 
             this.lblLap.AutoSize = true;
-            this.lblLap.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLap.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLap.Location = new System.Drawing.Point(16, 32);
             this.lblLap.Name = "lblLap";
-            this.lblLap.Size = new System.Drawing.Size(41, 16);
+            this.lblLap.Size = new System.Drawing.Size(46, 16);
             this.lblLap.TabIndex = 15;
             this.lblLap.Text = "<lap>";
             this.lblLap.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -176,10 +183,10 @@
             // lblGreenLaps
             // 
             this.lblGreenLaps.AutoSize = true;
-            this.lblGreenLaps.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGreenLaps.Location = new System.Drawing.Point(560, 32);
+            this.lblGreenLaps.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGreenLaps.Location = new System.Drawing.Point(720, 32);
             this.lblGreenLaps.Name = "lblGreenLaps";
-            this.lblGreenLaps.Size = new System.Drawing.Size(103, 16);
+            this.lblGreenLaps.Size = new System.Drawing.Size(119, 16);
             this.lblGreenLaps.TabIndex = 17;
             this.lblGreenLaps.Text = "<green flag run>";
             this.lblGreenLaps.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -500,32 +507,37 @@
             this.columnHeader24.Text = "Time";
             this.columnHeader24.Width = 70;
             // 
-            // panel1
+            // pnlEventStats
             // 
-            this.panel1.Controls.Add(this.cautionLightView1);
-            this.panel1.Controls.Add(this.RunLabel);
-            this.panel1.Controls.Add(this.SeriesLabel);
-            this.panel1.Controls.Add(this.TrackLabel);
-            this.panel1.Controls.Add(this.lblLap);
-            this.panel1.Controls.Add(this.CautionsLabel);
-            this.panel1.Controls.Add(this.lblLeaders);
-            this.panel1.Controls.Add(this.lblGreenLaps);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(5, 34);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1815, 56);
-            this.panel1.TabIndex = 34;
+            this.pnlEventStats.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pnlEventStats.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlEventStats.Controls.Add(this.RunLabel);
+            this.pnlEventStats.Controls.Add(this.SeriesLabel);
+            this.pnlEventStats.Controls.Add(this.TrackLabel);
+            this.pnlEventStats.Controls.Add(this.lblLap);
+            this.pnlEventStats.Controls.Add(this.lblCautions);
+            this.pnlEventStats.Controls.Add(this.lblLeaders);
+            this.pnlEventStats.Controls.Add(this.lblGreenLaps);
+            this.pnlEventStats.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlEventStats.Location = new System.Drawing.Point(0, 38);
+            this.pnlEventStats.Name = "pnlEventStats";
+            this.pnlEventStats.Size = new System.Drawing.Size(929, 56);
+            this.pnlEventStats.TabIndex = 34;
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.AutoScroll = true;
+            this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.flowLayoutPanel1.Controls.Add(this.pnlRunStats);
             this.flowLayoutPanel1.Controls.Add(this.pnlRaceStats);
             this.flowLayoutPanel1.Controls.Add(this.pnlLastLap);
             this.flowLayoutPanel1.Controls.Add(this.pnlAverages);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(5, 90);
+            this.flowLayoutPanel1.Controls.Add(this.pnlCautions);
+            this.flowLayoutPanel1.Controls.Add(this.pnlLapLeaders);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 94);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1815, 144);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(929, 283);
             this.flowLayoutPanel1.TabIndex = 35;
             // 
             // pnlRunStats
@@ -554,7 +566,7 @@
             // 
             this.pnlLastLap.Controls.Add(this.lvBestLastLap);
             this.pnlLastLap.Controls.Add(this.label12);
-            this.pnlLastLap.Location = new System.Drawing.Point(727, 3);
+            this.pnlLastLap.Location = new System.Drawing.Point(3, 145);
             this.pnlLastLap.Name = "pnlLastLap";
             this.pnlLastLap.Size = new System.Drawing.Size(216, 136);
             this.pnlLastLap.TabIndex = 36;
@@ -567,17 +579,61 @@
             this.pnlAverages.Controls.Add(this.label14);
             this.pnlAverages.Controls.Add(this.label13);
             this.pnlAverages.Controls.Add(this.lvBest20LapAvg);
-            this.pnlAverages.Location = new System.Drawing.Point(949, 3);
+            this.pnlAverages.Location = new System.Drawing.Point(225, 145);
             this.pnlAverages.Name = "pnlAverages";
             this.pnlAverages.Size = new System.Drawing.Size(656, 136);
             this.pnlAverages.TabIndex = 36;
             // 
+            // pnlCautions
+            // 
+            this.pnlCautions.Controls.Add(this.cautionsView1);
+            this.pnlCautions.Location = new System.Drawing.Point(3, 287);
+            this.pnlCautions.Name = "pnlCautions";
+            this.pnlCautions.Size = new System.Drawing.Size(405, 136);
+            this.pnlCautions.TabIndex = 39;
+            // 
+            // cautionsView1
+            // 
+            this.cautionsView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cautionsView1.Location = new System.Drawing.Point(0, 0);
+            this.cautionsView1.Name = "cautionsView1";
+            this.cautionsView1.Padding = new System.Windows.Forms.Padding(2);
+            this.cautionsView1.Size = new System.Drawing.Size(405, 136);
+            this.cautionsView1.TabIndex = 38;
+            // 
+            // pnlLapLeaders
+            // 
+            this.pnlLapLeaders.Controls.Add(this.lapLeadersView1);
+            this.pnlLapLeaders.Location = new System.Drawing.Point(414, 287);
+            this.pnlLapLeaders.Name = "pnlLapLeaders";
+            this.pnlLapLeaders.Size = new System.Drawing.Size(306, 135);
+            this.pnlLapLeaders.TabIndex = 40;
+            // 
+            // lapLeadersView1
+            // 
+            this.lapLeadersView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lapLeadersView1.Location = new System.Drawing.Point(0, 0);
+            this.lapLeadersView1.Name = "lapLeadersView1";
+            this.lapLeadersView1.Padding = new System.Windows.Forms.Padding(2);
+            this.lapLeadersView1.Size = new System.Drawing.Size(306, 135);
+            this.lapLeadersView1.TabIndex = 39;
+            // 
+            // cautionLightView2
+            // 
+            this.cautionLightView2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cautionLightView2.BackColor = System.Drawing.Color.Black;
+            this.cautionLightView2.LightState = Nascar.WinApp.Views.CautionLightState.Off;
+            this.cautionLightView2.Location = new System.Drawing.Point(839, 3);
+            this.cautionLightView2.Name = "cautionLightView2";
+            this.cautionLightView2.Padding = new System.Windows.Forms.Padding(2);
+            this.cautionLightView2.Size = new System.Drawing.Size(88, 32);
+            this.cautionLightView2.TabIndex = 36;
+            // 
             // cautionLightView1
             // 
-            this.cautionLightView1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cautionLightView1.BackColor = System.Drawing.Color.Black;
             this.cautionLightView1.LightState = Nascar.WinApp.Views.CautionLightState.Off;
-            this.cautionLightView1.Location = new System.Drawing.Point(1720, 8);
+            this.cautionLightView1.Location = new System.Drawing.Point(5, 5);
             this.cautionLightView1.Name = "cautionLightView1";
             this.cautionLightView1.Padding = new System.Windows.Forms.Padding(2);
             this.cautionLightView1.Size = new System.Drawing.Size(88, 32);
@@ -587,16 +643,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.cautionLightView2);
+            this.Controls.Add(this.cautionLightView1);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnlEventStats);
             this.Controls.Add(this.picRaceStatus);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "EventDisplay";
-            this.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.Size = new System.Drawing.Size(1825, 235);
+            this.Size = new System.Drawing.Size(929, 377);
             ((System.ComponentModel.ISupportInitialize)(this.picRaceStatus)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnlEventStats.ResumeLayout(false);
+            this.pnlEventStats.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.pnlRunStats.ResumeLayout(false);
             this.pnlRunStats.PerformLayout();
@@ -606,6 +663,8 @@
             this.pnlLastLap.PerformLayout();
             this.pnlAverages.ResumeLayout(false);
             this.pnlAverages.PerformLayout();
+            this.pnlCautions.ResumeLayout(false);
+            this.pnlLapLeaders.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -615,7 +674,7 @@
         private System.Windows.Forms.Label SeriesLabel;
         private System.Windows.Forms.Label TrackLabel;
         private System.Windows.Forms.Label RunLabel;
-        private System.Windows.Forms.Label CautionsLabel;
+        private System.Windows.Forms.Label lblCautions;
         private System.Windows.Forms.PictureBox picRaceStatus;
         private System.Windows.Forms.Label lblLeaders;
         private System.Windows.Forms.Label lblLap;
@@ -660,12 +719,17 @@
         private System.Windows.Forms.ColumnHeader columnHeader22;
         private System.Windows.Forms.ColumnHeader columnHeader23;
         private System.Windows.Forms.ColumnHeader columnHeader24;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnlEventStats;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Panel pnlRunStats;
         private System.Windows.Forms.Panel pnlRaceStats;
         private System.Windows.Forms.Panel pnlLastLap;
         private System.Windows.Forms.Panel pnlAverages;
         private Views.CautionLightView cautionLightView1;
+        private System.Windows.Forms.Panel pnlCautions;
+        private Views.CautionsView cautionsView1;
+        private System.Windows.Forms.Panel pnlLapLeaders;
+        private Views.LapLeadersView lapLeadersView1;
+        private Views.CautionLightView cautionLightView2;
     }
 }

@@ -11,7 +11,7 @@ using Nascar.WinApp.Views;
 
 namespace Nascar.WinApp
 {
-    public partial class LiveFeedDisplay : UserControl
+    public partial class LiveFeedDisplay : UserControl, INotifyPropertyChanged
     {
         FlagStateChanged FlagStateChangeEvent;
 
@@ -32,9 +32,83 @@ namespace Nascar.WinApp
             }
         }
 
+        public bool ShowRunStats
+        {
+            get
+            {
+                return eventDisplay.ShowRunStats;
+            }
+            set
+            {
+                eventDisplay.ShowRunStats = value;
+            }
+        }
+        public bool ShowRaceStats
+        {
+            get
+            {
+                return eventDisplay.ShowRaceStats;
+            }
+            set
+            {
+                eventDisplay.ShowRaceStats = value;
+            }
+        }
+        public bool ShowAverages
+        {
+            get
+            {
+                return eventDisplay.ShowAverages;
+            }
+            set
+            {
+                eventDisplay.ShowAverages = value;
+            }
+        }
+        public bool ShowLastLap
+        {
+            get
+            {
+                return eventDisplay.ShowLastLap;
+            }
+            set
+            {
+                eventDisplay.ShowLastLap = value;
+            }
+        }
+        public bool ShowCautions
+        {
+            get
+            {
+                return eventDisplay.ShowCautions;
+            }
+            set
+            {
+                eventDisplay.ShowCautions = value;
+            }
+        }
+        public bool ShowLapLeaders
+        {
+            get
+            {
+                return eventDisplay.ShowLapLeaders;
+            }
+            set
+            {
+                eventDisplay.ShowLapLeaders = value;
+            }
+        }
+
         public LiveFeedDisplay()
         {
             InitializeComponent();
+
+            ShowRunStats = true;
+            ShowRaceStats = true;
+            ShowAverages = true;
+            ShowLastLap = true;
+            ShowCautions = true;
+            ShowLapLeaders = true;
 
             vehiclePanel.Controls.Clear();
         }
@@ -81,18 +155,18 @@ namespace Nascar.WinApp
             double lastDelta = 0;
             foreach (VehicleModel vehicle in model.vehicles.OrderBy(p => p.running_position))
             {
-                var view = GetVehicleView(vehicle.vehicle_number); 
+                var view = GetVehicleView(vehicle.vehicle_number);
 
                 view.DistanceBehind = vehicle.delta - lastDelta;
 
                 view.Vehicle = vehicle; // << updates done here
 
                 this.vehiclePanel.Controls.SetChildIndex(view, vehicle.running_position - 1);
-                
+
                 lastDelta = vehicle.delta;
             }
 
-           // this.vehicleViewModelList1.UpdateDisplay(model);
+            // this.vehicleViewModelList1.UpdateDisplay(model);
         }
 
         VehicleView GetVehicleView(string vehicle_number)
@@ -159,7 +233,20 @@ namespace Nascar.WinApp
         void UpdateBestLastLap()
         {
             eventDisplay.SetBestLastLaps(vehiclePanel.Controls.OfType<VehicleView>().Where(v => v.Vehicle.last_lap_time > 0).OrderBy(v => v.Vehicle.last_lap_time).Take(5).ToList());
+        }
+        #endregion
+
+        #region INotifyPropertyChanged support
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public virtual void OnPropertyChanged(string propertyName)
+        {
+            if (null != PropertyChanged)
+            {
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         } 
         #endregion
+
     }
 }

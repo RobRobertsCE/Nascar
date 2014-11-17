@@ -30,7 +30,6 @@
         {
             Nascar.Api.Models.VehicleModel vehicleModel1 = new Nascar.Api.Models.VehicleModel();
             this.vehiclePanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.vehicleView1 = new Nascar.WinApp.Views.VehicleView();
             this.eventViewPanel = new System.Windows.Forms.Panel();
             this.pnlVehicleViewHeader = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
@@ -48,6 +47,8 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.splitter1 = new System.Windows.Forms.Splitter();
+            this.vehicleView1 = new Nascar.WinApp.Views.VehicleView();
             this.eventDisplay = new Nascar.WinApp.EventDisplay();
             this.eventDisplay1 = new Nascar.WinApp.EventDisplay();
             this.vehiclePanel.SuspendLayout();
@@ -65,44 +66,6 @@
             this.vehiclePanel.Name = "vehiclePanel";
             this.vehiclePanel.Size = new System.Drawing.Size(1481, 203);
             this.vehiclePanel.TabIndex = 1;
-            // 
-            // vehicleView1
-            // 
-            this.vehicleView1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.vehicleView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.vehicleView1.DistanceBehind = 0D;
-            this.vehicleView1.Location = new System.Drawing.Point(3, 3);
-            this.vehicleView1.Name = "vehicleView1";
-            this.vehicleView1.Size = new System.Drawing.Size(1445, 22);
-            this.vehicleView1.TabIndex = 0;
-            vehicleModel1.average_restart_speed = 0D;
-            vehicleModel1.average_running_position = 0D;
-            vehicleModel1.average_speed = 0D;
-            vehicleModel1.best_lap = 0;
-            vehicleModel1.best_lap_speed = 0D;
-            vehicleModel1.best_lap_time = 0D;
-            vehicleModel1.delta = 0D;
-            vehicleModel1.driver = null;
-            vehicleModel1.fastest_laps_run = 0;
-            vehicleModel1.is_on_track = false;
-            vehicleModel1.laps_completed = 0;
-            vehicleModel1.laps_led = null;
-            vehicleModel1.last_lap_speed = 0D;
-            vehicleModel1.last_lap_time = 0D;
-            vehicleModel1.passes_made = 0;
-            vehicleModel1.passing_differential = 0;
-            vehicleModel1.pit_stops = null;
-            vehicleModel1.qualifying_status = 0;
-            vehicleModel1.quality_passes = 0;
-            vehicleModel1.running_position = 0;
-            vehicleModel1.sponsor_name = null;
-            vehicleModel1.starting_position = 0;
-            vehicleModel1.status = 0;
-            vehicleModel1.times_passed = 0;
-            vehicleModel1.vehicle_elapsed_time = 0D;
-            vehicleModel1.vehicle_manufacturer = null;
-            vehicleModel1.vehicle_number = null;
-            this.vehicleView1.Vehicle = vehicleModel1;
             // 
             // eventViewPanel
             // 
@@ -264,6 +227,53 @@
             this.label9.TabIndex = 11;
             this.label9.Text = "Last Lap (MPH\\Time)";
             // 
+            // splitter1
+            // 
+            this.splitter1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitter1.Location = new System.Drawing.Point(0, 256);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(1481, 3);
+            this.splitter1.TabIndex = 3;
+            this.splitter1.TabStop = false;
+            // 
+            // vehicleView1
+            // 
+            this.vehicleView1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.vehicleView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.vehicleView1.DistanceBehind = 0D;
+            this.vehicleView1.Location = new System.Drawing.Point(3, 3);
+            this.vehicleView1.Name = "vehicleView1";
+            this.vehicleView1.Size = new System.Drawing.Size(1445, 22);
+            this.vehicleView1.TabIndex = 0;
+            vehicleModel1.average_restart_speed = 0D;
+            vehicleModel1.average_running_position = 0D;
+            vehicleModel1.average_speed = 0D;
+            vehicleModel1.best_lap = 0;
+            vehicleModel1.best_lap_speed = 0D;
+            vehicleModel1.best_lap_time = 0D;
+            vehicleModel1.delta = 0D;
+            vehicleModel1.driver = null;
+            vehicleModel1.fastest_laps_run = 0;
+            vehicleModel1.is_on_track = false;
+            vehicleModel1.laps_completed = 0;
+            vehicleModel1.laps_led = null;
+            vehicleModel1.last_lap_speed = 0D;
+            vehicleModel1.last_lap_time = 0D;
+            vehicleModel1.passes_made = 0;
+            vehicleModel1.passing_differential = 0;
+            vehicleModel1.pit_stops = null;
+            vehicleModel1.qualifying_status = 0;
+            vehicleModel1.quality_passes = 0;
+            vehicleModel1.running_position = 0;
+            vehicleModel1.sponsor_name = null;
+            vehicleModel1.starting_position = 0;
+            vehicleModel1.status = 0;
+            vehicleModel1.times_passed = 0;
+            vehicleModel1.vehicle_elapsed_time = 0D;
+            vehicleModel1.vehicle_manufacturer = null;
+            vehicleModel1.vehicle_number = null;
+            this.vehicleView1.Vehicle = vehicleModel1;
+            // 
             // eventDisplay
             // 
             this.eventDisplay.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -272,8 +282,9 @@
             this.eventDisplay.Location = new System.Drawing.Point(0, 0);
             this.eventDisplay.Model = null;
             this.eventDisplay.Name = "eventDisplay";
-            this.eventDisplay.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.eventDisplay.ShowAverages = false;
+            this.eventDisplay.ShowCautions = false;
+            this.eventDisplay.ShowLapLeaders = false;
             this.eventDisplay.ShowLastLap = false;
             this.eventDisplay.ShowRaceStats = false;
             this.eventDisplay.ShowRunStats = true;
@@ -289,6 +300,8 @@
             this.eventDisplay1.Name = "eventDisplay1";
             this.eventDisplay1.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.eventDisplay1.ShowAverages = false;
+            this.eventDisplay1.ShowCautions = false;
+            this.eventDisplay1.ShowLapLeaders = false;
             this.eventDisplay1.ShowLastLap = false;
             this.eventDisplay1.ShowRaceStats = false;
             this.eventDisplay1.ShowRunStats = true;
@@ -299,6 +312,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.splitter1);
             this.Controls.Add(this.vehiclePanel);
             this.Controls.Add(this.eventViewPanel);
             this.Name = "LiveFeedDisplay";
@@ -334,6 +348,7 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Splitter splitter1;
 
     }
 }

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NascarData.Models
+namespace NascarData.Models.Qualifying
 {
     public class QualifyingResultModel
     {
-        public int race_id { get; set; }
+        //public int race_id { get; set; } // ?? wasnt in json, but need for sql
         public int run_id { get; set; }
         public int series_id { get; set; }
         public int qualifying_round { get; set; }

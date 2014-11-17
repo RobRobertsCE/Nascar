@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NascarData.Models
+namespace NascarData.Models.Flag
 {
-    public class FlagStateModel
+    public class FlagModel
     {
-        // {"lap_number":0,"flag_state":8,"elapsed_time":0.0,"comment":"","beneficiary":"","time_of_day":0.0}
         public int lap_number { get; set; }
         public int flag_state { get; set; }
         public double elapsed_time { get; set; }

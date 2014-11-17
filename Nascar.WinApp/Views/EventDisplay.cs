@@ -11,7 +11,7 @@ using Nascar.WinApp.Views;
 
 namespace Nascar.WinApp
 {
-    public partial class EventDisplay : UserControl
+    public partial class EventDisplay : UserControl, INotifyPropertyChanged
     {
         int last_green_start = 0;
         private LiveFeedModel last_model;
@@ -31,16 +31,77 @@ namespace Nascar.WinApp
             }
         }
 
-        public bool ShowRunStats { get; set; }
-        public bool ShowRaceStats { get; set; }
-        public bool ShowAverages { get; set; }
-        public bool ShowLastLap { get; set; }
+        public bool ShowRunStats
+        {
+            get
+            {
+                return pnlRunStats.Visible;
+            }
+            set
+            {
+                pnlRunStats.Visible = value;
+            }
+        }
+        public bool ShowRaceStats
+        {
+            get
+            {
+                return pnlRaceStats.Visible;
+            }
+            set
+            {
+                pnlRaceStats.Visible = value;
+            }
+        }
+        public bool ShowAverages
+        {
+            get
+            {
+                return pnlAverages.Visible;
+            }
+            set
+            {
+                pnlAverages.Visible = value;
+            }
+        }
+        public bool ShowLastLap
+        {
+            get
+            {
+                return pnlLastLap.Visible;
+            }
+            set
+            {
+                pnlLastLap.Visible = value;
+            }
+        }
+        public bool ShowCautions
+        {
+            get
+            {
+                return pnlCautions.Visible;
+            }
+            set
+            {
+                pnlCautions.Visible = value;
+            }
+        }
+        public bool ShowLapLeaders
+        {
+            get
+            {
+                return pnlLapLeaders.Visible;
+            }
+            set
+            {
+                pnlLapLeaders.Visible = value;
+            }
+        }
 
         public EventDisplay()
         {
             InitializeComponent();
-            ShowRunStats = true;
-
+            
             InitializaEventDisplay();
         }
 
@@ -48,10 +109,19 @@ namespace Nascar.WinApp
         {
             SetFlagStatus(FlagState.Yellow);
 
-            this.pnlRunStats.DataBindings.Add(new Binding("Visible", this, "ShowRunStats"));
-            this.pnlRaceStats.DataBindings.Add(new Binding("Visible", this, "ShowRaceStats"));
-            this.pnlAverages.DataBindings.Add(new Binding("Visible", this, "ShowAverages"));
-            this.pnlLastLap.DataBindings.Add(new Binding("Visible", this, "ShowLastLap"));
+            ShowRunStats = true;
+            ShowRaceStats = true;
+            ShowAverages = true;
+            ShowLastLap = true;
+            ShowCautions = true;
+            ShowLapLeaders = true;
+
+            //this.pnlRunStats.DataBindings.Add(new Binding("Visible", this, "ShowRunStats"));
+            //this.pnlRaceStats.DataBindings.Add(new Binding("Visible", this, "ShowRaceStats"));
+            //this.pnlAverages.DataBindings.Add(new Binding("Visible", this, "ShowAverages"));
+            //this.pnlLastLap.DataBindings.Add(new Binding("Visible", this, "ShowLastLap"));
+            //this.pnlCautions.DataBindings.Add(new Binding("Visible", this, "ShowCautions"));
+            //this.pnlLapLeaders.DataBindings.Add(new Binding("Visible", this, "ShowLapLeaders"));
         }
 
         void DisplayModel(LiveFeedModel model)
@@ -59,13 +129,26 @@ namespace Nascar.WinApp
             if (null == model) return;
             this.RunLabel.Text = model.run_name;
             this.TrackLabel.Text = model.track_name;
-            this.lblLap.Text  = model.run_name;
-            this.SeriesLabel.Text = ((SeriesName)model.series_id).ToString();
+            this.lblLap.Text = model.run_name;
+            this.SeriesLabel.Text = ((SeriesName)model.series_id).ToString() + "Series";
             this.SetFlagStatus((FlagState)model.flag_state);
-
-            this.CautionsLabel.Text = String.Format("{0} Cautions for {1} laps", model.number_of_caution_segments.ToString(), model.number_of_caution_laps.ToString());
-            this.lblLeaders .Text = String.Format("{0} Leaders with {1} lead changes", model.number_of_leaders.ToString(), model.number_of_lead_changes.ToString());
+            this.SetLeadersText(model.number_of_leaders, model.number_of_lead_changes);
+            this.SetCautionsText(model.number_of_caution_segments, model.number_of_caution_laps);           
             this.lblLap.Text = String.Format("Lap {0} of {1}, {2} to go", model.lap_number.ToString(), model.laps_in_race.ToString(), model.laps_to_go.ToString());
+        }
+
+        void SetLeadersText(int number_of_leaders, int lead_changes)
+        {
+            string leadersCaption = number_of_leaders == 1 ? "Leader" : "Leaders";
+            string changesCaption = lead_changes == 1 ? "Change" : "Changes";
+            this.lblLeaders.Text = String.Format("{0} {1} with {2} Lead {3})", number_of_leaders.ToString(), leadersCaption, lead_changes.ToString(), changesCaption);
+        }
+
+        void SetCautionsText(int number_of_caution_segments, int number_of_caution_laps)
+        {
+            string cautionsCaption = number_of_caution_segments == 1 ? "Caution" : "Cautions";
+            string lapsCaption = number_of_caution_laps == 1 ? "Lap" : "Laps";
+            this.lblCautions.Text = String.Format("{0} {1} for {2} {3})", number_of_caution_segments, cautionsCaption, number_of_caution_laps, lapsCaption);
         }
 
         void SetFlagStatus(FlagState flag_status)
@@ -121,13 +204,14 @@ namespace Nascar.WinApp
             }
 
             cautionLightView1.SetFlagState(flag_status);
+            cautionLightView2.SetFlagState(flag_status);
 
             picRaceStatus.BackColor = flagColor;
 
             if (null == Model) return;
 
             if (flag_status != FlagState.Green)
-            {               
+            {
                 this.last_green_start = Model.lap_number;
             }
             else if ((null != last_model) && last_model.flag_state != 1 && flag_status == FlagState.Green)
@@ -230,6 +314,18 @@ namespace Nascar.WinApp
                 lvi.SubItems.Add(view.Vehicle.last_lap_time.ToString());
                 lvBestLastLap.Items.Add(lvi);
             }
-        }        
+        }
+
+        #region INotifyPropertyChanged support
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public virtual void OnPropertyChanged(string propertyName)
+        {
+            if (null != PropertyChanged)
+            {
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        #endregion
     }
 }

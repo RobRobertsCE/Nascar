@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using NascarData.Models;
+using NascarData.Models.LiveFeed;
 using Newtonsoft.Json;
 
 namespace NascarData.Business

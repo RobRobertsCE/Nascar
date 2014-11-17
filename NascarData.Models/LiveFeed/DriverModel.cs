@@ -1,4 +1,4 @@
-﻿namespace NascarData.Models
+﻿namespace NascarData.Models.LiveFeed
 {
     public class DriverModel
     {

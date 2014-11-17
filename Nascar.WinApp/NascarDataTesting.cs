@@ -67,6 +67,13 @@ namespace Nascar.WinApp
             try
             {
                 LoadRaceSelectionList(CupSeriesId);
+
+                this.liveFeedDisplay1.ShowRunStats = true;
+                this.liveFeedDisplay1.ShowRaceStats = true;
+                this.liveFeedDisplay1.ShowAverages = true;
+                this.liveFeedDisplay1.ShowLastLap = true;
+                this.liveFeedDisplay1.ShowCautions = true;
+                this.liveFeedDisplay1.ShowLapLeaders = true;
             }
             catch (Exception ex)
             {
@@ -657,6 +664,51 @@ namespace Nascar.WinApp
             {
                 Console.WriteLine(ex.ToString());
             }
+        }
+
+        private void lapLeadersToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            this.liveFeedDisplay1.ShowLapLeaders = ((ToolStripMenuItem)sender).Checked;
+        }
+
+        private void cautionLapsToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            this.liveFeedDisplay1.ShowCautions  = ((ToolStripMenuItem)sender).Checked;
+        }
+
+        private void runMoversToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            this.liveFeedDisplay1.ShowRunStats = ((ToolStripMenuItem)sender).Checked;
+        }
+
+        private void lastLapSpeedsToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            this.liveFeedDisplay1.ShowLastLap  = ((ToolStripMenuItem)sender).Checked;
+        }
+
+        private void raceMoversToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            this.liveFeedDisplay1.ShowRaceStats = ((ToolStripMenuItem)sender).Checked;
+        }
+
+        private void lapAveragesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.liveFeedDisplay1.ShowAverages  = ((ToolStripMenuItem)sender).Checked;
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pnlConfig.Visible = optionsToolStripMenuItem.Checked;
+        }
+
+        private void optionsToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            this.pnlConfig.Visible = ((ToolStripMenuItem)sender).Checked;
         }
     }
 }
