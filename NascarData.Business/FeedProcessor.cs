@@ -14,10 +14,13 @@ namespace NascarApi.Business
         delegate void processModelDelegate(LiveFeedModel model);
 
         #region fields
+        double lastElapsed = 0;
         NascarDbContext _ctx = null;
         LiveFeedModel lastModel;
         Race currentRace;
         Run currentRun;
+        RunFlagState currentRunFlagState;
+        IDictionary<string, VehicleRun> VehicleRuns;
         processModelDelegate processModelHandler;
         #endregion
 
@@ -54,7 +57,9 @@ namespace NascarApi.Business
         {
             try
             {
-                processModelHandler = new processModelDelegate(this.processFirstModel);
+                this.VehicleRuns = new Dictionary<string, VehicleRun>();
+
+                this.processModelHandler = new processModelDelegate(this.processFirstModel);
 
             }
             catch (Exception ex)
@@ -72,7 +77,7 @@ namespace NascarApi.Business
 
         protected virtual void LogMessage(string message)
         {
-            Console.WriteLine(String.Format("{0}: {1}",DateTime.Now.ToString(), message));
+            Console.WriteLine(String.Format("{0}: {1}", DateTime.Now.ToString(), message));
         }
         #endregion
 
@@ -111,6 +116,7 @@ namespace NascarApi.Business
                 firstModel.Start();
                 currentRace = GetRace(model);
                 currentRun = GetRun(model);
+                currentRunFlagState = GetRunFlagState(model);
 
                 this.processModelHandler = new processModelDelegate(this.processModel);
 
@@ -128,34 +134,12 @@ namespace NascarApi.Business
         {
 
             lastModel = model;
-            processRunData(model);
+            Process(model);
         }
         #endregion
-        long vCnt = 0;
-        double vTot = 0.0;
-        double lastElapsed = 0;
-
-        long vehicletotaltime = 0;
-        long vehicleruntotaltime = 0;
-        long pitstoptotaltime = 0;
-        long lapsledtotaltime = 0;
-        long vehiclelapstotaltime = 0;
-        int vehiclecount = 0;
-        int vehiclelapaddedcount = 0;
-        int lapsledcount = 0;
-        int pitstopcount = 0;
-
-        Stopwatch processTimer = new Stopwatch();
-        Stopwatch vehicleTimer = new Stopwatch();
-        Stopwatch vehicleLookupTimer = new Stopwatch();
-        Stopwatch vehicleRunTimer = new Stopwatch();
-        Stopwatch vehiclelapTimer = new Stopwatch();
-        Stopwatch vehiclelapAddTimer = new Stopwatch();
-        Stopwatch lapsLedTimer = new Stopwatch();
-        Stopwatch pitstopTimer = new Stopwatch();
 
         #region ### PROCESS RUN DATA ###
-        protected internal void processRunData(LiveFeedModel model)
+        protected internal void Process(LiveFeedModel model)
         {
             if (model.elapsed_time == lastElapsed)
             {
@@ -168,39 +152,11 @@ namespace NascarApi.Business
             NascarDbContext context = GetContext();
 
             foreach (VehicleModel vehicle in model.vehicles)
-            {               
-
+            {
                 try
                 {
-                    var raceVehicle = currentRace.RaceVehicles.Where(rv => rv.vehicle_number == vehicle.vehicle_number & rv.race_id == model.race_id).FirstOrDefault();
-                    
-                    if (null == raceVehicle)
-                    {
-                        raceVehicle = context.RaceVehicles.Create();
-                        raceVehicle.race_id = model.race_id;
-                        raceVehicle.vehicle_number = vehicle.vehicle_number;
-                        raceVehicle.sponsor_name = String.IsNullOrEmpty(vehicle.sponsor_name) ? "-" : vehicle.sponsor_name;
-                        raceVehicle.vehicle_type_id = context.VehicleTypes.Where(t => t.vehicle_manufacturer == vehicle.vehicle_manufacturer).FirstOrDefault().vehicle_type_id;
+                    var vehicleRun = GetVehicleRun(vehicle);
 
-                        context.RaceVehicles.Add(raceVehicle);
-                        context.SaveChanges();
-                    }
-
-                    vehicleRunTimer.Start();
-                   
-                    var vehicleRun = raceVehicle.VehicleRuns.Where(r => r.race_run_id == currentRun.race_run_id).FirstOrDefault();
-                    if (null == vehicleRun)
-                    {
-                        vehicleRun = context.VehicleRuns.Create();
-                        vehicleRun.race_run_id = currentRun.race_run_id;
-                        vehicleRun.vehicle_id = raceVehicle.vehicle_id;
-                        vehicleRun.driver_id = GetDriver(vehicle.driver).driver_id;
-
-                        context.Runs.Attach(currentRun);
-                        currentRun.VehicleRuns.Add(vehicleRun);
-
-                        context.SaveChanges();
-                    }
                     ProcessLapsLed(vehicleRun, vehicle.laps_led);
 
                     ProcessPitStops(vehicleRun, vehicle.pit_stops);
@@ -211,52 +167,9 @@ namespace NascarApi.Business
                 {
                     ExceptionHandler(ex);
                 }
-            } 
-        }
-
-        void PrintTimers()
-        {
-            Console.WriteLine("***********************************************************");
-
-            if (vehicleTimer.ElapsedMilliseconds > 0)
-            {
-                double vehicleavg = (double)vehicleTimer.ElapsedMilliseconds / (double)vehiclecount;
-                Console.WriteLine(String.Format("Vehicle Average: {0} ms", vehicleavg.ToString()));
-            }
-            if (vehicleLookupTimer.ElapsedMilliseconds > 0)
-            {
-                double vehiclelookupavg = (double)vehicleLookupTimer.ElapsedMilliseconds / (double)vehiclecount;
-                Console.WriteLine(String.Format("Vehicle Lookup Average: {0} ms", vehiclelookupavg.ToString()));
-            }
-            if (vehicleRunTimer.ElapsedMilliseconds > 0)
-            {
-                double vehiclerunavg = (double)vehicleRunTimer.ElapsedMilliseconds / (double)vehiclecount;
-                Console.WriteLine(String.Format("VehicleRun Average: {0} ms", vehiclerunavg.ToString()));
-            }
-            if (vehiclelapTimer.ElapsedMilliseconds > 0)
-            {
-                double vehiclelapavg = (double)vehiclelapTimer.ElapsedMilliseconds / (double)vehiclecount;
-                Console.WriteLine(String.Format("VehicleLaps Average: {0} ms",  vehiclelapavg.ToString()));
-            }
-
-            if (lapsledcount > 0 && lapsLedTimer.ElapsedMilliseconds > 0)
-            {
-                double lapsledavg = (double)lapsLedTimer.ElapsedMilliseconds / (double)lapsledcount;
-                Console.WriteLine(String.Format("LapsLed Average: {0} ms", lapsledavg.ToString()));
-            }
-            if (pitstopcount > 0 && pitstopTimer.ElapsedMilliseconds > 0)
-            {
-                double pitstopdavg = (double)pitstopTimer.ElapsedMilliseconds / (double)pitstopcount;
-                Console.WriteLine(String.Format("PitStops Average: {0} ms", pitstopdavg.ToString()));
-            }
-            if (vehiclelapaddedcount > 0 && vehiclelapAddTimer.ElapsedMilliseconds > 0)
-            {
-                double addedLapdavg = (double)vehiclelapAddTimer.ElapsedMilliseconds / (double)vehiclelapaddedcount;
-                Console.WriteLine(String.Format("Added VehicleLap Average: {0} ms", addedLapdavg.ToString()));
             }
         }
-
-        void ProcessVehicleLap(VehicleRun vehicleRun, VehicleModel vehicle, int lap_number)
+        protected internal void ProcessVehicleLap(VehicleRun vehicleRun, VehicleModel vehicle, int lap_number)
         {
             if (!vehicleRun.VehicleLaps.Any(vl => vl.laps_completed == vehicle.laps_completed))
             {
@@ -290,7 +203,7 @@ namespace NascarApi.Business
             }
 
         }
-        void ProcessPitStops(VehicleRun vehicleRun, IList<PitStopModel> pit_stops)
+        protected internal void ProcessPitStops(VehicleRun vehicleRun, IList<PitStopModel> pit_stops)
         {
             foreach (PitStopModel stop in pit_stops)
             {
@@ -299,7 +212,7 @@ namespace NascarApi.Business
                 if (null == existingStop)
                 {
                     var pitStop = GetContext().PitStops.Create();
-                    
+
                     pitStop.pit_in_lap_count = stop.pit_in_lap_count;
                     pitStop.pit_in_elapsed_time = stop.pit_in_elapsed_time;
                     pitStop.pit_out_elapsed_time = stop.pit_out_elapsed_time;
@@ -311,7 +224,7 @@ namespace NascarApi.Business
                 }
             }
         }
-        void ProcessLapsLed(VehicleRun vehicleRun, IList<LapsLedModel> laps_led)
+        protected internal void ProcessLapsLed(VehicleRun vehicleRun, IList<LapsLedModel> laps_led)
         {
             foreach (LapsLedModel lapsLed in laps_led)
             {
@@ -348,32 +261,50 @@ namespace NascarApi.Business
         }
         #endregion
 
-        #region get data classes
+        #region get/create data classes
+
         protected internal Race GetRace(LiveFeedModel model)
         {
-            NascarDbContext context = GetContext();
-            var race = context.Races.Find(model.race_id);
+            var race = GetContext().Races.Find(model.race_id);
 
             if (null == race)
-                throw new ArgumentException("Could not find that race.", "race_id");
+                race = CreateRace(model);
 
             return race;
+        }
+        protected internal Race CreateRace(LiveFeedModel model)
+        {
+            var newRace = GetContext().Races.Create();
+
+            newRace.race_id = model.race_id;
+            newRace.race_name = model.run_name;
+            newRace.series_id = model.series_id;
+            newRace.track_id = model.track_id;
+            newRace.is_points_race = true;
+            newRace.season_id = GetSeasonId(model);
+            newRace.race_number = model.race_id;
+            newRace.main_event_date = DateTime.Now;
+
+            GetContext().Races.Add(newRace);
+            GetContext().SaveChanges();
+
+            return newRace;
         }
 
         protected internal Run GetRun(LiveFeedModel model)
         {
-            NascarDbContext context = GetContext();
-            var run = context.Runs.Where(r => r.race_id == model.race_id && r.run_id == model.run_id).FirstOrDefault();
+            var run = currentRace.Runs.Where(r => r.race_id == model.race_id && r.run_id == model.run_id).FirstOrDefault();
 
             if (null == run)
-                run = CreateRun(model); ;
+                run = CreateRun(model);
+            else if (run.laps_to_go != model.laps_to_go)
+                run = UpdateCurrentRun(model, run);
 
             return run;
         }
         protected internal Run CreateRun(LiveFeedModel model)
         {
-            NascarDbContext context = GetContext();
-            var newRun = context.Runs.Create();
+            var newRun = GetContext().Runs.Create();
 
             newRun.race_id = model.race_id;
             newRun.run_id = model.run_id;
@@ -391,11 +322,142 @@ namespace NascarApi.Business
             newRun.number_of_lead_changes = model.number_of_lead_changes;
             newRun.number_of_leaders = model.number_of_leaders;
 
-            context.Runs.Add(newRun);
-            context.SaveChanges();
+            GetContext().Runs.Add(newRun);
+            GetContext().SaveChanges();
 
             return newRun;
         }
+        protected internal Run UpdateCurrentRun(LiveFeedModel model, Run run)
+        {
+            run.laps_in_run = model.laps_in_race;
+            run.laps_to_go = model.laps_to_go;
+            run.time_of_day = model.time_of_day;
+            run.number_of_caution_segments = model.number_of_caution_segments;
+            run.number_of_caution_laps = model.number_of_caution_laps;
+            run.number_of_lead_changes = model.number_of_lead_changes;
+            run.number_of_leaders = model.number_of_leaders;
+
+            if (model.flag_state == 0)
+                run.run_status = (int)RunStatus.Scheduled;
+            else if (model.flag_state == 9)
+                run.run_status = (int)RunStatus.Completed;
+            else
+                run.run_status = (int)RunStatus.Running;
+
+            if (model.flag_state != currentRunFlagState.flag_state)
+            {
+                currentRunFlagState = CreateRunFlagState(model);
+            }
+
+            GetContext().SaveChanges();
+        }
+
+        protected internal RunFlagState CreateRunFlagState(LiveFeedModel model)
+        {
+            var newFlagState = GetContext().RunFlagStates.Create();
+
+            newFlagState.race_run_id = currentRun.race_run_id;
+            newFlagState.flag_state = model.flag_state;
+            newFlagState.lap_number = model.lap_number;
+            newFlagState.elapsed_time = model.elapsed_time;
+
+            GetContext().RunFlagStates.Add(newDriver);
+            GetContext().SaveChanges();
+
+            return newFlagState;
+        }
+
+        protected internal Driver GetDriver(DriverModel model)
+        {
+            NascarDbContext context = GetContext();
+            var driver = context.Drivers.Find(model.driver_id);
+
+            if (null == driver)
+                driver = CreateDriver(model);
+
+            return driver;
+
+        }
+        protected internal Driver CreateDriver(DriverModel model)
+        {
+            var newDriver = GetContext().Drivers.Create();
+
+            newDriver.driver_id = model.driver_id;
+            newDriver.full_name = model.full_name;
+            newDriver.first_name = model.first_name;
+            newDriver.last_name = model.last_name;
+            newDriver.is_in_chase = model.is_in_chase;
+
+            GetContext().Drivers.Add(newDriver);
+            GetContext().SaveChanges();
+
+            return newDriver;
+        }
+
+        protected internal RaceVehicle GetRaceVehicle(VehicleModel vehicle)
+        {
+            var raceVehicle = currentRace.RaceVehicles
+                .Where(rv => rv.vehicle_number == vehicle.vehicle_number)
+                .FirstOrDefault();
+
+            if (null == raceVehicle)
+                raceVehicle = CreateRaceVehicle(vehicle);
+
+            return raceVehicle;
+        }
+        protected internal RaceVehicle CreateRaceVehicle(VehicleModel vehicle)
+        {
+            var raceVehicle = GetContext().RaceVehicles.Create();
+
+            raceVehicle.race_id = this.race_id;
+            raceVehicle.vehicle_number = vehicle.vehicle_number;
+            raceVehicle.sponsor_name = String.IsNullOrEmpty(vehicle.sponsor_name) ? "-" : vehicle.sponsor_name;
+            raceVehicle.vehicle_type_id = GetContext().VehicleTypes.Where(t => t.vehicle_manufacturer == vehicle.vehicle_manufacturer).FirstOrDefault().vehicle_type_id;
+
+            GetContext().RaceVehicles.Attach(raceVehicle);
+            currentRace.RaceVehicles.Add(raceVehicle);
+            GetContext().SaveChanges();
+
+            return raceVehicle;
+        }
+
+        protected internal VehicleRun GetVehicleRun(VehicleModel vehicle)
+        {
+            if (VehicleRuns.ContainsKey(vehicle.vehicle_number))
+                return VehicleRuns[vehicle.vehicle_number];
+
+            var raceVehicle = GetRaceVehicle(vehicle);
+
+            var vehicleRun = raceVehicle.VehicleRuns
+                .Where(r => r.race_run_id == currentRun.race_run_id)
+                .FirstOrDefault();
+
+            if (null == vehicleRun)
+                vehicleRun = CreateVehicleRun(raceVehicle, driver_id);
+
+            return vehicleRun;
+        }
+        protected internal VehicleRun CreateVehicleRun(RaceVehicle raceVehicle, int driver_id)
+        {
+            var vehicleRun = GetContext().VehicleRuns.Create();
+
+            vehicleRun.race_run_id = currentRun.race_run_id;
+            vehicleRun.vehicle_id = raceVehicle.vehicle_id;
+            vehicleRun.driver_id = driver_id;
+
+            GetContext().Runs.Attach(currentRun);
+            currentRun.VehicleRuns.Add(vehicleRun);
+            GetContext().SaveChanges();
+
+            VehicleRuns.Add(raceVehicle.vehicle_number, vehicleRun);
+
+            return vehicleRun;
+        }
+
+
+        #endregion
+
+        #region helper methods
 
         private string GetRaceName(string run_name)
         {
@@ -413,33 +475,12 @@ namespace NascarApi.Business
             }
         }
 
-        protected internal Driver GetDriver(DriverModel model)
+        protected internal int GetSeasonId(LiveFeedModel model)
         {
-            NascarDbContext context = GetContext();
-            var driver = context.Drivers.Find(model.driver_id);
-
-            if (null == driver)
-                driver = CreateDriver(model);
-
-            return driver;
-
+            return 1;
+            //return DateTime.Now.Year;
         }
-        protected internal Driver CreateDriver(DriverModel model)
-        {
-            NascarDbContext context = GetContext();
-            var newDriver = context.Drivers.Create();
 
-            newDriver.driver_id = model.driver_id;
-            newDriver.full_name = model.full_name;
-            newDriver.first_name = model.first_name;
-            newDriver.last_name = model.last_name;
-            newDriver.is_in_chase = model.is_in_chase;
-
-            context.Drivers.Add(newDriver);
-            context.SaveChanges();
-
-            return newDriver;
-        }
         #endregion
 
         #region get context
