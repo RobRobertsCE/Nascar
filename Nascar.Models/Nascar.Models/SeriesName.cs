@@ -7,8 +7,8 @@ namespace Nascar.Api.Models
 {
     public enum SeriesName
     {
-        Cup = 1,
+        SprintCup = 1,
         XFinity = 2,
-        Truck = 3
+        CampingWorldTruck = 3
     }
 }

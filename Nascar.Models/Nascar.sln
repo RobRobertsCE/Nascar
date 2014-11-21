@@ -15,17 +15,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nascar.MockApiServer", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nascar.Data.Schedule", "..\Nascar.Data.Schedule\Nascar.Data.Schedule.csproj", "{70B7384B-85B3-41BA-B733-F73E44B0CE07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NascarData", "..\NascarData\NascarData.csproj", "{C55019D8-4A2A-4548-8A4D-EB425B1943C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NascarApi.Data", "..\NascarData\NascarApi.Data.csproj", "{C55019D8-4A2A-4548-8A4D-EB425B1943C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NascarData.Models", "..\NascarData.Models\NascarData.Models.csproj", "{3FEA76E0-8AF2-49D2-995D-D75E74663AEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NascarApi.Models", "..\NascarData.Models\NascarApi.Models.csproj", "{3FEA76E0-8AF2-49D2-995D-D75E74663AEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NascarData.Business", "..\NascarData.Business\NascarData.Business.csproj", "{AD7E2624-A681-4E49-AB40-3A1FB3FDB6E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NascarApi", "..\NascarData.Business\NascarApi.csproj", "{AD7E2624-A681-4E49-AB40-3A1FB3FDB6E7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nascar Projects", "Nascar Projects", "{C31A0D97-05E9-4A16-B42E-179391BEAB12}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NascarData Projects", "NascarData Projects", "{55604CBB-5B62-48D5-825B-1E20E972DC5F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NascarApi Projects", "NascarApi Projects", "{55604CBB-5B62-48D5-825B-1E20E972DC5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NascarData.TestApp", "..\NascaeData.TestApp\NascarData.TestApp.csproj", "{97FCD8F4-CBC0-41F5-AC14-896B140328E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NascarApi.TestApp", "..\NascaeData.TestApp\NascarApi.TestApp.csproj", "{97FCD8F4-CBC0-41F5-AC14-896B140328E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nascar.Api", "..\Nascar.Api\ClassLibrary1\Nascar.Api.csproj", "{8323069B-7B08-47D8-BC69-BD0D21692A03}"
 EndProject

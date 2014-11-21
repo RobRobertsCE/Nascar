@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NascarData.Business
+namespace NascarApi.Business
 {
     public interface IFeedProcessor
     {
@@ -11,6 +11,6 @@ namespace NascarData.Business
         int series_id { get;}
 
         void processFeedData(string feedData);
-        void processFeedModel(NascarData.Models.LiveFeed.LiveFeedModel model);
+        void processFeedModel(NascarApi.Models.LiveFeed.LiveFeedModel model);
     }
 }

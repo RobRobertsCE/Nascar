@@ -1,4 +1,4 @@
-namespace NascarData
+namespace NascarApi.Data
 {
     using System;
     using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace NascarData
     public partial class VehicleLapsLed
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int vehicle_laps_led_id { get; set; }
 
         public int vehicle_run_id { get; set; }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NascarData.Models.Qualifying
+namespace NascarApi.Models.Qualifying
 {
     public class QualifyingModel
     {

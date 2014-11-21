@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NascarData.Models.LiveFeed
+namespace NascarApi.Models.LiveFeed
 {
     public class LiveFeedModel
     {
-        public DateTime created { get; set; }
         public int lap_number { get; set; }
         public double elapsed_time { get; set; }
         public int flag_state { get; set; }
@@ -25,5 +24,10 @@ namespace NascarData.Models.LiveFeed
         public int number_of_caution_laps { get; set; }
         public int number_of_lead_changes { get; set; }
         public int number_of_leaders { get; set; }
+
+        public LiveFeedModel()
+        {
+            vehicles = new List<VehicleModel>();
+        }
     }
 }

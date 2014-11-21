@@ -1,4 +1,4 @@
-namespace NascarData
+namespace NascarApi.Data
 {
     using System;
     using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace NascarData
 
         public int pit_in_lap_count { get; set; }
 
-        public int positions_gained_lost { get; set; }
+        public int positions_gained_lossed { get; set; }
 
         public double pit_in_elapsed_time { get; set; }
 

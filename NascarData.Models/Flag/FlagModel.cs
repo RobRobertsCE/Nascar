@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NascarData.Models.Flag
+namespace NascarApi.Models.Flag
 {
     public class FlagModel
     {

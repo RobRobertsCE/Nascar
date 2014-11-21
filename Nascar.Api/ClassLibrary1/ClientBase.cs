@@ -18,16 +18,10 @@ namespace Nascar.Api
 
         protected internal virtual string FeedUrl { get; protected set; }
 
-        public ClientBase(SeriesName series)
-        {
-            this.Series = series;
-            this.FeedUrl = SeriesUrlManager.GetSeriesFeedUrl(series);
-        }
-
         public ClientBase(SeriesName series, int raceId)
         {
             this.Series = series;
-            this.FeedUrl = SeriesUrlManager.GetSeriesFeedUrl(series, raceId);
+            this.FeedUrl = FeedUrlManager.GetLiveFeedUrl(FeedUrlManager.FeedType.LiveFeed ,series, raceId);
         }
 
         protected internal string GetRandom(int length)

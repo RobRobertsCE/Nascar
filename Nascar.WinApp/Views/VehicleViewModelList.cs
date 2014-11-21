@@ -27,7 +27,7 @@ namespace Nascar.WinApp.Views
 
                 //view.DistanceBehind = vehicle.delta - lastDelta;
 
-                view.ViewModel = new VehicleViewModel(vehicle, SeriesName.Cup); // << updates done here
+                view.ViewModel = new VehicleViewModel(vehicle, SeriesName.SprintCup); // << updates done here
 
                 this.viewPanel.Controls.SetChildIndex(view, vehicle.running_position - 1);
 

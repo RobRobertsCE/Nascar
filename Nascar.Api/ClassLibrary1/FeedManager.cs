@@ -102,11 +102,6 @@ namespace Nascar.Api
             this.race_id = race_id;
             feedClient = new LiveFeedClient(this.Series, race_id);
         }
-        public FeedManager(SeriesName series)
-        {
-            this.Series = series;
-            feedClient = new LiveFeedClient(this.Series);
-        }
         #endregion
 
         #region protected internal methods

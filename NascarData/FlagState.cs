@@ -1,4 +1,4 @@
-namespace NascarData
+namespace NascarApi.Data
 {
     using System;
     using System.Collections.Generic;
@@ -11,17 +11,14 @@ namespace NascarData
     {
         public FlagState()
         {
-            RunLaps = new HashSet<RunLap>();
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int flag_state_id { get; set; }
+        public int flag_state { get; set; }
 
         [Required]
         [StringLength(25)]
         public string flag_state_name { get; set; }
-
-        public virtual ICollection<RunLap> RunLaps { get; set; }
     }
 }

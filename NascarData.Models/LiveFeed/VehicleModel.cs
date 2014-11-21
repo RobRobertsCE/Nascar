@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NascarData.Models.LiveFeed
+namespace NascarApi.Models.LiveFeed
 {
   public class VehicleModel
   {

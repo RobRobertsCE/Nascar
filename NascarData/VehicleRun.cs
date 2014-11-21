@@ -1,4 +1,4 @@
-namespace NascarData
+namespace NascarApi.Data
 {
     using System;
     using System.Collections.Generic;
@@ -19,12 +19,12 @@ namespace NascarData
         [Key]
         public int vehicle_run_id { get; set; }
 
-        public int vehicle_number { get; set; }
+        [ForeignKey("RaceVehicle")]
+        public int vehicle_id { get; set; }
 
-        public int race_id { get; set; }
-
-        public int run_id { get; set; }
-
+        [Index()]
+        public int race_run_id { get; set; }
+        
         public int driver_id { get; set; }
 
         public virtual Driver Driver { get; set; }
@@ -32,6 +32,8 @@ namespace NascarData
         public virtual ICollection<PitStop> PitStops { get; set; }
 
         public virtual Run Run { get; set; }
+
+        public virtual RaceVehicle RaceVehicle { get; set; }
 
         public virtual ICollection<VehicleLap> VehicleLaps { get; set; }
 

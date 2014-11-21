@@ -51,11 +51,11 @@ namespace Nascar.WinApp
         {
             get
             {
-                if (rbCup.Checked) return SeriesName.Cup;
+                if (rbCup.Checked) return SeriesName.SprintCup;
                 if (rbXfinity.Checked) return SeriesName.XFinity;
-                if (rbTruck.Checked) return SeriesName.Truck;
+                if (rbTruck.Checked) return SeriesName.CampingWorldTruck;
 
-                return SeriesName.Cup;
+                return SeriesName.SprintCup;
             }
         }
         #endregion

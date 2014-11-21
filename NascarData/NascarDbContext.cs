@@ -1,4 +1,4 @@
-namespace NascarData
+namespace NascarApi.Data
 {
     using System;
     using System.Data.Entity;
@@ -8,18 +8,22 @@ namespace NascarData
     public partial class NascarDbContext : DbContext
     {
         public NascarDbContext()
-            : base("name=NascarDbContext")
+            : base("name=NascarFeedData")
         {
+            this.Configuration.LazyLoadingEnabled = true;
         }
 
         public virtual DbSet<Driver> Drivers { get; set; }
+        public virtual DbSet<FeedData> FeedDatas { get; set; }
+        public virtual DbSet<FeedType> FeedTypes { get; set; }
         public virtual DbSet<FlagState> FlagStates { get; set; }
         public virtual DbSet<PitStop> PitStops { get; set; }
         public virtual DbSet<Race> Races { get; set; }
         public virtual DbSet<RaceVehicle> RaceVehicles { get; set; }
         public virtual DbSet<Run> Runs { get; set; }
-        public virtual DbSet<RunLap> RunLaps { get; set; }
+        public virtual DbSet<RunFlagState> RunFlagStates { get; set; }
         public virtual DbSet<RunType> RunTypes { get; set; }
+        public virtual DbSet<ScheduledEvent> ScheduledEvents { get; set; }
         public virtual DbSet<Season> Seasons { get; set; }
         public virtual DbSet<Series> Series { get; set; }
         public virtual DbSet<Team> Teams { get; set; }
@@ -30,8 +34,8 @@ namespace NascarData
         public virtual DbSet<VehicleLapsLed> VehicleLapsLeds { get; set; }
         public virtual DbSet<VehicleRun> VehicleRuns { get; set; }
         public virtual DbSet<VehicleType> VehicleTypes { get; set; }
+
         public virtual DbSet<EventSchedule> EventSchedules { get; set; }
-        public virtual DbSet<LapStatusByRaceRun> LapStatusByRaceRuns { get; set; }
         public virtual DbSet<SeriesSchedule> SeriesSchedules { get; set; }
         public virtual DbSet<TeamDriver> TeamDrivers { get; set; }
 
@@ -58,10 +62,10 @@ namespace NascarData
                 .Property(e => e.flag_state_name)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<FlagState>()
-                .HasMany(e => e.RunLaps)
-                .WithRequired(e => e.FlagState)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<FlagState>()
+            //    .HasMany(e => e.RunLaps)
+            //    .WithRequired(e => e.FlagState)
+            //    .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Race>()
                 .Property(e => e.race_name)
@@ -90,17 +94,17 @@ namespace NascarData
                 .Property(e => e.run_name)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Run>()
-                .HasMany(e => e.RunLaps)
-                .WithRequired(e => e.Run)
-                .HasForeignKey(e => new { e.race_id, e.run_id })
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Run>()
+            //    .HasMany(e => e.RunLaps)
+            //    .WithRequired(e => e.Run)
+            //    .HasForeignKey(e => new { e.race_id, e.run_id })
+            //    .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Run>()
-                .HasMany(e => e.VehicleRuns)
-                .WithRequired(e => e.Run)
-                .HasForeignKey(e => new { e.race_id, e.run_id })
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Run>()
+            //    .HasMany(e => e.VehicleRuns)
+            //    .WithRequired(e => e.Run)
+            //    .HasForeignKey(e => new { e.race_id, e.run_id })
+            //    .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<RunType>()
                 .Property(e => e.run_type_name)
@@ -166,10 +170,9 @@ namespace NascarData
                 .WithRequired(e => e.VehicleRun)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<VehicleRun>()
-                .HasMany(e => e.VehicleLapsLeds)
-                .WithRequired(e => e.VehicleRun)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<VehicleLap>()
+            //   .Property(e => e.lap_number)
+            //   .IsIndexed();
 
             modelBuilder.Entity<VehicleType>()
                 .Property(e => e.vehicle_type_name)
@@ -196,17 +199,17 @@ namespace NascarData
                 .Property(e => e.run_type_name)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<LapStatusByRaceRun>()
-                .Property(e => e.run_name)
-                .IsUnicode(false);
+            //modelBuilder.Entity<LapStatusByRaceRun>()
+            //    .Property(e => e.run_name)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<LapStatusByRaceRun>()
-                .Property(e => e.run_type_name)
-                .IsUnicode(false);
+            //modelBuilder.Entity<LapStatusByRaceRun>()
+            //    .Property(e => e.run_type_name)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<LapStatusByRaceRun>()
-                .Property(e => e.flag_state_name)
-                .IsUnicode(false);
+            //modelBuilder.Entity<LapStatusByRaceRun>()
+            //    .Property(e => e.flag_state_name)
+            //    .IsUnicode(false);
 
             modelBuilder.Entity<SeriesSchedule>()
                 .Property(e => e.season_name)

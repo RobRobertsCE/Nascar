@@ -1,4 +1,4 @@
-namespace NascarData
+﻿namespace NascarApi.Data
 {
     using System;
     using System.Collections.Generic;
@@ -6,25 +6,17 @@ namespace NascarData
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class RunLap
+    public class RunFlagState
     {
         [Key]
-        public int run_laps_id { get; set; }
-
-        public int race_id { get; set; }
-
-        public int run_id { get; set; }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int run_flag_state_id { get; set; }
+        public int race_run_id { get; set; }
         public int lap_number { get; set; }
-
-        public int flag_state_id { get; set; }
-
+        public int flag_state { get; set; }
         public double elapsed_time { get; set; }
-
+        public string comment { get; set; }
+        public int beneficiary { get; set; }
         public double time_of_day { get; set; }
-
-        public virtual FlagState FlagState { get; set; }
-
-        public virtual Run Run { get; set; }
     }
 }

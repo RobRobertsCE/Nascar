@@ -78,7 +78,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ResourceManager.cs" />
-    <Compile Include="SeriesUrlManager.cs" />
+    <Compile Include="FeedUrlManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Nascar.Data.Schedule\Nascar.Data.Schedule.csproj">

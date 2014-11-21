@@ -304,7 +304,7 @@ namespace Nascar.WinApp.Views
             this.last_model = new VehicleModel();
             this.Vehicle = new VehicleModel();
 
-            this.Series = SeriesName.Cup;
+            this.Series = SeriesName.SprintCup;
         }
 
         public VehicleViewModel(VehicleModel model, SeriesName series)

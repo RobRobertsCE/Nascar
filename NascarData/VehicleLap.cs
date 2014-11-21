@@ -1,4 +1,4 @@
-namespace NascarData
+namespace NascarApi.Data
 {
     using System;
     using System.Collections.Generic;
@@ -12,8 +12,10 @@ namespace NascarData
         [Key]
         public int vehicle_lap_id { get; set; }
 
+        [Index("IX_RunLap",1)]
         public int vehicle_run_id { get; set; }
 
+         [Index("IX_RunLap", 2, IsUnique=true)]
         public int lap_number { get; set; }
 
         public double average_restart_speed { get; set; }
@@ -32,6 +34,7 @@ namespace NascarData
 
         public int fastest_laps_run { get; set; }
 
+        [Index()]
         public int laps_completed { get; set; }
 
         public double last_lap_speed { get; set; }

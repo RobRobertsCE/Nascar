@@ -1,4 +1,4 @@
-namespace NascarData
+namespace NascarApi.Data
 {
     using System;
     using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace NascarData
 
         public int race_id { get; set; }
 
-        public int vehicle_number { get; set; }
+        public string vehicle_number { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -33,5 +33,7 @@ namespace NascarData
         public virtual VehicleType VehicleType { get; set; }
 
         public virtual ICollection<TeamVehicle> TeamVehicles { get; set; }
+
+        public virtual ICollection<VehicleRun> VehicleRuns { get; set; }
     }
 }

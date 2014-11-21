@@ -1,4 +1,4 @@
-namespace NascarData
+namespace NascarApi.Data
 {
     using System;
     using System.Collections.Generic;
@@ -11,18 +11,15 @@ namespace NascarData
     {
         public Run()
         {
-            RunLaps = new HashSet<RunLap>();
             VehicleRuns = new HashSet<VehicleRun>();
         }
 
         [Key]
-        [Column(Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int race_run_id { get; set; }
+
         public int race_id { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int run_id { get; set; }
 
         [Required]
@@ -39,13 +36,9 @@ namespace NascarData
 
         public bool is_timed { get; set; }
 
-        public bool is_complete { get; set; }
+        public int run_status { get; set; }
 
-        public bool is_running { get; set; }
-
-        public int? flag_state_id { get; set; }
-
-        public int? laps_in_race { get; set; }
+        public int? laps_in_run { get; set; }
 
         public int? laps_to_go { get; set; }
 
@@ -62,8 +55,6 @@ namespace NascarData
         public virtual Race Race { get; set; }
 
         public virtual RunType RunType { get; set; }
-
-        public virtual ICollection<RunLap> RunLaps { get; set; }
 
         public virtual ICollection<VehicleRun> VehicleRuns { get; set; }
     }

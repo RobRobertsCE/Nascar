@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NascarData.Models.Leaderboard
+namespace NascarApi.Models.Leaderboard
 {
     public class WeatherInfoModel
     {

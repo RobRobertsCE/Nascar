@@ -50,53 +50,9 @@
     <Compile Include="FlagState.cs" />
     <Compile Include="LapsLed.cs" />
     <Compile Include="LiveFeed.cs" />
-    <Compile Include="Migrations\201410202157309_InitialCreate.cs" />
-    <Compile Include="Migrations\201410202157309_InitialCreate.Designer.cs">
-      <DependentUpon>201410202157309_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201410202238527_AddLapsLed.cs" />
-    <Compile Include="Migrations\201410202238527_AddLapsLed.Designer.cs">
-      <DependentUpon>201410202238527_AddLapsLed.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201410202240509_RenameLapsLeds.cs" />
-    <Compile Include="Migrations\201410202240509_RenameLapsLeds.Designer.cs">
-      <DependentUpon>201410202240509_RenameLapsLeds.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201410302340187_AddRawFeed.cs" />
-    <Compile Include="Migrations\201410302340187_AddRawFeed.Designer.cs">
-      <DependentUpon>201410302340187_AddRawFeed.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411021925555_driver_id_not_identity.cs" />
-    <Compile Include="Migrations\201411021925555_driver_id_not_identity.Designer.cs">
-      <DependentUpon>201411021925555_driver_id_not_identity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411022018319_session_id_not_identity.cs" />
-    <Compile Include="Migrations\201411022018319_session_id_not_identity.Designer.cs">
-      <DependentUpon>201411022018319_session_id_not_identity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411031317008_session_id_identity.cs" />
-    <Compile Include="Migrations\201411031317008_session_id_identity.Designer.cs">
-      <DependentUpon>201411031317008_session_id_identity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411031846206_addRun2.cs" />
-    <Compile Include="Migrations\201411031846206_addRun2.Designer.cs">
-      <DependentUpon>201411031846206_addRun2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411032045023_addRaceAndRunToVehicle.cs" />
-    <Compile Include="Migrations\201411032045023_addRaceAndRunToVehicle.Designer.cs">
-      <DependentUpon>201411032045023_addRaceAndRunToVehicle.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411032134244_addVehicleRunStat.cs" />
-    <Compile Include="Migrations\201411032134244_addVehicleRunStat.Designer.cs">
-      <DependentUpon>201411032134244_addVehicleRunStat.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411161700583_rawfeedrecordview.cs" />
-    <Compile Include="Migrations\201411161700583_rawfeedrecordview.Designer.cs">
-      <DependentUpon>201411161700583_rawfeedrecordview.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411161706369_fixreplayview.cs" />
-    <Compile Include="Migrations\201411161706369_fixreplayview.Designer.cs">
-      <DependentUpon>201411161706369_fixreplayview.cs</DependentUpon>
+    <Compile Include="Migrations\201411180231236_initial-create.cs" />
+    <Compile Include="Migrations\201411180231236_initial-create.Designer.cs">
+      <DependentUpon>201411180231236_initial-create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NascarDbContext.cs" />
@@ -119,48 +75,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201410202157309_InitialCreate.resx">
-      <DependentUpon>201410202157309_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201410202238527_AddLapsLed.resx">
-      <DependentUpon>201410202238527_AddLapsLed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201410202240509_RenameLapsLeds.resx">
-      <DependentUpon>201410202240509_RenameLapsLeds.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201410302340187_AddRawFeed.resx">
-      <DependentUpon>201410302340187_AddRawFeed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411021925555_driver_id_not_identity.resx">
-      <DependentUpon>201411021925555_driver_id_not_identity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411022018319_session_id_not_identity.resx">
-      <DependentUpon>201411022018319_session_id_not_identity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411031317008_session_id_identity.resx">
-      <DependentUpon>201411031317008_session_id_identity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411031846206_addRun2.resx">
-      <DependentUpon>201411031846206_addRun2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411032045023_addRaceAndRunToVehicle.resx">
-      <DependentUpon>201411032045023_addRaceAndRunToVehicle.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411032134244_addVehicleRunStat.resx">
-      <DependentUpon>201411032134244_addVehicleRunStat.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411161700583_rawfeedrecordview.resx">
-      <DependentUpon>201411161700583_rawfeedrecordview.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411161706369_fixreplayview.resx">
-      <DependentUpon>201411161706369_fixreplayview.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Nascar.Models\Nascar.Models\Nascar.Api.Models.csproj">
       <Project>{a2f2fa60-f876-4e93-9890-4eb9673acae3}</Project>
       <Name>Nascar.Api.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201411180231236_initial-create.resx">
+      <DependentUpon>201411180231236_initial-create.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

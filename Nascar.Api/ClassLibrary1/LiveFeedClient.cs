@@ -12,9 +12,6 @@ namespace Nascar.Api
     public class LiveFeedClient 
         : ClientBase, IFeedClient, IDisposable
     {       
-        public LiveFeedClient(SeriesName series)
-            :base(series)
-        { }
         public LiveFeedClient(SeriesName series, int raceId)
             : base(series, raceId)
         { }
@@ -28,10 +25,7 @@ namespace Nascar.Api
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
-                var responseText = streamReader.ReadToEnd();
-                //Now you have your response.
-                //or false depending on information in the response
-                return responseText;
+                return streamReader.ReadToEnd();
             }
         }
 

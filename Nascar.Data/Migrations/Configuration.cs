@@ -10,7 +10,6 @@ namespace Nascar.Data.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "Nascar.Data.NascarDbContext";
         }
 
         protected override void Seed(Nascar.Data.NascarDbContext context)
