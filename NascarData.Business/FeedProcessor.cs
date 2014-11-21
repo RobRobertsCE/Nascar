@@ -17,7 +17,6 @@ namespace NascarApi.Business
         #region fields
         double lastElapsed = 0;
         NascarDbContext _ctx = null;
-        LiveFeedModel lastModel;
         Race currentRace;
         Run currentRun;
         RunFlagState currentRunFlagState;
@@ -60,7 +59,7 @@ namespace NascarApi.Business
             {
                 this.VehicleRuns = new Dictionary<string, VehicleRun>();
 
-                this.processModelHandler = new processModelDelegate(this.processFirstModel);
+                this.processModelHandler = new processModelDelegate(this.FirstProcess);
 
             }
             catch (Exception ex)
@@ -115,7 +114,7 @@ namespace NascarApi.Business
             catch (Exception ex)
             {
                 this.ExceptionHandler(ex);
-            }            
+            }
         }
         public void processLiveFlagModel(FlagModel model)
         {
@@ -124,33 +123,32 @@ namespace NascarApi.Business
         #endregion
 
         #region protected internal process model methods
-        protected internal void processFirstModel(LiveFeedModel model)
+        protected internal void FirstProcess(LiveFeedModel model)
         {
             try
             {
-                Stopwatch firstModel = new Stopwatch();
-                firstModel.Start();
-                currentRace = GetRace(model);
-                currentRun = GetRun(model);
-                currentRunFlagState = CreateRunFlagState(model);
+                this.currentRace = GetRace(model);
+                this.currentRun = GetRun(model);
+                this.currentRunFlagState = GetRunFlagState(model);
 
-                this.processModelHandler = new processModelDelegate(this.processModel);
-
+                this.processModelHandler = new processModelDelegate(this.Process);
                 this.processModelHandler.Invoke(model);
-                firstModel.Stop();
-                Console.WriteLine("FirstModel: {0} ms", firstModel.ElapsedMilliseconds.ToString());
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+            {
+                string message = ex.Message;
+                var ix = ex.InnerException;
+                while (null != ix.InnerException)
+                {
+                    message = ix.InnerException.Message;
+                    ix = ix.InnerException;
+                }
+                LogMessage(String.Format("DATA EXCEPTION: {0}", message));
             }
             catch (Exception ex)
             {
                 this.ExceptionHandler(ex);
             }
-        }
-
-        protected internal void processModel(LiveFeedModel model)
-        {
-
-            lastModel = model;
-            Process(model);
         }
         #endregion
 
@@ -167,9 +165,9 @@ namespace NascarApi.Business
 
             NascarDbContext context = GetContext();
 
-            foreach (VehicleModel vehicle in model.vehicles)
+            try
             {
-                try
+                foreach (VehicleModel vehicle in model.vehicles)
                 {
                     var vehicleRun = GetVehicleRun(vehicle);
 
@@ -179,10 +177,12 @@ namespace NascarApi.Business
 
                     ProcessVehicleLap(vehicleRun, vehicle, model.lap_number);
                 }
-                catch (Exception ex)
-                {
-                    ExceptionHandler(ex);
-                }
+
+                UpdateCurrentRun(model, currentRun);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler(ex);
             }
         }
         protected internal void ProcessVehicleLap(VehicleRun vehicleRun, VehicleModel vehicle, int lap_number)
@@ -267,6 +267,10 @@ namespace NascarApi.Business
                     GetContext().SaveChanges();
                 }
             }
+        }
+        protected internal void UpdateVehicleRun(LiveFeedModel model)
+        {
+
         }
         #endregion
 
@@ -366,7 +370,7 @@ namespace NascarApi.Business
 
             if (model.flag_state != currentRunFlagState.flag_state)
             {
-                currentRunFlagState = CreateRunFlagState(model);
+                currentRunFlagState = GetRunFlagState(model);
             }
 
             GetContext().SaveChanges();
@@ -374,6 +378,18 @@ namespace NascarApi.Business
             return run;
         }
 
+        protected internal RunFlagState GetRunFlagState(LiveFeedModel model)
+        {
+            if ((null != currentRunFlagState) && currentRunFlagState.elapsed_time == model.elapsed_time)
+                return currentRunFlagState;
+
+            var flagState = currentRun.RunFlagStates.Where(r => r.race_run_id == currentRun.race_run_id && r.elapsed_time == model.elapsed_time).FirstOrDefault();
+
+            if (null == flagState)
+                flagState = CreateRunFlagState(model);
+
+            return flagState;
+        }
         protected internal RunFlagState CreateRunFlagState(LiveFeedModel model)
         {
             var newFlagState = GetContext().RunFlagStates.Create();
