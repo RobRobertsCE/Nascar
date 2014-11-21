@@ -12,5 +12,8 @@ namespace NascarApi.Business
 
         void processFeedData(string feedData);
         void processFeedModel(NascarApi.Models.LiveFeed.LiveFeedModel model);
+
+        void processLiveFlag(string liveFlagData);
+        void processLiveFlagModel(NascarApi.Models.Flag.FlagModel model);
     }
 }

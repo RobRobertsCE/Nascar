@@ -4,6 +4,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using NascarApi.Data;
 using NascarApi.Models.LiveFeed;
+using NascarApi.Models.Flag;
 using System.Collections.Generic;
 
 namespace NascarApi.Business
@@ -81,7 +82,7 @@ namespace NascarApi.Business
         }
         #endregion
 
-        #region public process feed methods
+        #region IFeedProcessor
         public void processFeedData(string feedData)
         {
             try
@@ -93,7 +94,6 @@ namespace NascarApi.Business
                 this.ExceptionHandler(ex);
             }
         }
-
         public void processFeedModel(LiveFeedModel model)
         {
             try
@@ -104,6 +104,22 @@ namespace NascarApi.Business
             {
                 this.ExceptionHandler(ex);
             }
+        }
+
+        public void processLiveFlag(string liveFlagData)
+        {
+            try
+            {
+                processLiveFlagModel(GetFlagModel(liveFlagData));
+            }
+            catch (Exception ex)
+            {
+                this.ExceptionHandler(ex);
+            }            
+        }
+        public void processLiveFlagModel(FlagModel model)
+        {
+            currentRunFlagState = UpdateRunFlagState(model);
         }
         #endregion
 
@@ -116,7 +132,7 @@ namespace NascarApi.Business
                 firstModel.Start();
                 currentRace = GetRace(model);
                 currentRun = GetRun(model);
-                currentRunFlagState = GetRunFlagState(model);
+                currentRunFlagState = CreateRunFlagState(model);
 
                 this.processModelHandler = new processModelDelegate(this.processModel);
 
@@ -259,6 +275,10 @@ namespace NascarApi.Business
         {
             return JsonConvert.DeserializeObject<LiveFeedModel>(feedData);
         }
+        protected internal FlagModel GetFlagModel(string flagFeedData)
+        {
+            return JsonConvert.DeserializeObject<FlagModel>(flagFeedData);
+        }
         #endregion
 
         #region get/create data classes
@@ -350,6 +370,8 @@ namespace NascarApi.Business
             }
 
             GetContext().SaveChanges();
+
+            return run;
         }
 
         protected internal RunFlagState CreateRunFlagState(LiveFeedModel model)
@@ -361,10 +383,45 @@ namespace NascarApi.Business
             newFlagState.lap_number = model.lap_number;
             newFlagState.elapsed_time = model.elapsed_time;
 
-            GetContext().RunFlagStates.Add(newDriver);
+            GetContext().RunFlagStates.Add(newFlagState);
             GetContext().SaveChanges();
 
             return newFlagState;
+        }
+
+        /// <summary>
+        /// TO BE USED BY LIVE_FLAG FEED. DOES NOT UPDATE currentRunFlagState property.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        protected internal RunFlagState UpdateRunFlagState(FlagModel model)
+        {
+            RunFlagState flagState = GetContext().RunFlagStates.Where(s => s.race_run_id == currentRun.race_run_id && s.elapsed_time == model.elapsed_time).FirstOrDefault();
+
+            if (null == flagState)
+            {
+                flagState = GetContext().RunFlagStates.Create();
+
+                flagState.race_run_id = currentRun.race_run_id;
+                flagState.flag_state = model.flag_state;
+                flagState.lap_number = model.lap_number;
+                flagState.elapsed_time = model.elapsed_time;
+                flagState.comment = model.comment;
+                flagState.beneficiary = model.beneficiary;
+                flagState.time_of_day = model.time_of_day;
+
+                GetContext().RunFlagStates.Attach(flagState);
+                currentRun.RunFlagStates.Add(flagState);
+                GetContext().SaveChanges();
+            }
+            else if (flagState.comment != model.comment || flagState.beneficiary != model.beneficiary)
+            {
+                flagState.comment = model.comment;
+                flagState.beneficiary = model.beneficiary;
+                GetContext().SaveChanges();
+            }
+
+            return flagState;
         }
 
         protected internal Driver GetDriver(DriverModel model)
@@ -433,7 +490,7 @@ namespace NascarApi.Business
                 .FirstOrDefault();
 
             if (null == vehicleRun)
-                vehicleRun = CreateVehicleRun(raceVehicle, driver_id);
+                vehicleRun = CreateVehicleRun(raceVehicle, vehicle.driver.driver_id);
 
             return vehicleRun;
         }
@@ -453,8 +510,6 @@ namespace NascarApi.Business
 
             return vehicleRun;
         }
-
-
         #endregion
 
         #region helper methods

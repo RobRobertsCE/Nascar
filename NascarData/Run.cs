@@ -12,6 +12,7 @@ namespace NascarApi.Data
         public Run()
         {
             VehicleRuns = new HashSet<VehicleRun>();
+            RunFlagStates = new HashSet<RunFlagState>();
         }
 
         [Key]
@@ -57,5 +58,7 @@ namespace NascarApi.Data
         public virtual RunType RunType { get; set; }
 
         public virtual ICollection<VehicleRun> VehicleRuns { get; set; }
+
+        public virtual ICollection<RunFlagState> RunFlagStates { get; set; }
     }
 }
