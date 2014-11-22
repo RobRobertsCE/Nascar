@@ -12,11 +12,12 @@ namespace NascarApi.Data
         {
             this.Configuration.LazyLoadingEnabled = true;
         }
-
+        /* Tables */
         public virtual DbSet<Driver> Drivers { get; set; }
         public virtual DbSet<FeedData> FeedDatas { get; set; }
         public virtual DbSet<FeedType> FeedTypes { get; set; }
         public virtual DbSet<FlagState> FlagStates { get; set; }
+        public virtual DbSet<QualifyingResult> QualifyingResults { get; set; }
         public virtual DbSet<PitStop> PitStops { get; set; }
         public virtual DbSet<Race> Races { get; set; }
         public virtual DbSet<RaceVehicle> RaceVehicles { get; set; }
@@ -26,15 +27,17 @@ namespace NascarApi.Data
         public virtual DbSet<ScheduledEvent> ScheduledEvents { get; set; }
         public virtual DbSet<Season> Seasons { get; set; }
         public virtual DbSet<Series> Series { get; set; }
+        public virtual DbSet<SeriesPoints> SeriesPointsStandings { get; set; }
         public virtual DbSet<Team> Teams { get; set; }
         public virtual DbSet<TeamVehicle> TeamVehicles { get; set; }
+        public virtual DbSet<TeamVehicleDriver> TeamVehicleDrivers { get; set; }
         public virtual DbSet<Track> Tracks { get; set; }
         public virtual DbSet<TrackType> TrackTypes { get; set; }
         public virtual DbSet<VehicleLap> VehicleLaps { get; set; }
         public virtual DbSet<VehicleLapsLed> VehicleLapsLeds { get; set; }
         public virtual DbSet<VehicleRun> VehicleRuns { get; set; }
         public virtual DbSet<VehicleType> VehicleTypes { get; set; }
-
+        /* Views */
         public virtual DbSet<EventSchedule> EventSchedules { get; set; }
         public virtual DbSet<SeriesSchedule> SeriesSchedules { get; set; }
         public virtual DbSet<TeamDriver> TeamDrivers { get; set; }

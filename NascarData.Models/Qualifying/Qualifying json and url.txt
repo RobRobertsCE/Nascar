@@ -1,5 +1,13 @@
 ﻿http://www.nascar.com/live/feeds/series_3/4372/live_qualifying.json
 
+
+public class RootObject
+{
+    public int race_id { get; set; }
+    public int series_id { get; set; }
+    public List<QualifyingResult> qualifying_results { get; set; }
+}
+
 public class QualifyingResult
 {
     public int run_id { get; set; }
@@ -18,11 +26,4 @@ public class QualifyingResult
     public bool is_current_round { get; set; }
     public int time_limit { get; set; }
     public double last_lap_time { get; set; }
-}
-
-public class RootObject
-{
-    public int race_id { get; set; }
-    public int series_id { get; set; }
-    public List<QualifyingResult> qualifying_results { get; set; }
 }

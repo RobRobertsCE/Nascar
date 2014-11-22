@@ -457,8 +457,8 @@ namespace NascarApi.Business
 
             newDriver.driver_id = model.driver_id;
             newDriver.full_name = model.full_name;
-            newDriver.first_name = model.first_name;
-            newDriver.last_name = model.last_name;
+            newDriver.first_name = TrimDriverName(model.first_name);
+            newDriver.last_name = TrimDriverName(model.last_name);
             newDriver.is_in_chase = model.is_in_chase;
 
             GetContext().Drivers.Add(newDriver);
@@ -529,6 +529,10 @@ namespace NascarApi.Business
         #endregion
 
         #region helper methods
+        private string TrimDriverName(string name)
+        {
+            return name.Replace("#", "").Replace("*", "").Replace("(i)", "").Trim();
+        }
 
         private string GetRaceName(string run_name)
         {
