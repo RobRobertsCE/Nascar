@@ -10,9 +10,9 @@
 
     public class FlagFeedProcessor : FeedProcessor<FlagModel>
     {
-        public override FeedFormat FeedFormat
+        public override ApiFeedType FeedType
         {
-            get { return FeedFormat.Flag; }
+            get { return ApiFeedType.LiveFlag; }
         }
        
         public FlagFeedProcessor(int season_id, int series_id, int race_id)

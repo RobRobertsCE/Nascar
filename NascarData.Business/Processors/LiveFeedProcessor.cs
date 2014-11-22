@@ -23,11 +23,11 @@
         #endregion
 
         #region properties
-        public override FeedFormat FeedFormat
+        public override ApiFeedType FeedType
         {
             get
             {
-                return FeedFormat.Live;
+                return ApiFeedType.LiveFeed;
             }
         }
         #endregion
@@ -282,7 +282,7 @@
             newRun.round_number = model.run_id;
             newRun.start_timestamp = DateTime.Now;
             newRun.duration = model.laps_in_race;
-            newRun.run_status = (int)RunStatus.Running;
+            newRun.run_status = (int)SessionStatus.Running;
             newRun.laps_in_run = model.laps_in_race;
             newRun.laps_to_go = model.laps_to_go;
             newRun.time_of_day = model.time_of_day;
@@ -309,11 +309,11 @@
             run.number_of_leaders = model.number_of_leaders;
 
             if (model.flag_state == 0)
-                run.run_status = (int)RunStatus.Scheduled;
+                run.run_status = (int)SessionStatus.Scheduled;
             else if (model.flag_state == 9)
-                run.run_status = (int)RunStatus.Completed;
+                run.run_status = (int)SessionStatus.Completed;
             else
-                run.run_status = (int)RunStatus.Running;
+                run.run_status = (int)SessionStatus.Running;
 
             if (model.flag_state != currentRunFlagState.flag_state)
             {

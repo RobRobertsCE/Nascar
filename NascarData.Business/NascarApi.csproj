@@ -43,6 +43,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,17 +51,49 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FeedFormat.cs" />
+    <Compile Include="ApiFeedType.cs" />
+    <Compile Include="EventArgs\LiveFeedEventArgs.cs" />
+    <Compile Include="EventFeedManager.cs" />
     <Compile Include="Processors\FeedProcessor.cs" />
     <Compile Include="Processors\FlagFeedProcessor.cs" />
+    <Compile Include="Processors\Interfaces\IFeed.cs" />
     <Compile Include="Processors\LiveFeedProcessor.cs" />
-    <Compile Include="Processors\IFeedProcessor.cs" />
+    <Compile Include="Processors\Interfaces\IFeedProcessor.cs" />
     <Compile Include="Processors\PointsFeedProcessor.cs" />
-    <Compile Include="ProcessingDelegates.cs" />
+    <Compile Include="Processors\ProcessorDelegates.cs" />
     <Compile Include="Processors\LeaderboardFeedProcessor.cs" />
+    <Compile Include="Processors\WeatherFeedProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Processors\QualifyingFeedProcessor.cs" />
-    <Compile Include="RunStatus.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ApiEngineState.cs" />
+    <Compile Include="Readers\ApiClient.cs" />
+    <Compile Include="Delegates.cs" />
+    <Compile Include="EventArgs\EventStartedEventArgs.cs" />
+    <Compile Include="EventArgs\EventStoppedEventArgs.cs" />
+    <Compile Include="EventArgs\FeedEventArgs.cs" />
+    <Compile Include="Readers\ApiClientDataReceivedDelegate.cs" />
+    <Compile Include="Readers\AsyncApiResultDelegate.cs" />
+    <Compile Include="Readers\Flag\FlagApiClient.cs" />
+    <Compile Include="Readers\Leaderboard\LeaderboardApiClient.cs" />
+    <Compile Include="Readers\LiveFeed\LiveFeedApiClient.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Readers\LiveFeed\LiveFeedManager.cs" />
+    <Compile Include="Readers\ApiUrlManager.cs" />
+    <Compile Include="Readers\IApiFeedEngine.cs" />
+    <Compile Include="Readers\IApiClient.cs" />
+    <Compile Include="Readers\Points\PointsApiClient.cs" />
+    <Compile Include="Readers\Qualifying\QualifyingApiClient.cs" />
+    <Compile Include="Readers\Weather\WeatherApiClient.cs" />
+    <Compile Include="ResourceManager.cs" />
+    <Compile Include="SessionStatus.cs" />
+    <Compile Include="SeriesType.cs" />
+    <Compile Include="SessionType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -75,6 +108,41 @@
       <Project>{c55019d8-4a2a-4548-8a4d-eb425b1943c0}</Project>
       <Name>NascarApi.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chevy_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cup_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cwts_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ford_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nascar_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nns_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ram_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toyota_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Processors\Delegates\" />
+    <Folder Include="Processors\EventArgs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

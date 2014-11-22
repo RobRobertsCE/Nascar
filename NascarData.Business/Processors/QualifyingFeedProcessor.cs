@@ -9,11 +9,11 @@
 
     public class QualifyingFeedProcessor : FeedProcessor<QualifyingModel>
     {
-        public override FeedFormat FeedFormat
+        public override ApiFeedType FeedType
         {
             get
             {
-                return FeedFormat.Qualifying;
+                return ApiFeedType.LiveQualifying ;
             }
         }
 

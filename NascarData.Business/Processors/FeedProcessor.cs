@@ -12,6 +12,7 @@
 
     public abstract class FeedProcessor<T> : IFeedProcessor<T>
     {
+        #region events
         public event ProcessingCompleteDelegate ProcessingComplete;
         protected virtual void OnProcessingComplete()
         {
@@ -32,6 +33,7 @@
             if (null != ArchivingComplete)
                 ArchivingComplete.Invoke(this, EventArgs.Empty);
         }
+        #endregion
 
         #region components
         BackgroundWorker archiveWorker;
@@ -43,7 +45,7 @@
         #endregion
 
         #region properties
-        public abstract FeedFormat FeedFormat { get; }
+        public abstract ApiFeedType FeedType { get; }
 
         int runId;
         public int run_id
@@ -142,6 +144,50 @@
         }
         #endregion
 
+        #region ctor / init
+        public FeedProcessor(int season_id, int series_id, int race_id)
+        {
+            this.season_id = season_id;
+            this.series_id = series_id;
+            this.race_id = race_id;
+
+            this.InitializeFeedProcessorInternal();
+        }
+
+        protected virtual void InitializeFeedProcessorInternal()
+        {
+            archiveWorker = new BackgroundWorker();
+            archiveWorker.DoWork += bgwArchiveFeed_DoWork;
+            archiveWorker.RunWorkerCompleted += bgwArchiveFeed_RunWorkerCompleted;
+
+            feedWorker = new BackgroundWorker();
+            feedWorker.DoWork += feedWorker_DoWork;
+            feedWorker.RunWorkerCompleted += feedWorker_RunWorkerCompleted;
+
+            this.InitializeFeedProcessor();
+        }
+
+        protected virtual void InitializeFeedProcessor()
+        {
+
+        }
+
+        #endregion
+
+        #region common
+        protected virtual void ExceptionHandler(Exception ex)
+        {
+            this.LogMessage(ex.ToString());
+            this.OnProcessingError(ex);
+        }
+
+        protected virtual void LogMessage(string message)
+        {
+            Console.WriteLine(String.Format("{0}: {1}", MessageHeader, message));
+        }
+
+        #endregion
+
         #region public Process
 
         public void ProcessJson(string feedJson)
@@ -185,50 +231,6 @@
         }
 
         protected abstract void BeginProcessAsync(T model);
-
-        #endregion
-
-        #region ctor / init
-        public FeedProcessor(int season_id, int series_id, int race_id)
-        {
-            this.season_id = season_id;
-            this.series_id = series_id;
-            this.race_id = race_id;
-
-            this.InitializeFeedProcessorInternal();
-        }
-
-        protected virtual void InitializeFeedProcessorInternal()
-        {
-            archiveWorker = new BackgroundWorker();
-            archiveWorker.DoWork += bgwArchiveFeed_DoWork;
-            archiveWorker.RunWorkerCompleted += bgwArchiveFeed_RunWorkerCompleted;
-
-            feedWorker = new BackgroundWorker();
-            feedWorker.DoWork += feedWorker_DoWork;
-            feedWorker.RunWorkerCompleted += feedWorker_RunWorkerCompleted;
-
-            this.InitializeFeedProcessor();
-        }
-
-        protected virtual void InitializeFeedProcessor()
-        {
-
-        }
-
-        #endregion
-
-        #region common
-        protected virtual void ExceptionHandler(Exception ex)
-        {
-            this.LogMessage(ex.ToString());
-            this.OnProcessingError(ex);
-        }
-
-        protected virtual void LogMessage(string message)
-        {
-            Console.WriteLine(String.Format("{0}: {1}", MessageHeader, message));
-        }
 
         #endregion
 
@@ -312,7 +314,7 @@
             {
                 var data = this.Context.FeedDatas.Create();
 
-                data.feed_type = (int)this.FeedFormat;
+                data.feed_type = (int)this.FeedType;
                 data.race_id = this.race_id;
                 data.data = FromModel(model);
                 data.created = DateTime.Now;

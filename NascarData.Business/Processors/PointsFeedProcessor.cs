@@ -9,11 +9,11 @@
 
     public class PointsFeedProcessor : FeedProcessor<PointsModel>
     {
-        public override FeedFormat FeedFormat
+        public override ApiFeedType FeedType
         {
             get
             {
-                return FeedFormat.Points;
+                return ApiFeedType.LivePoints;
             }
         }
 
