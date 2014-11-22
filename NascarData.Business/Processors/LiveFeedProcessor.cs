@@ -1,9 +1,10 @@
-﻿namespace NascarApi
+﻿namespace NascarApi.Processors
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using NascarApi.Data;
+    using NascarApi.Models;
     using NascarApi.Models.Flag;
     using NascarApi.Models.LiveFeed;
     using Newtonsoft.Json;
@@ -19,6 +20,16 @@
         RunFlagState currentRunFlagState;
         IDictionary<string, VehicleRun> VehicleRuns;
         processModelDelegate processModelHandler;
+        #endregion
+
+        #region properties
+        public override FeedFormat FeedFormat
+        {
+            get
+            {
+                return FeedFormat.Live;
+            }
+        }
         #endregion
 
         #region ctor / init
@@ -55,6 +66,15 @@
             {
                 this.ExceptionHandler(ex);
             }
+            finally
+            {
+                this.OnProcessingComplete();
+            }
+        }
+
+        protected override void BeginProcessAsync(LiveFeedModel model)
+        {
+            this.processModelHandler.Invoke(model);
         }
         #endregion
 

@@ -55,7 +55,7 @@
     <Compile Include="LiveFeed\LapsLedModel.cs" />
     <Compile Include="Leaderboard\DriverModel.cs" />
     <Compile Include="Leaderboard\LapsLedModel.cs" />
-    <Compile Include="Leaderboard\LeaderboardFeed.cs" />
+    <Compile Include="Leaderboard\LeaderboardModel.cs" />
     <Compile Include="Leaderboard\PassingModel.cs" />
     <Compile Include="Leaderboard\WeatherInfoModel.cs" />
     <Compile Include="LiveFeed\LiveFeedModel.cs" />

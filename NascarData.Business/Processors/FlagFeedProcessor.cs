@@ -1,4 +1,4 @@
-﻿namespace NascarApi
+﻿namespace NascarApi.Processors
 {
     using NascarApi.Models.Flag;
     using System;
@@ -6,9 +6,15 @@
     using System.Linq;
     using System.Text;
     using NascarApi.Data;
+    using NascarApi.Models;
 
     public class FlagFeedProcessor : FeedProcessor<FlagModel>
     {
+        public override FeedFormat FeedFormat
+        {
+            get { return FeedFormat.Flag; }
+        }
+       
         public FlagFeedProcessor(int season_id, int series_id, int race_id)
             : base(season_id, series_id, race_id)
         {
@@ -27,6 +33,11 @@
             }
         }
 
+        protected override void BeginProcessAsync(FlagModel model)
+        {
+            this.UpdateRunFlagState(model);
+        }
+        
         protected internal void UpdateRunFlagState(FlagModel model)
         {
             if (null == this.Run) return;

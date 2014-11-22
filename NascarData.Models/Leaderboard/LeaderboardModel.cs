@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NascarApi.Models.Leaderboard
 {
-    public class LeaderboardFeed
+    public class LeaderboardModel
     {
         public int CurrentLapNumber { get; set; }
         public int ElapsedTime { get; set; }

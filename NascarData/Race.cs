@@ -47,5 +47,7 @@ namespace NascarApi.Data
         public virtual ICollection<Run> Runs { get; set; }
 
         public virtual ICollection<RaceVehicle> RaceVehicles { get; set; }
+
+        public virtual ICollection<FeedData> FeedDatas { get; set; }
     }
 }

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace NascarApi
+﻿namespace NascarApi.Processors
 {
     public interface IFeedProcessor<T>
     {
+        event ProcessingCompleteDelegate ProcessingComplete;
+        event ProcessingErrorDelegate ProcessingError;
+        event ArchivingCompleteDelegate ArchivingComplete;
+
         int season_id { get; }
         int series_id { get; }
         int race_id { get; }
@@ -14,5 +13,6 @@ namespace NascarApi
 
         void ProcessJson(string feedJson);
         void ProcessModel(T model);
+        void ProcessModelAsync(T model);
     }
 }

@@ -22,6 +22,8 @@
         public int feed_type { get; set; }
 
         public string data { get; set; }
+
+        public DateTime created { get; set; }
     }
 }
 

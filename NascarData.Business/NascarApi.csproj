@@ -50,13 +50,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FeedProcessor.cs" />
-    <Compile Include="FlagFeedProcessor.cs" />
-    <Compile Include="LiveFeedProcessor.cs" />
-    <Compile Include="IFeedProcessor.cs" />
-    <Compile Include="PointsFeedProcessor.cs" />
+    <Compile Include="FeedFormat.cs" />
+    <Compile Include="Processors\FeedProcessor.cs" />
+    <Compile Include="Processors\FlagFeedProcessor.cs" />
+    <Compile Include="Processors\LiveFeedProcessor.cs" />
+    <Compile Include="Processors\IFeedProcessor.cs" />
+    <Compile Include="Processors\PointsFeedProcessor.cs" />
+    <Compile Include="ProcessingDelegates.cs" />
+    <Compile Include="Processors\LeaderboardFeedProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QualifyingFeedProcessor.cs" />
+    <Compile Include="Processors\QualifyingFeedProcessor.cs" />
     <Compile Include="RunStatus.cs" />
   </ItemGroup>
   <ItemGroup>
