@@ -51,8 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FeedProcessor.cs" />
+    <Compile Include="FlagFeedProcessor.cs" />
+    <Compile Include="LiveFeedProcessor.cs" />
     <Compile Include="IFeedProcessor.cs" />
+    <Compile Include="PointsFeedProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QualifyingFeedProcessor.cs" />
     <Compile Include="RunStatus.cs" />
   </ItemGroup>
   <ItemGroup>

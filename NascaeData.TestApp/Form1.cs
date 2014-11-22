@@ -7,7 +7,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using NascarApi.Business;
+using NascarApi;
+using NascarApi.Models;
+using NascarApi.Models.LiveFeed;
 
 namespace NascarApi.TestApp
 {
@@ -188,7 +190,7 @@ namespace NascarApi.TestApp
 
             sb.AppendLine(String.Format("{0} {1} {2}", series_id, race_id, run_id));
 
-            NascarApi.Business.IFeedProcessor processor = new NascarApi.Business.FeedProcessor(1, series_id, race_id);
+            IFeedProcessor<LiveFeedModel> processor = new LiveFeedProcessor(1, series_id, race_id);
 
             using (Nascar.Data.NascarDbContext context = new Nascar.Data.NascarDbContext("NascarDbContext"))
             {
@@ -203,7 +205,7 @@ namespace NascarApi.TestApp
                 foreach (Nascar.Data.RawFeedRecord item in records)
                 {
                     timeFeedProcess.Start();
-                    processor.processFeedData(item.data);
+                    processor.ProcessJson(item.data);
                     timeFeedProcess.Stop();
                     idx++;
                     vT += timeFeedProcess.ElapsedMilliseconds;
