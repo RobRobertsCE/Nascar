@@ -188,7 +188,7 @@ namespace NascarApi.TestApp
 
             sb.AppendLine(String.Format("{0} {1} {2}", series_id, race_id, run_id));
 
-            NascarApi.Business.IFeedProcessor processor = new NascarApi.Business.FeedProcessor(series_id, race_id);
+            NascarApi.Business.IFeedProcessor processor = new NascarApi.Business.FeedProcessor(1, series_id, race_id);
 
             using (Nascar.Data.NascarDbContext context = new Nascar.Data.NascarDbContext("NascarDbContext"))
             {

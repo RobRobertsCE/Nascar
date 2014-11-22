@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using Newtonsoft.Json;
-using NascarApi.Data;
-using NascarApi.Models.LiveFeed;
-using NascarApi.Models.Flag;
 using System.Collections.Generic;
+using System.Linq;
+using NascarApi.Data;
+using NascarApi.Models.Flag;
+using NascarApi.Models.LiveFeed;
+using Newtonsoft.Json;
 
 namespace NascarApi.Business
 {
     public class FeedProcessor : IFeedProcessor
     {
-
         delegate void processModelDelegate(LiveFeedModel model);
 
         #region fields
@@ -25,6 +23,13 @@ namespace NascarApi.Business
         #endregion
 
         #region properties
+        int runId;
+        public int run_id
+        {
+            get { return runId; }
+            private set { runId = value; }
+        }
+
         int raceId;
         public int race_id
         {
@@ -38,6 +43,25 @@ namespace NascarApi.Business
             get { return seriesId; }
             private set { seriesId = value; }
         }
+
+        int seasonId;
+        public int season_id
+        {
+            get { return seasonId; }
+            private set { seasonId = value; }
+        }
+
+        string messageHeader = String.Empty;
+        protected virtual string MessageHeader
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(messageHeader))
+                    messageHeader = String.Format("SeasonId:{0, -5}, SeriesId:{1, -2}, RaceId:{2, -5}, RunId{3, -3} {4}", this.season_id.ToString(), this.series_id.ToString(), this.race_id.ToString(), this.run_id.ToString(), DateTime.Now.ToString());
+
+                return messageHeader;
+            }
+        }
         #endregion
 
         #region ctor / init
@@ -45,8 +69,9 @@ namespace NascarApi.Business
         {
             this.InitializeFeedProcessor();
         }
-        public FeedProcessor(int series_id, int race_id)
+        public FeedProcessor(int season_id, int series_id, int race_id)
         {
+            this.season_id = season_id;
             this.series_id = series_id;
             this.race_id = race_id;
 
@@ -77,8 +102,9 @@ namespace NascarApi.Business
 
         protected virtual void LogMessage(string message)
         {
-            Console.WriteLine(String.Format("{0}: {1}", DateTime.Now.ToString(), message));
+            Console.WriteLine(String.Format("{0}: {1}", MessageHeader, message));
         }
+
         #endregion
 
         #region IFeedProcessor
@@ -133,6 +159,7 @@ namespace NascarApi.Business
 
                 this.processModelHandler = new processModelDelegate(this.Process);
                 this.processModelHandler.Invoke(model);
+
             }
             catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
             {
@@ -286,7 +313,6 @@ namespace NascarApi.Business
         #endregion
 
         #region get/create data classes
-
         protected internal Race GetRace(LiveFeedModel model)
         {
             var race = GetContext().Races.Find(model.race_id);
@@ -315,6 +341,10 @@ namespace NascarApi.Business
             return newRace;
         }
 
+        protected internal Run FindRun(int race_id, int run_id)
+        {
+            return currentRace.Runs.Where(r => r.race_id == race_id && r.run_id == run_id).FirstOrDefault();
+        }
         protected internal Run GetRun(LiveFeedModel model)
         {
             var run = currentRace.Runs.Where(r => r.race_id == model.race_id && r.run_id == model.run_id).FirstOrDefault();
@@ -348,6 +378,8 @@ namespace NascarApi.Business
 
             GetContext().Runs.Add(newRun);
             GetContext().SaveChanges();
+
+            this.run_id = newRun.run_id;
 
             return newRun;
         }
@@ -412,6 +444,12 @@ namespace NascarApi.Business
         /// <returns></returns>
         protected internal RunFlagState UpdateRunFlagState(FlagModel model)
         {
+            if (null == currentRun)
+            {
+                currentRun = FindRun(this.race_id, this.run_id);
+                if (null == currentRun) return null;
+            }
+
             RunFlagState flagState = GetContext().RunFlagStates.Where(s => s.race_run_id == currentRun.race_run_id && s.elapsed_time == model.elapsed_time).FirstOrDefault();
 
             if (null == flagState)
@@ -555,7 +593,6 @@ namespace NascarApi.Business
             return 1;
             //return DateTime.Now.Year;
         }
-
         #endregion
 
         #region get context
