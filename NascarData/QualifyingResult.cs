@@ -13,7 +13,7 @@
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int qualifying_result_id { get; set; }
         [ForeignKey("Season")]
-        public int seasion_id { get; set; }
+        public int season_id { get; set; }
         [ForeignKey("Series")]
         public int series_id { get; set; }
         [ForeignKey("Race")]
@@ -35,9 +35,9 @@
         public int time_limit { get; set; }
         public double last_lap_time { get; set; }
 
-        public virtual Season season { get; set; }
-        public virtual Series series { get; set; }
-        public virtual Race race { get; set; }
-        public virtual Driver driver { get; set; }
+        public virtual Season Season { get; set; }
+        public virtual Series Series { get; set; }
+        public virtual Race Race { get; set; }
+        public virtual Driver Driver { get; set; }
     }
 }

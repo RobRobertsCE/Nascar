@@ -12,7 +12,7 @@
     public abstract class ApiClient : IApiClient
     {
 #if DEBUG
-        private bool TEST_MODE = true;
+        private bool TEST_MODE = false;
         private bool TEST_ERROR_MODE = false;
 #endif
         #region events
@@ -47,11 +47,26 @@
         #endregion
 
         #region ctor
+        public ApiClient(SeriesType seriesType, int raceId, int season, SessionType sessionType)
+        {
+            this.Feed = ApiFeedType.Leaderboard;
+            this.Series = seriesType;
+            this.RaceId = raceId;
+
+            this.FeedUrl = ApiUrlManager.GetLeaderboardApiUrl(seriesType, raceId, season.ToString(), sessionType);
+
+            asyncClient = new ApiAsyncClient();
+            asyncClient.AsyncCallComplete += asyncClient_AsyncCallComplete;
+        }
         public ApiClient(SeriesType seriesType, int raceId, ApiFeedType feedType)
         {
             this.Feed = feedType;
             this.Series = seriesType;
             this.RaceId = raceId;
+
+            if (feedType == ApiFeedType.Leaderboard)
+                throw new Exception("Cant use for Leaderboard feed!");
+
             this.FeedUrl = ApiUrlManager.GetApiUrl(feedType, seriesType, raceId);
 
             asyncClient = new ApiAsyncClient();
@@ -111,8 +126,8 @@
         }
         private void TestMode()
         {
-            //this.OnDataReceived(Properties.Resources.LiveFeedJson_1_4315);
-            asyncClient.BeginGetAsync(@"http://www.jayski.com");
+            this.OnDataReceived(Properties.Resources.LiveFeedJson_1_4315);
+            //asyncClient.BeginGetAsync(@"http://www.jayski.com");
         }
 #endif
         #endregion

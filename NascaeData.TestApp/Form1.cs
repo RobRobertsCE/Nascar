@@ -290,9 +290,9 @@ namespace NascarApi.TestApp
         {
             try
             {
-                Nascar.Data.Race race=null;
+                NascarApi.Data.Race race=null;
 
-                using (Nascar.Data.NascarDbContext context = new Nascar.Data.NascarDbContext("NascarDbContext"))
+                using (NascarApi.Data.NascarDbContext context = new NascarApi.Data.NascarDbContext())
                 {
                     race = context.Races.Where(r=>r.race_id==4319).FirstOrDefault();
                 }

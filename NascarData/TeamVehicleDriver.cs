@@ -17,7 +17,7 @@
         [ForeignKey("Driver")]
         public int driver_id { get; set; }
 
-        public virtual Driver driver { get; set; }
-        public virtual TeamVehicle team_vehicle { get; set; }
+        public virtual Driver Driver { get; set; }
+        public virtual TeamVehicle TeamVehicle { get; set; }
     }
 }

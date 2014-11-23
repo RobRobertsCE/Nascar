@@ -12,8 +12,10 @@ namespace NascarApi.Data
         [Key]
         public int team_vehicle_id { get; set; }
 
+        [ForeignKey("RaceVehicle")]
         public int vehicle_id { get; set; }
 
+        [ForeignKey("Team")]
         public int team_id { get; set; }
 
         public virtual RaceVehicle RaceVehicle { get; set; }

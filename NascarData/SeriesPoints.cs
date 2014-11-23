@@ -37,10 +37,10 @@
         public int top_10 { get; set; }
         public int poles { get; set; }
 
-        public virtual Season season { get; set; }
-        public virtual Series series { get; set; }
-        public virtual Race race { get; set; }
-        public virtual Driver driver { get; set; }
+        public virtual Season Season { get; set; }
+        public virtual Series Series { get; set; }
+        public virtual Race Race { get; set; }
+        public virtual Driver Driver { get; set; }
 
         public SeriesPoints()
         {

@@ -24,7 +24,7 @@ namespace NascarApi.Readers
         // 1 = race id
         // 2 = feed url name (leaderboard)
         const string ApiEndpointUrlTemplate = @"http://www.nascar.com/live/feeds/Series_{0}/{1}/{2}.json";
-
+        
         //www.nascar.com/leaderboard/Series_1/2014/4319/3/leaderboard.json
         // 0 = series #
         // 1 = year
@@ -37,7 +37,7 @@ namespace NascarApi.Readers
         #region public static methods
         public static string GetLeaderboardApiUrl(SeriesType seriesType, int raceId, string fourDigitYear, SessionType sessionType)
         {
-            return string.Format(ApiEndpointUrlTemplate, (int)seriesType, fourDigitYear, raceId, (int)sessionType, ((FeedName)ApiFeedType.Leaderboard).ToString());
+            return string.Format(ApiLeaderboardUrlTemplate, (int)seriesType, fourDigitYear, raceId, (int)sessionType + 1, ((FeedName)ApiFeedType.Leaderboard).ToString());
         }
         public static string GetApiUrl(ApiFeedType feedType, SeriesType seriesType, int raceId)
         {
