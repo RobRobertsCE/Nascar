@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NascarApi.Models.Points
 {
-    public class PointsModel
+    public class PointsModel : IApiModel
     {
         public int bonus_points { get; set; }
         public string car_number { get; set; }

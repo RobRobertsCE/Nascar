@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NascarApi.Models.Weather
 {
-    public class WeatherUndergroundModel
+    public class WeatherUndergroundModel : IApiModel
     {
         public ResponseModel response { get; set; }
         public CurrentObservationModel current_observation { get; set; }

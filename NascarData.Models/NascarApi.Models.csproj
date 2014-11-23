@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IApiModel.cs" />
     <Compile Include="LiveFeed\DriverModel.cs" />
     <Compile Include="Flag\FlagModel.cs" />
     <Compile Include="LiveFeed\LapsLedModel.cs" />

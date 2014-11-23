@@ -1,17 +1,12 @@
 ﻿namespace NascarApi.Processors
 {
-    public interface IFeedProcessor<T> : IFeed
+    public interface IFeedProcessor
     {
-        //event ProcessingCompleteDelegate ProcessingComplete;
-        //event ProcessingErrorDelegate ProcessingError;
-        //event ArchivingCompleteDelegate ArchivingComplete;
-
-        //int season_id { get; }
-        //int series_id { get; }
-        //int race_id { get; }
         int run_id { get; }
-
         void ProcessJson(string feedJson);
+    }
+    public interface IFeedProcessorT<T> : IFeedProcessor, IFeed
+    {              
         void ProcessModel(T model);
         void ProcessModelAsync(T model);
     }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NascarApi.Models.Flag
 {
-    public class FlagModel
+    public class FlagModel : IApiModel
     {
         public int lap_number { get; set; }
         public int flag_state { get; set; }

@@ -192,17 +192,13 @@ namespace NascarApi.TestApp
 
             sb.AppendLine(String.Format("{0} {1} {2}", series_id, race_id, run_id));
 
-            IFeedProcessor<LiveFeedModel> processor = new LiveFeedProcessor(1, series_id, race_id);
+            IFeedProcessorT<LiveFeedModel> processor = new LiveFeedProcessor(1, series_id, race_id);
 
             using (Nascar.Data.NascarDbContext context = new Nascar.Data.NascarDbContext("NascarDbContext"))
             {
                 int idx = 0;
-                //int rawFeedStart = Convert.ToInt32(txtRawFeed.Text);
-                //int rawFeedCount = Convert.ToInt32(txtFeedCount.Text);
-                //var records = context.RawFeedRecords.Where(r => r.race_id == race_id && r.run_id == run_id && r.RawFeedKey > rawFeedStart).OrderBy(r => r.FeedTimestamp).Take(rawFeedCount);
-                var records = context.RawFeedRecords.Where(r => r.race_id == race_id && r.run_id == run_id).OrderBy(r => r.FeedTimestamp);
-
-
+               var records = context.RawFeedRecords.Where(r => r.race_id == race_id && r.run_id == run_id).OrderBy(r => r.FeedTimestamp);
+                
                 Stopwatch timeFeedProcess = new Stopwatch();
                 foreach (Nascar.Data.RawFeedRecord item in records)
                 {
@@ -228,7 +224,7 @@ namespace NascarApi.TestApp
         {
             try
             {
-                engine = new ApiEngineT<LiveFeedModel>(SeriesType.SprintCup, 4315);
+                engine = new ApiEngineT<LiveFeedModel>(SeriesType.SprintCup, 4315, ApiFeedType.LiveFeed);
 
                 engine.ApiEngineStarted += engine_ApiEngineStarted;
                 engine.ApiEngineStopped += engine_ApiEngineStopped;

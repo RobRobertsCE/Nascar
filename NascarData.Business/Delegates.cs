@@ -22,6 +22,6 @@ namespace NascarApi
     public delegate void ApiResultDelegate(object sender, ApiFeedType feedType, string jsonResult);
     public delegate void AsyncApiResultDelegate(object sender, string jsonResult);
     public delegate void ApiModelEventDelegate<T>(object sender, ApiModelEventArgs<T> e);    
-    
+    public delegate void IApiModelEventDelegate(object sender, IApiModelEventArgs e);
 
 }

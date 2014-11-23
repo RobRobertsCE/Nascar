@@ -3,9 +3,9 @@
     using System;
     using NascarApi.Models.Weather;
 
-    public sealed class WeatherModelEventArgs : ApiModelEventArgs<ResponseModel>
+    public sealed class WeatherModelEventArgs : ApiModelEventArgs<WeatherUndergroundModel>
     {
-        public WeatherModelEventArgs(ResponseModel model)
+        public WeatherModelEventArgs(WeatherUndergroundModel model)
             : base(model)
         { }
     }

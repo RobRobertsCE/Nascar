@@ -10,7 +10,7 @@
     using System.Text;
     using NascarApi.Models;
 
-    public abstract class FeedProcessor<T> : IFeedProcessor<T>
+    public abstract class FeedProcessor<T> : IFeedProcessorT<T>
     {
         #region events
         public event ProcessingCompleteDelegate ProcessingComplete;

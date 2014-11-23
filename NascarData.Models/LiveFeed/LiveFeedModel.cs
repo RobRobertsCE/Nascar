@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NascarApi.Models.LiveFeed
 {
-    public class LiveFeedModel
+    public class LiveFeedModel : IApiModel
     {
         public int lap_number { get; set; }
         public double elapsed_time { get; set; }

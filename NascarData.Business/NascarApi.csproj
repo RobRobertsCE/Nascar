@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiFeedType.cs" />
+    <Compile Include="ApiSessionEngine.cs" />
     <Compile Include="Readers\ApiClientFactory.cs" />
     <Compile Include="Readers\ApiEngine.cs" />
     <Compile Include="Readers\ApiEngineT.cs" />

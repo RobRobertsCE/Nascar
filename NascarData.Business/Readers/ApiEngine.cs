@@ -2,7 +2,7 @@
 {
     using System;
     using System.Timers;
-    using NascarApi.Models.LiveFeed;
+    using NascarApi.Models;
     using Newtonsoft.Json;
 
     public abstract class ApiEngine
@@ -42,6 +42,15 @@
             if (null != ApiResult)
             {
                 ApiResult(this, feedType, jsonResult);
+            }
+        }
+
+        public event IApiModelEventDelegate ApiModelReceived;
+        protected virtual void OnApiModelReceived(IApiModel model)
+        {
+            if (null != ApiModelReceived)
+            {
+                ApiModelReceived(this, new IApiModelEventArgs(model));
             }
         }
         #endregion
