@@ -220,6 +220,7 @@ namespace NascarApi.TestApp
         #endregion
 
         #region ApiEngineT testing
+        ApiEngineT<LiveFeedModel> engine = null;
         private void btnRefactorTest_Click(object sender, EventArgs e)
         {
             try
@@ -240,7 +241,6 @@ namespace NascarApi.TestApp
                 Console.WriteLine(ex.ToString());
             }
         }
-        ApiEngineT<LiveFeedModel> engine = null;
         private void button1_Click_2(object sender, EventArgs e)
         {
             try
@@ -266,26 +266,85 @@ namespace NascarApi.TestApp
         {
             Console.WriteLine("engine_ApiResult: " + jsonResult);
         }
-
         void engine_ApiModelEvent(object sender, ApiModelEventArgs<LiveFeedModel> e)
         {
             Console.WriteLine("engine_ApiModelEvent: " + e.ToString());
         }
-
         void engine_ApiFeedEngineError(object sender, Exception e)
         {
             Console.WriteLine("engine_ApiFeedEngineError: " + e.ToString());
-
         }
-
         void engine_ApiEngineStopped(object sender, EventArgs e)
         {
             Console.WriteLine("engine_ApiEngineStopped");
         }
-
         void engine_ApiEngineStarted(object sender, EventArgs e)
         {
             Console.WriteLine("engine_ApiEngineStarted");
+        }
+        #endregion
+
+        #region ApiSessionEngine testing
+        ApiSessionEngine session;
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Nascar.Data.Race race=null;
+
+                using (Nascar.Data.NascarDbContext context = new Nascar.Data.NascarDbContext("NascarDbContext"))
+                {
+                    race = context.Races.Where(r=>r.race_id==4319).FirstOrDefault();
+                }
+
+                session = new ApiSessionEngine(race);
+
+                session.ApiEngineStarted += session_ApiEngineStarted;
+                session.ApiEngineStopped += session_ApiEngineStopped;
+                session.ApiFeedEngineError += session_ApiFeedEngineError;
+                session.ApiModelReceived += session_ApiModelReceived;
+
+                session.Start();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                session.Stop();
+
+                session.ApiEngineStarted -= session_ApiEngineStarted;
+                session.ApiEngineStopped -= session_ApiEngineStopped;
+                session.ApiFeedEngineError -= session_ApiFeedEngineError;
+                session.ApiModelReceived -= session_ApiModelReceived;
+
+                session.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        void session_ApiModelReceived(object sender, IApiModelEventArgs e)
+        {
+            Console.WriteLine("session_ApiModelReceived: " + e.ToString());
+        }
+        void session_ApiFeedEngineError(object sender, Exception e)
+        {
+            Console.WriteLine("session_ApiFeedEngineError: " + e.ToString());
+        }
+        void session_ApiEngineStopped(object sender, EventArgs e)
+        {
+            Console.WriteLine("session_ApiEngineStopped");
+        }
+        void session_ApiEngineStarted(object sender, EventArgs e)
+        {
+            Console.WriteLine("session_ApiEngineStarted");
         }
         #endregion
     }
