@@ -232,7 +232,7 @@ namespace NascarApi.TestApp
                 engine.ApiEngineStarted += engine_ApiEngineStarted;
                 engine.ApiEngineStopped += engine_ApiEngineStopped;
                 engine.ApiFeedEngineError += engine_ApiFeedEngineError;
-                //engine.ApiModelEvent += engine_ApiModelEvent;
+                engine.ApiModelEvent += engine_ApiModelEvent;
                 engine.ApiResult += engine_ApiResult;
 
                 engine.Start();
@@ -253,7 +253,7 @@ namespace NascarApi.TestApp
                 engine.ApiEngineStarted -= engine_ApiEngineStarted;
                 engine.ApiEngineStopped -= engine_ApiEngineStopped;
                 engine.ApiFeedEngineError -= engine_ApiFeedEngineError;
-                //engine.ApiModelEvent -= engine_ApiModelEvent;
+                engine.ApiModelEvent -= engine_ApiModelEvent;
                 engine.ApiResult -= engine_ApiResult;
 
                 engine.Dispose();
