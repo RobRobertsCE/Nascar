@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NascarApi.Readers;
 
 namespace NascarApi
 {
@@ -9,13 +10,12 @@ namespace NascarApi
 
     public delegate void EventFeedStoppedDelegate(object sender, EventStoppedEventArgs e);
 
-    public delegate void ApiFeedEngineStartedDelegate(object sender, EventArgs e);
+    public delegate void ApiEngineStartedDelegate(object sender, EventArgs e);
 
-    public delegate void ApiFeedEngineStoppedDelegate(object sender, EventArgs e);
+    public delegate void ApiEngineStoppedDelegate(object sender, EventArgs e);
 
-    public delegate void ApiFeedEngineErrorDelegate(object sender, Exception e);
+    public delegate void ApiEngineErrorDelegate(object sender, Exception e);
 
-    public delegate void LiveFeedEventHandler(object sender, LiveFeedEventArgs e);
 
     public delegate void LiveFeedRawDataHandler(object sender, string rawData);
 
@@ -24,4 +24,13 @@ namespace NascarApi
     public delegate void LiveFeedStartedHandler(object sender, EventArgs e);
 
     public delegate void LiveFeedStoppedHandler(object sender, EventArgs e);
+
+    public delegate void ApiResultDelegate(object sender, ApiFeedType feedType, string jsonResult);
+    public delegate void AsyncApiResultDelegate(object sender, string jsonResult);
+
+    public delegate void ApiModelEventDelegate<T>(object sender, ApiModelEventArgs<T> e);    
+
+    public delegate void LiveFeedEventDelegate(object sender, LiveFeedModelEventArgs e);
+    public delegate void LeaderboardEventDelegate(object sender, LeaderboardModelEventArgs e);
+
 }

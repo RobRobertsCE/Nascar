@@ -5,16 +5,16 @@
     using NascarApi.Models.LiveFeed;
     using Newtonsoft.Json;
 
-    public class LiveFeedManager 
+    public class LiveFeedManager
         : IDisposable
     {
         #region events
-        public event LiveFeedEventHandler LiveFeedEvent;
+        public event LiveFeedEventDelegate LiveFeedEvent;
         protected virtual void OnLiveFeedEvent(LiveFeedModel model)
         {
             if (null != LiveFeedEvent)
             {
-                LiveFeedEventArgs e = new LiveFeedEventArgs(model);
+                LiveFeedModelEventArgs e = new LiveFeedModelEventArgs(model);
                 LiveFeedEvent(this, e);
             }
         }

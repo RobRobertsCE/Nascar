@@ -8,7 +8,6 @@ namespace NascarApi
     public enum ApiEngineState
     {
         Ready,
-        Running,
-        Paused
+        Running
     }
 }

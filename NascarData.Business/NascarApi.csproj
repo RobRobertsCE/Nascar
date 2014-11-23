@@ -52,8 +52,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiFeedType.cs" />
-    <Compile Include="EventArgs\LiveFeedEventArgs.cs" />
-    <Compile Include="EventFeedManager.cs" />
+    <Compile Include="Readers\ApiClientFactory.cs" />
+    <Compile Include="Readers\ApiEngine.cs" />
+    <Compile Include="Readers\ApiEngineT.cs" />
+    <Compile Include="Readers\Flag\FlagModelEventArgs.cs" />
+    <Compile Include="Readers\Leaderboard\LeaderboardModelEventArgs.cs" />
+    <Compile Include="Readers\LiveFeed\LiveFeedApiEngine.cs" />
+    <Compile Include="Readers\LiveFeed\LiveFeedModelEventArgs.cs" />
     <Compile Include="Processors\FeedProcessor.cs" />
     <Compile Include="Processors\FlagFeedProcessor.cs" />
     <Compile Include="Processors\Interfaces\IFeed.cs" />
@@ -75,9 +80,7 @@
     <Compile Include="Delegates.cs" />
     <Compile Include="EventArgs\EventStartedEventArgs.cs" />
     <Compile Include="EventArgs\EventStoppedEventArgs.cs" />
-    <Compile Include="EventArgs\FeedEventArgs.cs" />
-    <Compile Include="Readers\ApiClientDataReceivedDelegate.cs" />
-    <Compile Include="Readers\AsyncApiResultDelegate.cs" />
+    <Compile Include="Readers\ApiModelEventArgs.cs" />
     <Compile Include="Readers\Flag\FlagApiClient.cs" />
     <Compile Include="Readers\Leaderboard\LeaderboardApiClient.cs" />
     <Compile Include="Readers\LiveFeed\LiveFeedApiClient.cs">
@@ -85,11 +88,14 @@
     </Compile>
     <Compile Include="Readers\LiveFeed\LiveFeedManager.cs" />
     <Compile Include="Readers\ApiUrlManager.cs" />
-    <Compile Include="Readers\IApiFeedEngine.cs" />
+    <Compile Include="Readers\IApiEngine.cs" />
     <Compile Include="Readers\IApiClient.cs" />
     <Compile Include="Readers\Points\PointsApiClient.cs" />
+    <Compile Include="Readers\Points\PointsModelEventArgs.cs" />
     <Compile Include="Readers\Qualifying\QualifyingApiClient.cs" />
+    <Compile Include="Readers\Qualifying\QualifyingModelEventArgs.cs" />
     <Compile Include="Readers\Weather\WeatherApiClient.cs" />
+    <Compile Include="Readers\Weather\WeatherModelEventArgs.cs" />
     <Compile Include="ResourceManager.cs" />
     <Compile Include="SessionStatus.cs" />
     <Compile Include="SeriesType.cs" />
@@ -143,6 +149,9 @@
     <Folder Include="Interfaces\" />
     <Folder Include="Processors\Delegates\" />
     <Folder Include="Processors\EventArgs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LiveFeedJson_1_4315.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

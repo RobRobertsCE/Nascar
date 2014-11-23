@@ -11,6 +11,7 @@ using NascarApi;
 using NascarApi.Models;
 using NascarApi.Models.LiveFeed;
 using NascarApi.Processors;
+using NascarApi.Readers;
 
 namespace NascarApi.TestApp
 {
@@ -221,5 +222,74 @@ namespace NascarApi.TestApp
             System.IO.File.WriteAllText(String.Format("c:\\temp\\feeddata{0}_{1}_{2}.txt", series_id.ToString(), race_id.ToString(), run_id.ToString()), sb.ToString());
         }
         #endregion
+
+        private void btnRefactorTest_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                engine = new ApiEngineT<LiveFeedModel>(SeriesType.SprintCup, 4315);
+
+                engine.ApiEngineStarted += engine_ApiEngineStarted;
+                engine.ApiEngineStopped += engine_ApiEngineStopped;
+                engine.ApiFeedEngineError += engine_ApiFeedEngineError;
+                //engine.ApiModelEvent += engine_ApiModelEvent;
+                engine.ApiResult += engine_ApiResult;
+
+                engine.Start();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+        ApiEngineT<LiveFeedModel> engine = null;
+        private void button1_Click_2(object sender, EventArgs e)
+        {
+            try
+            {
+                engine.Stop();
+
+                engine.ApiEngineStarted -= engine_ApiEngineStarted;
+                engine.ApiEngineStopped -= engine_ApiEngineStopped;
+                engine.ApiFeedEngineError -= engine_ApiFeedEngineError;
+                //engine.ApiModelEvent -= engine_ApiModelEvent;
+                engine.ApiResult -= engine_ApiResult;
+
+                engine.Dispose();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        void engine_ApiResult(object sender, ApiFeedType feedType, string jsonResult)
+        {
+            Console.WriteLine("engine_ApiResult: " + jsonResult);
+        }
+
+        void engine_ApiModelEvent(object sender, ApiModelEventArgs<LiveFeedModel> e)
+        {
+            Console.WriteLine("engine_ApiModelEvent: " + e.ToString());
+        }
+
+        void engine_ApiFeedEngineError(object sender, Exception e)
+        {
+            Console.WriteLine("engine_ApiFeedEngineError: " + e.ToString());
+
+        }
+
+        void engine_ApiEngineStopped(object sender, EventArgs e)
+        {
+            Console.WriteLine("engine_ApiEngineStopped");
+        }
+
+        void engine_ApiEngineStarted(object sender, EventArgs e)
+        {
+            Console.WriteLine("engine_ApiEngineStarted");
+        }
+
     }
 }

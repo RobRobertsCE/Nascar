@@ -171,7 +171,7 @@ namespace NascarApi
         ApiFeedType feed;
 
         public IFeedProcessor<LiveFeedModel> FeedProcessor { get; set; }
-        public LiveFeedManager manager { get; set; }
+        public ApiEngine manager { get; set; }
 
         public FeedSync(SeriesType SelectedSeries, int race_id, ApiFeedType feed)           
         {
@@ -185,22 +185,22 @@ namespace NascarApi
             if (null != manager)
             {
                 manager.Stop();
-                manager.LiveFeedStarted -= manager_LiveFeedStarted;
-                manager.LiveFeedStopped -= manager_LiveFeedStopped;
+                manager.ApiFeedStarted -= manager_LiveFeedStarted;
+                manager.ApiFeedStopped -= manager_LiveFeedStopped;
                 manager.LiveFeedEvent -= manager_LiveFeedEvent;
                 manager.Dispose();
                 if (null != manager) manager = null;
             }
-            manager = new LiveFeedManager(this.SelectedSeries, this.race_id, this.feed);
-            manager.LiveFeedStarted += manager_LiveFeedStarted;
-            manager.LiveFeedStopped += manager_LiveFeedStopped;
+            manager = new ApiEngine(this.SelectedSeries, this.race_id, this.feed);
+            manager.ApiFeedStarted += manager_LiveFeedStarted;
+            manager.ApiFeedStopped += manager_LiveFeedStopped;
 
             manager.LiveFeedEvent += manager_LiveFeedEvent;
         }
 
-        void manager_LiveFeedEvent(object sender, LiveFeedEventArgs e)
+        void manager_LiveFeedEvent(object sender, LiveFeedModelEventArgs e)
         {
-            FeedProcessor.ProcessModel(e.LiveFeed);
+            FeedProcessor.ProcessModel(e.Model);
         }
 
         void manager_LiveFeedStarted(object sender, EventArgs e)

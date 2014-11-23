@@ -2,8 +2,13 @@
 {
     public class LeaderboardApiClient : ApiClient
     {
-        public LeaderboardApiClient(SeriesType seriesType, int raceId)
+        public int Season { get; protected set; }
+        public SessionType SessionType { get; protected set; }
+        public LeaderboardApiClient(SeriesType seriesType, int raceId, int season, SessionType sessionType)
             : base(seriesType, raceId, ApiFeedType.Leaderboard)
-        { }
+        {
+            this.Season = season;
+            this.SessionType = sessionType;
+        }
     }
 }

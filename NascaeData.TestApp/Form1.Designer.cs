@@ -43,6 +43,8 @@
             this.btnAllFeeds = new System.Windows.Forms.Button();
             this.btnAllRaces = new System.Windows.Forms.Button();
             this.btnAllTracks = new System.Windows.Forms.Button();
+            this.btnRefactorTest = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnStart
@@ -94,7 +96,7 @@
             this.label3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.label3.Location = new System.Drawing.Point(0, 269);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(208, 37);
+            this.label3.Size = new System.Drawing.Size(447, 37);
             this.label3.TabIndex = 5;
             this.label3.Text = "label3";
             // 
@@ -178,11 +180,33 @@
             this.btnAllTracks.UseVisualStyleBackColor = true;
             this.btnAllTracks.Click += new System.EventHandler(this.btnAllTracks_Click);
             // 
+            // btnRefactorTest
+            // 
+            this.btnRefactorTest.Location = new System.Drawing.Point(176, 8);
+            this.btnRefactorTest.Name = "btnRefactorTest";
+            this.btnRefactorTest.Size = new System.Drawing.Size(139, 23);
+            this.btnRefactorTest.TabIndex = 15;
+            this.btnRefactorTest.Text = "Start";
+            this.btnRefactorTest.UseVisualStyleBackColor = true;
+            this.btnRefactorTest.Click += new System.EventHandler(this.btnRefactorTest_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(176, 40);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(139, 23);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "Stop";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_2);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(208, 306);
+            this.ClientSize = new System.Drawing.Size(447, 306);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnRefactorTest);
             this.Controls.Add(this.btnAllTracks);
             this.Controls.Add(this.btnAllRaces);
             this.Controls.Add(this.btnAllFeeds);
@@ -222,6 +246,8 @@
         private System.Windows.Forms.Button btnAllFeeds;
         private System.Windows.Forms.Button btnAllRaces;
         private System.Windows.Forms.Button btnAllTracks;
+        private System.Windows.Forms.Button btnRefactorTest;
+        private System.Windows.Forms.Button button1;
     }
 }
 

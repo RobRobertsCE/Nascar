@@ -11,15 +11,19 @@
     /// </summary>
     public abstract class ApiClient : IApiClient
     {
+#if DEBUG
+        private bool TEST_MODE = true;
+        private bool TEST_ERROR_MODE = false;
+#endif
         #region events
         /// <summary>
         /// Fires when the json string is received from the api.
         /// </summary>
-        public event ApiClientDataReceivedDelegate DataReceived;
+        public event ApiResultDelegate DataReceived;
         protected virtual void OnDataReceived(string json)
         {
             if (null != DataReceived)
-                DataReceived.Invoke(this, json);
+                DataReceived.Invoke(this, this.Feed, json);
         }
         #endregion
 
@@ -52,7 +56,15 @@
 
             asyncClient = new ApiAsyncClient();
             asyncClient.AsyncCallComplete += asyncClient_AsyncCallComplete;
-        }     
+        }
+        #endregion
+
+        #region ExceptionHandler
+        protected virtual void ExceptionHandler(Exception exception)
+        {
+            Console.WriteLine(exception.Message);
+            throw exception;
+        }
         #endregion
 
         #region GetData
@@ -73,13 +85,36 @@
         #region BeginGetDataAsync
         public virtual void BeginGetDataAsync()
         {
+#if DEBUG
+            if (TEST_ERROR_MODE)
+            {
+                TestErrorMode();
+                return;
+            }
+            if (TEST_MODE)
+            {
+                TestMode();
+                return;
+            }
+#endif
             string url = GetUrl();
-            asyncClient.BeginGetAsync(url);            
+            asyncClient.BeginGetAsync(url);
         }
         void asyncClient_AsyncCallComplete(object sender, string jsonResponse)
         {
             this.OnDataReceived(jsonResponse);
         }
+#if DEBUG
+        private void TestErrorMode()
+        {
+            throw new Exception("FOO BABY!!1!11!11");
+        }
+        private void TestMode()
+        {
+            //this.OnDataReceived(Properties.Resources.LiveFeedJson_1_4315);
+            asyncClient.BeginGetAsync(@"http://www.jayski.com");
+        }
+#endif
         #endregion
 
         #region protected methods
@@ -97,7 +132,7 @@
         }
         protected string GetUrl()
         {
-            return string.Format(FeedUrl, GetRandom(DEFAULT_RANDOM_LENGTH));
+            return string.Format("{0}{1}", FeedUrl, GetRandom(DEFAULT_RANDOM_LENGTH));
         }
         #endregion
 
@@ -108,7 +143,7 @@
             {
                 asyncClient.AsyncCallComplete -= asyncClient_AsyncCallComplete;
                 asyncClient.Dispose();
-            }                
+            }
         }
         #endregion
 
@@ -147,101 +182,128 @@
 
             public void BeginGetAsync(string apiEndpointUrl)
             {
-                // Get the URI from the command line.
-                Uri httpSite = new Uri(apiEndpointUrl);
+                try
+                {
+                    // Get the URI from the command line.
+                    Uri httpSite = new Uri(apiEndpointUrl);
+                    Console.WriteLine(httpSite);
 
-                // Create the request object.
-                WebRequest wreq = WebRequest.Create(httpSite);
 
-                // Create the state object.
-                ApiRequestState rs = new ApiRequestState();
+                    // Create the request object.
+                    WebRequest wreq = WebRequest.Create(httpSite);
 
-                // Put the request into the state object so it can be passed around.
-                rs.Request = wreq;
+                    // Create the state object.
+                    ApiRequestState rs = new ApiRequestState();
 
-                // Issue the async request.
-                IAsyncResult r = (IAsyncResult)wreq.BeginGetResponse(
-                   new AsyncCallback(RespCallback), rs);
+                    // Put the request into the state object so it can be passed around.
+                    rs.Request = wreq;
 
-                // Wait until the ManualResetEvent is set so that the application 
-                // does not exit until after the callback is called.
-                allDone.WaitOne();
+                    // Issue the async request.
+                    IAsyncResult r = (IAsyncResult)wreq.BeginGetResponse(
+                       new AsyncCallback(RespCallback), rs);
 
-                Console.WriteLine(rs.RequestData.ToString());
+                    // Wait until the ManualResetEvent is set so that the application 
+                    // does not exit until after the callback is called.
+                    allDone.WaitOne();
 
-                OnAsyncCallComplete(rs.RequestData.ToString());
+                    Console.WriteLine(rs.RequestData.ToString());
+
+                    OnAsyncCallComplete(rs.RequestData.ToString());
+                }
+                catch (Exception ex)
+                {
+                    allDone.Set();
+                    Console.WriteLine(ex.ToString());
+                }
             }
 
             private void RespCallback(IAsyncResult ar)
             {
-                // Get the RequestState object from the async result.
-                ApiRequestState rs = (ApiRequestState)ar.AsyncState;
+                try
+                {
+                    // Get the RequestState object from the async result.
+                    ApiRequestState rs = (ApiRequestState)ar.AsyncState;
 
-                // Get the WebRequest from RequestState.
-                WebRequest req = rs.Request;
+                    // Get the WebRequest from RequestState.
+                    WebRequest req = rs.Request;
 
-                // Call EndGetResponse, which produces the WebResponse object
-                //  that came from the request issued above.
-                WebResponse resp = req.EndGetResponse(ar);
+                    // Call EndGetResponse, which produces the WebResponse object
+                    //  that came from the request issued above.
+                    WebResponse resp = req.EndGetResponse(ar);
 
-                //  Start reading data from the response stream.
-                Stream ResponseStream = resp.GetResponseStream();
+                    //  Start reading data from the response stream.
+                    Stream ResponseStream = resp.GetResponseStream();
 
-                // Store the response stream in RequestState to read 
-                // the stream asynchronously.
-                rs.ResponseStream = ResponseStream;
+                    // Store the response stream in RequestState to read 
+                    // the stream asynchronously.
+                    rs.ResponseStream = ResponseStream;
 
-                //  Pass rs.BufferRead to BeginRead. Read data into rs.BufferRead
-                IAsyncResult iarRead = ResponseStream.BeginRead(rs.BufferRead, 0,
-                   BUFFER_SIZE, new AsyncCallback(ReadCallBack), rs);
+                    //  Pass rs.BufferRead to BeginRead. Read data into rs.BufferRead
+                    IAsyncResult iarRead = ResponseStream.BeginRead(rs.BufferRead, 0,
+                       BUFFER_SIZE, new AsyncCallback(ReadCallBack), rs);
+                }
+                catch (Exception ex)
+                {
+                    allDone.Set();
+                    Console.WriteLine(ex.ToString());
+                }
             }
 
             private void ReadCallBack(IAsyncResult asyncResult)
             {
-                // Get the RequestState object from AsyncResult.
-                ApiRequestState rs = (ApiRequestState)asyncResult.AsyncState;
-
-                // Retrieve the ResponseStream that was set in RespCallback. 
-                Stream responseStream = rs.ResponseStream;
-
-                // Read rs.BufferRead to verify that it contains data. 
-                int read = responseStream.EndRead(asyncResult);
-                if (read > 0)
+                try
                 {
-                    // Prepare a Char array buffer for converting to Unicode.
-                    Char[] charBuffer = new Char[BUFFER_SIZE];
+                    // Get the RequestState object from AsyncResult.
+                    ApiRequestState rs = (ApiRequestState)asyncResult.AsyncState;
 
-                    // Convert byte stream to Char array and then to String.
-                    // len contains the number of characters converted to Unicode.
-                    int len =
-                       rs.StreamDecode.GetChars(rs.BufferRead, 0, read, charBuffer, 0);
+                    // Retrieve the ResponseStream that was set in RespCallback. 
+                    Stream responseStream = rs.ResponseStream;
 
-                    String str = new String(charBuffer, 0, len);
-
-                    // Append the recently read data to the RequestData stringbuilder
-                    // object contained in RequestState.
-                    rs.RequestData.Append(
-                       Encoding.ASCII.GetString(rs.BufferRead, 0, read));
-
-                    // Continue reading data until 
-                    // responseStream.EndRead returns –1.
-                    IAsyncResult ar = responseStream.BeginRead(
-                       rs.BufferRead, 0, BUFFER_SIZE,
-                       new AsyncCallback(ReadCallBack), rs);
-                }
-                else
-                {
-                    if (rs.RequestData.Length > 0)
+                    // Read rs.BufferRead to verify that it contains data. 
+                    int read = responseStream.EndRead(asyncResult);
+                    if (read > 0)
                     {
-                        //  Display data to the console.
-                        string strContent;
-                        strContent = rs.RequestData.ToString();
+                        // Prepare a Char array buffer for converting to Unicode.
+                        Char[] charBuffer = new Char[BUFFER_SIZE];
+
+                        // Convert byte stream to Char array and then to String.
+                        // len contains the number of characters converted to Unicode.
+                        int len =
+                           rs.StreamDecode.GetChars(rs.BufferRead, 0, read, charBuffer, 0);
+
+                        String str = new String(charBuffer, 0, len);
+
+                        // Append the recently read data to the RequestData stringbuilder
+                        // object contained in RequestState.
+                        rs.RequestData.Append(
+                           Encoding.ASCII.GetString(rs.BufferRead, 0, read));
+
+                        // Continue reading data until 
+                        // responseStream.EndRead returns –1.
+                        IAsyncResult ar = responseStream.BeginRead(
+                           rs.BufferRead, 0, BUFFER_SIZE,
+                           new AsyncCallback(ReadCallBack), rs);
                     }
-                    // Close down the response stream.
-                    responseStream.Close();
-                    // Set the ManualResetEvent so the main thread can exit.
-                    allDone.Set();
+                    else
+                    {
+                        if (rs.RequestData.Length > 0)
+                        {
+                            //  Display data to the console.
+                            string strContent;
+                            strContent = rs.RequestData.ToString();
+                        }
+                        // Close down the response stream.
+                        responseStream.Close();
+                        // Set the ManualResetEvent so the main thread can exit.
+                        allDone.Set();
+                    }
                 }
+                catch (Exception ex)
+                {
+                    allDone.Set();
+                    Console.WriteLine(ex.ToString());
+                }
+
                 return;
             }
 

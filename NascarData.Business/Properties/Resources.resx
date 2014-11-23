@@ -130,6 +130,9 @@
   <data name="ford_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ford_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="LiveFeedJson_1_4315" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LiveFeedJson_1_4315.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="nascar_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\nascar_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

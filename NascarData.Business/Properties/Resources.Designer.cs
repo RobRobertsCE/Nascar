@@ -101,6 +101,15 @@ namespace NascarApi.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {&quot;lap_number&quot;:194,&quot;elapsed_time&quot;:11900.0,&quot;flag_state&quot;:9,&quot;race_id&quot;:4315,&quot;laps_in_race&quot;:194,&quot;laps_to_go&quot;:0,&quot;vehicles&quot;:[{&quot;average_restart_speed&quot;:185.534,&quot;average_running_position&quot;:28.451,&quot;average_speed&quot;:160.281,&quot;best_lap&quot;:38,&quot;best_lap_speed&quot;:199.996,&quot;best_lap_time&quot;:47.881,&quot;vehicle_manufacturer&quot;:&quot;Tyt&quot;,&quot;vehicle_number&quot;:&quot;55&quot;,&quot;driver&quot;:{&quot;driver_id&quot;:3425,&quot;full_name&quot;:&quot;Brian Vickers&quot;,&quot;first_name&quot;:&quot;Brian&quot;,&quot;last_name&quot;:&quot;Vickers&quot;,&quot;is_in_chase&quot;:false},&quot;vehicle_elapsed_time&quot;:11752.8465,&quot;fastest_laps_run&quot;:3,&quot;laps_completed&quot;: [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string LiveFeedJson_1_4315 {
+            get {
+                return ResourceManager.GetString("LiveFeedJson_1_4315", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap nascar_logo {

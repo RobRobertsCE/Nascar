@@ -7,6 +7,8 @@ namespace NascarApi
 {
     public interface IApiClient : IDisposable 
     {
+        event ApiResultDelegate DataReceived;
+
         SeriesType Series { get; }
         int RaceId { get; }
         ApiFeedType Feed { get; }
