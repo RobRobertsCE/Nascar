@@ -223,6 +223,7 @@ namespace NascarApi.TestApp
         }
         #endregion
 
+        #region ApiEngineT testing
         private void btnRefactorTest_Click(object sender, EventArgs e)
         {
             try
@@ -290,6 +291,6 @@ namespace NascarApi.TestApp
         {
             Console.WriteLine("engine_ApiEngineStarted");
         }
-
+        #endregion
     }
 }

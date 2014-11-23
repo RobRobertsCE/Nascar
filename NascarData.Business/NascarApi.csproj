@@ -57,19 +57,17 @@
     <Compile Include="Readers\ApiEngineT.cs" />
     <Compile Include="Readers\Flag\FlagModelEventArgs.cs" />
     <Compile Include="Readers\Leaderboard\LeaderboardModelEventArgs.cs" />
-    <Compile Include="Readers\LiveFeed\LiveFeedApiEngine.cs" />
     <Compile Include="Readers\LiveFeed\LiveFeedModelEventArgs.cs" />
     <Compile Include="Processors\FeedProcessor.cs" />
-    <Compile Include="Processors\FlagFeedProcessor.cs" />
-    <Compile Include="Processors\Interfaces\IFeed.cs" />
-    <Compile Include="Processors\LiveFeedProcessor.cs" />
-    <Compile Include="Processors\Interfaces\IFeedProcessor.cs" />
-    <Compile Include="Processors\PointsFeedProcessor.cs" />
-    <Compile Include="Processors\ProcessorDelegates.cs" />
-    <Compile Include="Processors\LeaderboardFeedProcessor.cs" />
-    <Compile Include="Processors\WeatherFeedProcessor.cs" />
+    <Compile Include="Processors\Flag\FlagFeedProcessor.cs" />
+    <Compile Include="Processors\IFeed.cs" />
+    <Compile Include="Processors\LiveFeed\LiveFeedProcessor.cs" />
+    <Compile Include="Processors\IFeedProcessor.cs" />
+    <Compile Include="Processors\Points\PointsFeedProcessor.cs" />
+    <Compile Include="Processors\Leaderboard\LeaderboardFeedProcessor.cs" />
+    <Compile Include="Processors\Weather\WeatherFeedProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Processors\QualifyingFeedProcessor.cs" />
+    <Compile Include="Processors\Qualifying\QualifyingFeedProcessor.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -86,7 +84,6 @@
     <Compile Include="Readers\LiveFeed\LiveFeedApiClient.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Readers\LiveFeed\LiveFeedManager.cs" />
     <Compile Include="Readers\ApiUrlManager.cs" />
     <Compile Include="Readers\IApiEngine.cs" />
     <Compile Include="Readers\IApiClient.cs" />
@@ -145,11 +142,7 @@
   <ItemGroup>
     <None Include="Resources\toyota_logo.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Processors\Delegates\" />
-    <Folder Include="Processors\EventArgs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\LiveFeedJson_1_4315.txt" />
   </ItemGroup>
